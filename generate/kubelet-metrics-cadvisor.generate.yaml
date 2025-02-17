@@ -1,0 +1,212 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+query:
+  cluster: set
+  endpoint: set
+  job: !eq kubelet
+  metrics_path: !eq /metrics/cadvisor
+  namespace: set
+  prometheus: set
+  prometheus_replica: set
+  service: !eq monitoring-kube-prometheus-kubelet
+hints:
+  rename:
+    aggregated:
+    - instance: unset
+      node: unset
+    byImage:
+    - cpu: unset
+      id: set
+      image: set
+      instance: set
+      name: set
+      node: set
+      pod: set
+    byMode:
+    - boot_id: set
+      id: unset
+      instance: set
+      kernelVersion: unset
+      machine_id: set
+      mode: set
+      node: set
+      osVersion: unset
+      pod: unset
+      system_uuid: set
+    byPod:
+    - id: set
+      instance: set
+      node: set
+      pod: set
+    cpuByContainer:
+    - container: set
+      cpu: set
+      id: set
+      image: set
+      instance: set
+      name: set
+      node: set
+      pod: set
+    cpuByImage:
+    - cpu: set
+      id: set
+      image: set
+      instance: set
+      name: set
+      node: set
+      pod: set
+    cpuByInitContainer:
+    - container: unset
+      cpu: set
+      id: set
+      image: set
+      instance: set
+      name: set
+      node: set
+      pod: set
+    cpuByPod:
+    - cpu: set
+      id: set
+      image: unset
+      instance: set
+      name: unset
+      node: set
+      pod: set
+    failure:
+    - container: set
+      cpu: unset
+      device: unset
+      failure_type: set
+      id: set
+      image: set
+      instance: set
+      name: set
+      node: set
+      pod: set
+      scope: set
+    - container: unset
+      cpu: unset
+      device: unset
+      failure_type: set
+      id: set
+      image: set
+      instance: set
+      name: set
+      node: set
+      pod: set
+      scope: set
+    - cpu: unset
+      device: unset
+      failure_type: set
+      id: set
+      image: unset
+      instance: set
+      name: unset
+      node: set
+      pod: set
+      scope: set
+    noContainer:
+    - container: unset
+      cpu: unset
+      id: set
+      image: set
+      instance: set
+      name: set
+      node: set
+      pod: set
+    noCpu:
+    - cpu: unset
+      id: set
+      instance: set
+      node: set
+      pod: set
+    noDevice:
+    - container: unset
+      cpu: unset
+      device: unset
+      id: set
+      image: set
+      instance: set
+      name: set
+      node: set
+      pod: set
+    noFailure:
+    - container: unset
+      cpu: unset
+      device: unset
+      failure_type: unset
+      id: set
+      image: set
+      instance: set
+      name: set
+      node: set
+      pod: set
+      scope: unset
+    noInterface:
+    - container: unset
+      cpu: unset
+      device: unset
+      failure_type: unset
+      id: set
+      image: set
+      instance: set
+      interface: unset
+      name: set
+      node: set
+      pod: set
+      scope: unset
+    nodeMetaData:
+    - boot_id: set
+      id: unset
+      instance: set
+      kernelVersion: unset
+      machine_id: set
+      mode: unset
+      node: set
+      osVersion: unset
+      pod: unset
+      system_uuid: set
+    nodeWithMetaData:
+    - boot_id: set
+      id: unset
+      instance: set
+      kernelVersion: unset
+      machine_id: set
+      node: set
+      osVersion: unset
+      pod: unset
+      system_uuid: set
+    perNode:
+    - instance: set
+      node: set
+    perNode1:
+    - id: unset
+      instance: set
+      node: set
+      pod: unset
+    perNode2:
+    - id: unset
+      instance: set
+      kernelVersion: unset
+      node: set
+      osVersion: unset
+      pod: unset
+    perNode3:
+    - boot_id: unset
+      id: unset
+      instance: set
+      kernelVersion: unset
+      machine_id: unset
+      node: set
+      osVersion: unset
+      pod: unset
+      system_uuid: unset
+    version:
+    - id: unset
+      instance: set
+      kernelVersion: set
+      node: set
+      osVersion: set
+      pod: unset

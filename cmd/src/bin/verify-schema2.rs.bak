@@ -1,0 +1,39 @@
+use std::{collections::BTreeMap, str::FromStr};
+
+use prometheus_schema::{schema, QualifiedItemName};
+
+fn main() {
+    let files = BTreeMap::from_iter([
+        (
+            "argocd.root.yaml",
+            include_str!("../../../schemas/argocd.root.yaml"),
+        ),
+        (
+            "argocd.schema.yaml",
+            include_str!("../../../schemas/argocd.schema.yaml"),
+        ),
+        (
+            "go.schema.yaml",
+            include_str!("../../../schemas/go.schema.yaml"),
+        ),
+        (
+            "grpc.schema.yaml",
+            include_str!("../../../schemas/grpc.schema.yaml"),
+        ),
+        (
+            "prometheus.schema.yaml",
+            include_str!("../../../schemas/prometheus.schema.yaml"),
+        ),
+    ]);
+
+    let module = "argocd";
+    let modules = schema::Universe::mock_load(module, &files).unwrap();
+    println!("Succesfully loaded schema.");
+
+    let root = QualifiedItemName::from_str(&format!("{module}:root")).unwrap();
+
+    modules
+        .lookup_item(&root)
+        .unwrap()
+        .show_tree(&modules, &root, 0);
+}

@@ -1,0 +1,14 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+module: prometheus
+version: 0.1.0
+items:
+  scrape:
+    metrics:
+      scrape_duration_seconds: !scalar {}
+      scrape_samples_post_metric_relabeling: !scalar {}
+      scrape_samples_scraped: !scalar {}
+      scrape_series_added: !scalar {}
+      up: !scalar {}

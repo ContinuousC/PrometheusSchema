@@ -1,0 +1,49 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+query:
+  cluster: set
+  container: set
+  endpoint: set
+  namespace: set
+  prometheus: set
+  prometheus_replica: set
+  service: set
+  job: !in
+  - argo-cd-argocd-application-controller-metrics
+  - argo-cd-argocd-applicationset-controller-metrics
+  - argo-cd-argocd-notifications-controller-metrics
+  - argo-cd-argocd-repo-server-metrics
+  - argo-cd-argocd-server-metrics
+hints:
+  choose:
+    - query:
+        cluster: set
+        container: set
+        endpoint: set
+        job: set
+        namespace: set
+        prometheus: set
+        prometheus_replica: set
+        service: set
+      choice:
+        - code
+        - host
+        - method
+  split_by:
+    - label: job
+      query:
+        instance: !set
+        pod: !set
+  rename:
+    commonLabels:
+    - cluster: set
+      container: set
+      endpoint: set
+      job: set
+      namespace: set
+      prometheus: set
+      prometheus_replica: set
+      service: set
+

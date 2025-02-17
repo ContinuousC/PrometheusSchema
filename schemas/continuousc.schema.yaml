@@ -1,0 +1,21 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+name: continuousc
+version: 0.1.0
+requires:
+  kubelet: 0.1
+items:
+  jobs:
+    items:
+      - kubelets
+  kubelets:
+    query:
+      job: !eq kubelet
+    assert:
+      service: !set # monitoring-kube-prometheus-kubelet, monitoring-tools-kube-prom-kubelet
+    keys:
+      - service
+    items:
+      - kubelet:job

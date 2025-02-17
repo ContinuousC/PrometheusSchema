@@ -1,0 +1,93 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+query:
+  cluster: set
+  job: !eq kubelet
+  le: unset
+  metrics_path: !eq /metrics
+  prometheus: set
+  prometheus_replica: set
+  service: !eq monitoring-kube-prometheus-kubelet
+hints:
+  choose:
+  - query:
+      endpoint: set
+      namespace: set
+    choice:
+    - instance
+    - node
+  - query:
+      endpoint: set
+      instance: set
+      namespace: set
+      node: set
+    choice:
+    - protocol
+    - transport
+  rename:
+    buildInfo:
+    - build_date: set
+      compiler: set
+      endpoint: set
+      git_commit: set
+      git_tree_state: set
+      git_version: set
+      go_version: set
+      major: set
+      minor: set
+      namespace: set
+      platform: set
+    global:
+    - endpoint: set
+      instance: unset
+      namespace: set
+      node: unset
+    node:
+    - endpoint: set
+      instance: set
+      namespace: set
+      node: set
+    nodeBuildInfo:
+    - build_date: set
+      compiler: set
+      endpoint: set
+      git_commit: set
+      git_tree_state: set
+      git_version: set
+      go_version: set
+      instance: set
+      major: set
+      minor: set
+      namespace: set
+      node: set
+      platform: set
+    notBuildInfo:
+    - build_date: unset
+      compiler: unset
+      endpoint: set
+      git_commit: unset
+      git_tree_state: unset
+      git_version: unset
+      go_version: unset
+      major: unset
+      minor: unset
+      namespace: set
+      platform: unset
+    securityEvaluations:
+    - build_date: unset
+      compiler: unset
+      decision: set
+      endpoint: set
+      git_commit: unset
+      git_tree_state: unset
+      git_version: unset
+      go_version: unset
+      major: unset
+      minor: unset
+      mode: set
+      namespace: set
+      platform: unset
+      policy_level: set
+      policy_version: set

@@ -1,0 +1,33 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+version: 0.1.0
+requires:
+  kubelet-metrics: 0.1
+  kubelet-metrics-cadvisor: 0.1
+  kubelet-metrics-probes: 0.1
+items:
+  root:
+    query:
+      job: !eq kubelet
+      endpoint: set
+    items:
+      - metrics
+      - cadvisor
+      - probes
+  metrics:
+    query:
+      metrics_path: !eq /metrics
+    items:
+      - kubelet-metrics:root
+  cadvisor:
+    query:
+      metrics_path: !eq /metrics/cadvisor
+    items:      
+      - kubelet-metrics-cadvisor:root
+  probes:
+    query:
+      metrics_path: !eq /metrics/probes
+    items:
+      - kubelet-metrics-probes:root

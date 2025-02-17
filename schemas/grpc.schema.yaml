@@ -1,0 +1,23 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+module: grpc
+version: 0.1.0
+items:
+  grpc_server:
+    query:
+      grpc_method: set
+      grpc_service: set
+      grpc_type: set
+    items:
+    - handled
+    metrics:
+      grpc_server_msg_received_total: !scalar {}
+      grpc_server_msg_sent_total: !scalar {}
+      grpc_server_started_total: !scalar {}
+  handled:
+    query:
+      grpc_code: set
+    metrics:
+      grpc_server_handled_total: !scalar {}

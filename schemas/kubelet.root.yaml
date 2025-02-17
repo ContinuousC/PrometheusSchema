@@ -1,0 +1,21 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+requires:
+  kubelet-separate: 0.1
+items:
+  root:
+    items:
+      - monitoring-kube-prometheus-kubelet
+      - monitoring-tools-kube-prom-kubelet
+  monitoring-kube-prometheus-kubelet:
+    query:
+      service: !eq monitoring-kube-prometheus-kubelet
+    items:
+      - kubelet-separate:root
+  monitoring-tools-kube-prom-kubelet:
+    query:
+      service: !eq monitoring-tools-kube-prom-kubelet
+    items:
+      - kubelet-separate:root

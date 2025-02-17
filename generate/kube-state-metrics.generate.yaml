@@ -1,0 +1,8 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+query:
+  job: !eq kube-state-metrics
+  service: !eq monitoring-kube-state-metrics
+hints: {}

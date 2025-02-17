@@ -1,0 +1,20 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+version: 0.1.0
+requires:
+  kubelet-metrics: 0.1
+items:
+  root:
+    query:
+      cluster: set
+      job: !eq kubelet
+      metrics_path: !eq /metrics
+      prometheus: set
+      prometheus_replica: set
+      service: !eq monitoring-kube-prometheus-kubelet
+    keys:
+      - cluster
+    items:
+      - kubelet-metrics:root

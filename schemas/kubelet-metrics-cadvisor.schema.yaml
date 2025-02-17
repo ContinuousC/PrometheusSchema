@@ -1,0 +1,933 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+version: 0.1.0
+items:
+  boot_id-endpoint-instance-job-machine_id-metrics_path-mode-namespace-node-service-system_uuid:
+    query:
+      mode: set
+    keys:
+    - mode
+    metrics:
+      machine_nvm_capacity: !scalar {}
+  boot_id-endpoint-instance-job-machine_id-metrics_path-namespace-node-service-system_uuid:
+    query:
+      boot_id: set
+      container: unset
+      cpu: unset
+      device: unset
+      failure_type: unset
+      id: unset
+      image: unset
+      interface: unset
+      kernelVersion: unset
+      machine_id: set
+      major: unset
+      minor: unset
+      name: unset
+      operation: unset
+      osVersion: unset
+      pod: unset
+      scope: unset
+      system_uuid: set
+      ulimit: unset
+    keys:
+    - boot_id
+    - machine_id
+    - system_uuid
+    items:
+    - boot_id-endpoint-instance-job-machine_id-metrics_path-mode-namespace-node-service-system_uuid
+    metrics:
+      machine_cpu_cores: !scalar
+        labels:
+          mode: unset
+      machine_cpu_physical_cores: !scalar
+        labels:
+          mode: unset
+      machine_cpu_sockets: !scalar
+        labels:
+          mode: unset
+      machine_memory_bytes: !scalar
+        labels:
+          mode: unset
+      machine_nvm_avg_power_budget_watts: !scalar
+        labels:
+          mode: unset
+  container-cpu-endpoint-id-image-instance-job-metrics_path-name-namespace-node-pod-service:
+    query:
+      container: set
+    keys:
+    - container
+    metrics:
+      cluster:cpu_usage_nosum:rate5m: !scalar {}
+      container_cpu_usage_seconds_total: !scalar {}
+  container-device-endpoint-id-image-instance-job-major-metrics_path-minor-name-namespace-node-operation-pod-service:
+    query:
+      major: set
+      minor: set
+      operation: set
+    keys:
+    - major
+    - minor
+    - operation
+    metrics:
+      container_blkio_device_usage_total: !scalar {}
+  container-device-endpoint-id-image-instance-job-metrics_path-name-namespace-node-pod-service:
+    query:
+      container: set
+    keys:
+    - container
+    items:
+    - container-device-endpoint-id-image-instance-job-major-metrics_path-minor-name-namespace-node-operation-pod-service
+    metrics:
+      container_fs_reads_bytes_total: !scalar
+        labels:
+          major: unset
+          minor: unset
+          operation: unset
+      container_fs_reads_total: !scalar
+        labels:
+          major: unset
+          minor: unset
+          operation: unset
+      container_fs_writes_bytes_total: !scalar
+        labels:
+          major: unset
+          minor: unset
+          operation: unset
+      container_fs_writes_total: !scalar
+        labels:
+          major: unset
+          minor: unset
+          operation: unset
+  container-endpoint-failure_type-id-image-instance-job-metrics_path-name-namespace-node-pod-scope-service:
+    query:
+      container: set
+    keys:
+    - container
+    metrics:
+      container_memory_failures_total: !scalar {}
+  container-endpoint-id-image-instance-job-metrics_path-name-namespace-node-pod-service:
+    query:
+      container: set
+      interface: unset
+    keys:
+    - container
+    items:
+    - container-endpoint-id-image-instance-job-metrics_path-name-namespace-node-pod-service-ulimit
+    metrics:
+      container_cpu_cfs_periods_total: !scalar
+        labels:
+          ulimit: unset
+      container_cpu_cfs_throttled_periods_total: !scalar
+        labels:
+          ulimit: unset
+      container_last_seen: !scalar
+        labels:
+          ulimit: unset
+      container_memory_cache: !scalar
+        labels:
+          ulimit: unset
+      container_memory_failcnt: !scalar
+        labels:
+          ulimit: unset
+      container_memory_max_usage_bytes: !scalar
+        labels:
+          ulimit: unset
+      container_memory_rss: !scalar
+        labels:
+          ulimit: unset
+      container_memory_usage_bytes: !scalar
+        labels:
+          ulimit: unset
+      container_memory_working_set_bytes: !scalar
+        labels:
+          ulimit: unset
+      container_oom_events_total: !scalar
+        labels:
+          ulimit: unset
+      container_processes: !scalar
+        labels:
+          ulimit: unset
+      container_sockets: !scalar
+        labels:
+          ulimit: unset
+      container_start_time_seconds: !scalar
+        labels:
+          ulimit: unset
+      container_threads: !scalar
+        labels:
+          ulimit: unset
+      node_namespace_pod_container:container_memory_cache: !scalar
+        labels:
+          ulimit: unset
+      node_namespace_pod_container:container_memory_rss: !scalar
+        labels:
+          ulimit: unset
+      node_namespace_pod_container:container_memory_working_set_bytes: !scalar
+        labels:
+          ulimit: unset
+  container-endpoint-id-image-instance-job-metrics_path-name-namespace-node-pod-service-ulimit:
+    query:
+      ulimit: set
+    keys:
+    - ulimit
+    metrics:
+      container_ulimits_soft: !scalar {}
+  cpu-endpoint-id-image-instance-job-metrics_path-name-namespace-node-pod-service:
+    query:
+      image: set
+      name: set
+    keys:
+    - image
+    - name
+    items:
+    - container-cpu-endpoint-id-image-instance-job-metrics_path-name-namespace-node-pod-service
+    metrics:
+      container_cpu_usage_seconds_total: !scalar
+        labels:
+          container: unset
+  # cpu-endpoint-id-instance-job-metrics_path-namespace-node-pod-service:
+  #   query:
+  #     cpu: set
+  #     device: unset
+  #     failure_type: unset
+  #     interface: unset
+  #     major: unset
+  #     minor: unset
+  #     operation: unset
+  #     scope: unset
+  #     ulimit: unset
+  #   keys:
+  #   - cpu
+  #   items:
+  #   - cpu-endpoint-id-image-instance-job-metrics_path-name-namespace-node-pod-service
+  #   metrics:
+  #     container_cpu_usage_seconds_total: !scalar
+  #       labels:
+  #         container: unset
+  #         image: unset
+  #         name: unset
+  device-endpoint-id-image-instance-job-major-metrics_path-minor-name-namespace-node-operation-pod-service:
+    query:
+      container: unset
+      major: set
+      minor: set
+      operation: set
+    keys:
+    - major
+    - minor
+    - operation
+    metrics:
+      container_blkio_device_usage_total: !scalar {}
+  device-endpoint-id-image-instance-job-metrics_path-name-namespace-node-pod-service:
+    query:
+      image: set
+      name: set
+    keys:
+    - image
+    - name
+    items:
+    - container-device-endpoint-id-image-instance-job-metrics_path-name-namespace-node-pod-service
+    - device-endpoint-id-image-instance-job-major-metrics_path-minor-name-namespace-node-operation-pod-service
+    metrics:
+      container_fs_reads_bytes_total: !scalar
+        labels:
+          container: unset
+          major: unset
+          minor: unset
+          operation: unset
+      container_fs_reads_total: !scalar
+        labels:
+          container: unset
+          major: unset
+          minor: unset
+          operation: unset
+      container_fs_writes_bytes_total: !scalar
+        labels:
+          container: unset
+          major: unset
+          minor: unset
+          operation: unset
+      container_fs_writes_total: !scalar
+        labels:
+          container: unset
+          major: unset
+          minor: unset
+          operation: unset
+  device-endpoint-id-instance-job-major-metrics_path-minor-namespace-node-operation-pod-service:
+    query:
+      container: unset
+      image: unset
+      major: set
+      minor: set
+      name: unset
+      operation: set
+    keys:
+    - major
+    - minor
+    - operation
+    metrics:
+      container_blkio_device_usage_total: !scalar {}
+  device-endpoint-id-instance-job-metrics_path-namespace-node-pod-service:
+    query:
+      cpu: unset
+      device: set
+      failure_type: unset
+      interface: unset
+      scope: unset
+      ulimit: unset
+    keys:
+    - device
+    items:
+    - device-endpoint-id-image-instance-job-metrics_path-name-namespace-node-pod-service
+    - device-endpoint-id-instance-job-major-metrics_path-minor-namespace-node-operation-pod-service
+    metrics:
+      container_fs_reads_bytes_total: !scalar
+        labels:
+          container: unset
+          image: unset
+          major: unset
+          minor: unset
+          name: unset
+          operation: unset
+      container_fs_reads_total: !scalar
+        labels:
+          container: unset
+          image: unset
+          major: unset
+          minor: unset
+          name: unset
+          operation: unset
+      container_fs_writes_bytes_total: !scalar
+        labels:
+          container: unset
+          image: unset
+          major: unset
+          minor: unset
+          name: unset
+          operation: unset
+      container_fs_writes_total: !scalar
+        labels:
+          container: unset
+          image: unset
+          major: unset
+          minor: unset
+          name: unset
+          operation: unset
+  endpoint-failure_type-id-image-instance-job-metrics_path-name-namespace-node-pod-scope-service:
+    query:
+      image: set
+      name: set
+    keys:
+    - image
+    - name
+    items:
+    - container-endpoint-failure_type-id-image-instance-job-metrics_path-name-namespace-node-pod-scope-service
+    metrics:
+      container_memory_failures_total: !scalar
+        labels:
+          container: unset
+  endpoint-failure_type-id-instance-job-metrics_path-namespace-node-pod-scope-service:
+    query:
+      cpu: unset
+      device: unset
+      failure_type: set
+      interface: unset
+      major: unset
+      minor: unset
+      operation: unset
+      scope: set
+      ulimit: unset
+    keys:
+    - failure_type
+    - scope
+    items:
+    - endpoint-failure_type-id-image-instance-job-metrics_path-name-namespace-node-pod-scope-service
+    metrics:
+      container_memory_failures_total: !scalar
+        labels:
+          container: unset
+          image: unset
+          name: unset
+  endpoint-id-image-instance-interface-job-metrics_path-name-namespace-node-pod-service:
+    query:
+      container: unset
+      interface: set
+      ulimit: unset
+    keys:
+    - interface
+    metrics:
+      container_network_receive_bytes_total: !scalar {}
+      container_network_receive_errors_total: !scalar {}
+      container_network_receive_packets_dropped_total: !scalar {}
+      container_network_receive_packets_total: !scalar {}
+      container_network_transmit_bytes_total: !scalar {}
+      container_network_transmit_errors_total: !scalar {}
+      container_network_transmit_packets_dropped_total: !scalar {}
+      container_network_transmit_packets_total: !scalar {}
+  endpoint-id-image-instance-job-metrics_path-name-namespace-node-pod-service:
+    query:
+      cpu: unset
+      device: unset
+      failure_type: unset
+      image: set
+      major: unset
+      minor: unset
+      name: set
+      operation: unset
+      scope: unset
+    keys:
+    - image
+    - name
+    items:
+    - container-endpoint-id-image-instance-job-metrics_path-name-namespace-node-pod-service
+    - endpoint-id-image-instance-interface-job-metrics_path-name-namespace-node-pod-service
+    - endpoint-id-image-instance-job-metrics_path-name-namespace-node-pod-service-ulimit
+    metrics:
+      container_last_seen: !scalar
+        labels:
+          container: unset
+          interface: unset
+          ulimit: unset
+      container_memory_cache: !scalar
+        labels:
+          container: unset
+          interface: unset
+          ulimit: unset
+      container_memory_failcnt: !scalar
+        labels:
+          container: unset
+          interface: unset
+          ulimit: unset
+      container_memory_max_usage_bytes: !scalar
+        labels:
+          container: unset
+          interface: unset
+          ulimit: unset
+      container_memory_rss: !scalar
+        labels:
+          container: unset
+          interface: unset
+          ulimit: unset
+      container_memory_usage_bytes: !scalar
+        labels:
+          container: unset
+          interface: unset
+          ulimit: unset
+      container_memory_working_set_bytes: !scalar
+        labels:
+          container: unset
+          interface: unset
+          ulimit: unset
+      container_oom_events_total: !scalar
+        labels:
+          container: unset
+          interface: unset
+          ulimit: unset
+      container_processes: !scalar
+        labels:
+          container: unset
+          interface: unset
+          ulimit: unset
+      container_sockets: !scalar
+        labels:
+          container: unset
+          interface: unset
+          ulimit: unset
+      container_start_time_seconds: !scalar
+        labels:
+          container: unset
+          interface: unset
+          ulimit: unset
+      container_threads: !scalar
+        labels:
+          container: unset
+          interface: unset
+          ulimit: unset
+      node_namespace_pod_container:container_memory_cache: !scalar
+        labels:
+          container: unset
+          interface: unset
+          ulimit: unset
+      node_namespace_pod_container:container_memory_rss: !scalar
+        labels:
+          container: unset
+          interface: unset
+          ulimit: unset
+      node_namespace_pod_container:container_memory_working_set_bytes: !scalar
+        labels:
+          container: unset
+          interface: unset
+          ulimit: unset
+  endpoint-id-image-instance-job-metrics_path-name-namespace-node-pod-service-ulimit:
+    query:
+      container: unset
+      interface: unset
+      ulimit: set
+    keys:
+    - ulimit
+    metrics:
+      container_ulimits_soft: !scalar {}
+  endpoint-id-instance-job-metrics_path-namespace-node-pod-service:
+    query:
+      boot_id: unset
+      id: set
+      kernelVersion: unset
+      machine_id: unset
+      mode: unset
+      osVersion: unset
+      pod: set
+      system_uuid: unset
+    keys:
+    - id
+    - pod
+    discovery: !item
+      item_type: kubernetes/pod
+      keys:
+        pod: !property kubernetes/name
+        namespace: !relation
+          relation: !match
+            relation_type: !is kubernetes/pod_namespace
+          key: !item
+            item: !match
+              item_type: !is kubernetes/namespace
+            key: !property kubernetes/name
+    items:
+    # - cpu-endpoint-id-instance-job-metrics_path-namespace-node-pod-service
+    - device-endpoint-id-instance-job-metrics_path-namespace-node-pod-service
+    - endpoint-failure_type-id-instance-job-metrics_path-namespace-node-pod-scope-service
+    - endpoint-id-image-instance-job-metrics_path-name-namespace-node-pod-service
+    - cpu-endpoint-id-image-instance-job-metrics_path-name-namespace-node-pod-service
+    metrics:
+      container_cpu_usage_seconds_total: !scalar
+        labels:
+          container: unset
+          image: unset
+          name: unset
+          cpu: !eq total
+      container_cpu_cfs_periods_total: !scalar
+        labels:
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          image: unset
+          interface: unset
+          major: unset
+          minor: unset
+          name: unset
+          operation: unset
+          scope: unset
+          ulimit: unset
+      container_cpu_cfs_throttled_periods_total: !scalar
+        labels:
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          image: unset
+          interface: unset
+          major: unset
+          minor: unset
+          name: unset
+          operation: unset
+          scope: unset
+          ulimit: unset
+      container_last_seen: !scalar
+        labels:
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          image: unset
+          interface: unset
+          major: unset
+          minor: unset
+          name: unset
+          operation: unset
+          scope: unset
+          ulimit: unset
+      container_memory_cache: !scalar
+        labels:
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          image: unset
+          interface: unset
+          major: unset
+          minor: unset
+          name: unset
+          operation: unset
+          scope: unset
+          ulimit: unset
+      container_memory_failcnt: !scalar
+        labels:
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          image: unset
+          interface: unset
+          major: unset
+          minor: unset
+          name: unset
+          operation: unset
+          scope: unset
+          ulimit: unset
+      container_memory_max_usage_bytes: !scalar
+        labels:
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          image: unset
+          interface: unset
+          major: unset
+          minor: unset
+          name: unset
+          operation: unset
+          scope: unset
+          ulimit: unset
+      container_memory_rss: !scalar
+        labels:
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          image: unset
+          interface: unset
+          major: unset
+          minor: unset
+          name: unset
+          operation: unset
+          scope: unset
+          ulimit: unset
+      container_memory_usage_bytes: !scalar
+        labels:
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          image: unset
+          interface: unset
+          major: unset
+          minor: unset
+          name: unset
+          operation: unset
+          scope: unset
+          ulimit: unset
+      container_memory_working_set_bytes: !scalar
+        labels:
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          image: unset
+          interface: unset
+          major: unset
+          minor: unset
+          name: unset
+          operation: unset
+          scope: unset
+          ulimit: unset
+      container_oom_events_total: !scalar
+        labels:
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          image: unset
+          interface: unset
+          major: unset
+          minor: unset
+          name: unset
+          operation: unset
+          scope: unset
+          ulimit: unset
+      container_processes: !scalar
+        labels:
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          image: unset
+          interface: unset
+          major: unset
+          minor: unset
+          name: unset
+          operation: unset
+          scope: unset
+          ulimit: unset
+      container_sockets: !scalar
+        labels:
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          image: unset
+          interface: unset
+          major: unset
+          minor: unset
+          name: unset
+          operation: unset
+          scope: unset
+          ulimit: unset
+      container_start_time_seconds: !scalar
+        labels:
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          image: unset
+          interface: unset
+          major: unset
+          minor: unset
+          name: unset
+          operation: unset
+          scope: unset
+          ulimit: unset
+      container_threads: !scalar
+        labels:
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          image: unset
+          interface: unset
+          major: unset
+          minor: unset
+          name: unset
+          operation: unset
+          scope: unset
+          ulimit: unset
+  endpoint-instance-job-kernelVersion-metrics_path-namespace-node-osVersion-service:
+    query:
+      boot_id: unset
+      container: unset
+      cpu: unset
+      device: unset
+      failure_type: unset
+      id: unset
+      image: unset
+      interface: unset
+      kernelVersion: set
+      machine_id: unset
+      major: unset
+      minor: unset
+      mode: unset
+      name: unset
+      operation: unset
+      osVersion: set
+      pod: unset
+      scope: unset
+      system_uuid: unset
+      ulimit: unset
+    keys:
+    - kernelVersion
+    - osVersion
+    metrics:
+      cadvisor_version_info: !scalar {}
+  endpoint-instance-job-metrics_path-namespace-node-service:
+    query:
+      instance: set
+      node: set
+    keys:
+    - instance
+    - node
+    items:
+    - boot_id-endpoint-instance-job-machine_id-metrics_path-namespace-node-service-system_uuid
+    - endpoint-id-instance-job-metrics_path-namespace-node-pod-service
+    - endpoint-instance-job-kernelVersion-metrics_path-namespace-node-osVersion-service
+    metrics:
+      container_scrape_error: !scalar
+        labels:
+          boot_id: unset
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          id: unset
+          image: unset
+          interface: unset
+          kernelVersion: unset
+          machine_id: unset
+          major: unset
+          minor: unset
+          mode: unset
+          name: unset
+          operation: unset
+          osVersion: unset
+          pod: unset
+          scope: unset
+          system_uuid: unset
+          ulimit: unset
+      machine_scrape_error: !scalar
+        labels:
+          boot_id: unset
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          id: unset
+          image: unset
+          interface: unset
+          kernelVersion: unset
+          machine_id: unset
+          major: unset
+          minor: unset
+          mode: unset
+          name: unset
+          operation: unset
+          osVersion: unset
+          pod: unset
+          scope: unset
+          system_uuid: unset
+          ulimit: unset
+      scrape_duration_seconds: !scalar
+        labels:
+          boot_id: unset
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          id: unset
+          image: unset
+          interface: unset
+          kernelVersion: unset
+          machine_id: unset
+          major: unset
+          minor: unset
+          mode: unset
+          name: unset
+          operation: unset
+          osVersion: unset
+          pod: unset
+          scope: unset
+          system_uuid: unset
+          ulimit: unset
+      scrape_samples_post_metric_relabeling: !scalar
+        labels:
+          boot_id: unset
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          id: unset
+          image: unset
+          interface: unset
+          kernelVersion: unset
+          machine_id: unset
+          major: unset
+          minor: unset
+          mode: unset
+          name: unset
+          operation: unset
+          osVersion: unset
+          pod: unset
+          scope: unset
+          system_uuid: unset
+          ulimit: unset
+      scrape_samples_scraped: !scalar
+        labels:
+          boot_id: unset
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          id: unset
+          image: unset
+          interface: unset
+          kernelVersion: unset
+          machine_id: unset
+          major: unset
+          minor: unset
+          mode: unset
+          name: unset
+          operation: unset
+          osVersion: unset
+          pod: unset
+          scope: unset
+          system_uuid: unset
+          ulimit: unset
+      scrape_series_added: !scalar
+        labels:
+          boot_id: unset
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          id: unset
+          image: unset
+          interface: unset
+          kernelVersion: unset
+          machine_id: unset
+          major: unset
+          minor: unset
+          mode: unset
+          name: unset
+          operation: unset
+          osVersion: unset
+          pod: unset
+          scope: unset
+          system_uuid: unset
+          ulimit: unset
+      up: !scalar
+        labels:
+          boot_id: unset
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          id: unset
+          image: unset
+          interface: unset
+          kernelVersion: unset
+          machine_id: unset
+          major: unset
+          minor: unset
+          mode: unset
+          name: unset
+          operation: unset
+          osVersion: unset
+          pod: unset
+          scope: unset
+          system_uuid: unset
+          ulimit: unset
+  root:
+    query:
+      endpoint: set
+      job: set
+      metrics_path: set
+      namespace: set
+      service: set
+    items:
+    - endpoint-instance-job-metrics_path-namespace-node-service
+    metrics:
+      count:up1: !scalar
+        labels:
+          boot_id: unset
+          container: unset
+          cpu: unset
+          device: unset
+          failure_type: unset
+          id: unset
+          image: unset
+          instance: unset
+          interface: unset
+          kernelVersion: unset
+          machine_id: unset
+          major: unset
+          minor: unset
+          mode: unset
+          name: unset
+          node: unset
+          operation: unset
+          osVersion: unset
+          pod: unset
+          scope: unset
+          system_uuid: unset
+          ulimit: unset
+

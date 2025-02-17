@@ -1,0 +1,36 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+metrics:
+  container_cpu_usage_seconds_total:
+    labels:
+      # From job
+      endpoint: !set
+      job: !set
+      metrics_path: !set
+      namespace: !set
+      service: !set
+
+      # Common
+      cpu: !set
+      id: !set
+      instance: !set
+      node: !set
+      pod: !set
+    items:
+      pod:
+        labels:
+          image: !unset
+          name: !unset
+          container: !unset          
+      init_container:
+        labels:
+          image: !set
+          name: !set
+          container: !unset
+      container:
+        labels:
+          image: !set
+          name: !set
+          container: !set

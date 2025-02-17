@@ -1,0 +1,65 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: prometheus-schema
+  description: ContinuousC Prometheus support
+spec:
+  owner: developers
+  domain: continuousc
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: prometheus-core
+  description: Core types and functions for C9c Prometheus support
+spec:
+  type: library
+  lifecycle: experimental
+  owner: developers
+  system: prometheus-schema
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: prometheus-api
+  description: Api types for C9c Prometheus support
+spec:
+  type: library
+  lifecycle: experimental
+  owner: developers
+  system: prometheus-schema
+  dependsOn:
+    - component:prometheus-core
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: prometheus-expr
+  description: C9c Prometheus Expression Support
+spec:
+  type: library
+  lifecycle: experimental
+  owner: developers
+  system: prometheus-schema
+  dependsOn:
+    - component:prometheus-core
+    - component:prometheus-api
+    - component:prometheus-schema
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: prometheus-schema
+  description: C9c Prometheus Schema
+spec:
+  type: library
+  lifecycle: experimental
+  owner: developers
+  system: prometheus-schema
+  dependsOn:
+    - component:prometheus-core
+    - component:prometheus-api

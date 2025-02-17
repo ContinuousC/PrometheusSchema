@@ -1,0 +1,14 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+query:
+  job: !eq kubelet
+  service: !eq monitoring-kube-prometheus-kubelet
+  metrics_path: !eq /metrics/cadvisor
+  cluster: !set
+  endpoint: !set
+  namespace: !set
+  prometheus: !set
+  prometheus_replica: !set
+hints: {}

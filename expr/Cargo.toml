@@ -1,0 +1,50 @@
+[package]
+name = "prometheus-expr"
+version = "0.1.2-acc.8"
+repository = "https://github.com/ContinuousC/PrometheusSchema.git"
+license = "Elastic-2.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = []
+tsify = ["dep:tsify", "dep:wasm-bindgen"]
+apistos = ["dep:apistos", "schemars"]
+schemars = [
+    "dep:schemars",
+    "prometheus-api/schemars",
+    "prometheus-core/schemars",
+    "unit/schemars",
+]
+schema = ["dep:prometheus-schema"]
+api = ["dep:prometheus-api"]
+
+[dependencies]
+tsify = { registry = "si", version = "0.4.6", optional = true }
+wasm-bindgen = { version = "0.2.87", optional = true }
+chrono = { version = "0.4.31", features = ["serde"] }
+serde = { version = "1.0.164", features = ["derive"] }
+serde_with = { version = "3.4.0", features = ["chrono"] }
+ordered-float = { version = "4.2.0", features = ["serde"] }
+derive_more = { version = "1.0.0", features = [
+    "display",
+    "from_str",
+    "add",
+    "mul",
+] }
+schemars = { version = "0.8", optional = true }
+apistos = { version = "0.2.5", optional = true }
+thiserror = "1.0.40"
+nom = "7.1.3"
+
+prometheus-core = { registry = "si", version = "=0.1.2-acc.8" }
+prometheus-api = { registry = "si", version = "=0.1.2-acc.21", optional = true }
+prometheus-schema = { registry = "si", version = "=0.1.25-acc.23", optional = true }
+unit = { version = "0.1.12", registry = "si", features = [
+    "serialize_as_string",
+] }
+regex = "1.11.1"
+num-traits = "0.2.19"

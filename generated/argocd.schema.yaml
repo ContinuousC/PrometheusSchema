@@ -1,0 +1,476 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+version: 0.1.0
+items:
+  '!code-!host-!method':
+    query:
+      code: unset
+      host: unset
+      method: unset
+    items:
+      - '!instance-!pod'
+      - instance-pod
+  '!command-!hostname':
+    query:
+      command: unset
+      hostname: unset
+    items:
+      - '!version'
+      - version
+  '!controller':
+    query:
+      controller: unset
+    items:
+      - '!version'
+      - version
+  '!dest_namespace':
+    query:
+      dest_namespace: unset
+    metrics:
+      argocd_app_info: !scalar {}
+  '!dest_server-!exported_namespace':
+    query:
+      dest_server: unset
+      exported_namespace: unset
+    items:
+      - '!server'
+      - server
+  '!dest_server-resource_kind-response_code-server-verb':
+    query:
+      dest_server: unset
+      resource_kind: set
+      response_code: set
+      server: set
+      verb: set
+    keys:
+      - resource_kind
+      - response_code
+      - server
+      - verb
+    items:
+      - '!resource_namespace'
+      - resource_namespace
+  '!exported_namespace-!project':
+    query:
+      exported_namespace: unset
+      project: unset
+    metrics:
+      workqueue_adds_total: !scalar {}
+      workqueue_depth: !scalar {}
+      workqueue_longest_running_processor_seconds: !scalar {}
+      workqueue_queue_duration_seconds: !histogram {}
+      workqueue_retries_total: !scalar {}
+      workqueue_unfinished_work_seconds: !scalar {}
+      workqueue_work_duration_seconds: !histogram {}
+  '!group':
+    query:
+      group: unset
+    metrics:
+      argocd_cluster_events_total: !scalar {}
+  '!grpc_code':
+    query:
+      grpc_code: unset
+    metrics:
+      grpc_server_msg_received_total: !scalar {}
+      grpc_server_msg_sent_total: !scalar {}
+      grpc_server_started_total: !scalar {}
+  '!grpc_method-!grpc_service-!grpc_type':
+    query:
+      grpc_method: unset
+      grpc_service: unset
+      grpc_type: unset
+    metrics:
+      go_gc_duration_seconds: !summary {}
+      go_goroutines: !scalar {}
+      go_memstats_alloc_bytes: !scalar {}
+      go_memstats_alloc_bytes_total: !scalar {}
+      go_memstats_buck_hash_sys_bytes: !scalar {}
+      go_memstats_frees_total: !scalar {}
+      go_memstats_gc_sys_bytes: !scalar {}
+      go_memstats_heap_alloc_bytes: !scalar {}
+      go_memstats_heap_idle_bytes: !scalar {}
+      go_memstats_heap_inuse_bytes: !scalar {}
+      go_memstats_heap_objects: !scalar {}
+      go_memstats_heap_released_bytes: !scalar {}
+      go_memstats_heap_sys_bytes: !scalar {}
+      go_memstats_last_gc_time_seconds: !scalar {}
+      go_memstats_lookups_total: !scalar {}
+      go_memstats_mallocs_total: !scalar {}
+      go_memstats_mcache_inuse_bytes: !scalar {}
+      go_memstats_mcache_sys_bytes: !scalar {}
+      go_memstats_mspan_inuse_bytes: !scalar {}
+      go_memstats_mspan_sys_bytes: !scalar {}
+      go_memstats_next_gc_bytes: !scalar {}
+      go_memstats_other_sys_bytes: !scalar {}
+      go_memstats_stack_inuse_bytes: !scalar {}
+      go_memstats_stack_sys_bytes: !scalar {}
+      go_memstats_sys_bytes: !scalar {}
+      go_threads: !scalar {}
+      process_cpu_seconds_total: !scalar {}
+      process_max_fds: !scalar {}
+      process_open_fds: !scalar {}
+      process_resident_memory_bytes: !scalar {}
+      process_start_time_seconds: !scalar {}
+      process_virtual_memory_bytes: !scalar {}
+      process_virtual_memory_max_bytes: !scalar {}
+      scrape_duration_seconds: !scalar {}
+      scrape_samples_post_metric_relabeling: !scalar {}
+      scrape_samples_scraped: !scalar {}
+      scrape_series_added: !scalar {}
+      up: !scalar {}
+  '!health_status-!repo-!sync_status-phase':
+    query:
+      health_status: unset
+      phase: set
+      repo: unset
+      sync_status: unset
+    keys:
+      - phase
+    metrics:
+      argocd_app_sync_total: !scalar {}
+  '!instance-!pod':
+    query:
+      instance: unset
+      pod: unset
+    metrics:
+      count:up1: !scalar {}
+  '!k8s_version':
+    query:
+      k8s_version: unset
+    items:
+      - '!kind'
+      - kind
+  '!kind':
+    query:
+      kind: unset
+    metrics:
+      argocd_cluster_api_resource_objects: !scalar {}
+      argocd_cluster_api_resources: !scalar {}
+      argocd_cluster_cache_age_seconds: !scalar {}
+  '!name':
+    query:
+      name: unset
+    items:
+      - '!dest_server-!exported_namespace'
+      - dest_server-exported_namespace
+  '!repo':
+    query:
+      repo: unset
+    items:
+      - '!version'
+      - version
+  '!request_type':
+    query:
+      request_type: unset
+    metrics:
+      argocd_repo_pending_request_total: !scalar {}
+  '!resource_namespace':
+    query:
+      resource_namespace: unset
+    metrics:
+      argocd_app_k8s_request_total: !scalar {}
+  '!result':
+    query:
+      result: unset
+    metrics:
+      controller_runtime_active_workers: !scalar {}
+      controller_runtime_max_concurrent_reconciles: !scalar {}
+      controller_runtime_reconcile_errors_total: !scalar {}
+      controller_runtime_reconcile_time_seconds: !histogram {}
+  '!server':
+    query:
+      server: unset
+    items:
+      - '!command-!hostname'
+      - command-hostname
+  '!version':
+    query:
+      version: unset
+    metrics:
+      go_gc_duration_seconds: !summary {}
+      go_goroutines: !scalar {}
+      go_memstats_alloc_bytes: !scalar {}
+      go_memstats_alloc_bytes_total: !scalar {}
+      go_memstats_buck_hash_sys_bytes: !scalar {}
+      go_memstats_frees_total: !scalar {}
+      go_memstats_gc_sys_bytes: !scalar {}
+      go_memstats_heap_alloc_bytes: !scalar {}
+      go_memstats_heap_idle_bytes: !scalar {}
+      go_memstats_heap_inuse_bytes: !scalar {}
+      go_memstats_heap_objects: !scalar {}
+      go_memstats_heap_released_bytes: !scalar {}
+      go_memstats_heap_sys_bytes: !scalar {}
+      go_memstats_last_gc_time_seconds: !scalar {}
+      go_memstats_lookups_total: !scalar {}
+      go_memstats_mallocs_total: !scalar {}
+      go_memstats_mcache_inuse_bytes: !scalar {}
+      go_memstats_mcache_sys_bytes: !scalar {}
+      go_memstats_mspan_inuse_bytes: !scalar {}
+      go_memstats_mspan_sys_bytes: !scalar {}
+      go_memstats_next_gc_bytes: !scalar {}
+      go_memstats_other_sys_bytes: !scalar {}
+      go_memstats_stack_inuse_bytes: !scalar {}
+      go_memstats_stack_sys_bytes: !scalar {}
+      go_memstats_sys_bytes: !scalar {}
+      go_threads: !scalar {}
+      process_cpu_seconds_total: !scalar {}
+      process_max_fds: !scalar {}
+      process_open_fds: !scalar {}
+      process_resident_memory_bytes: !scalar {}
+      process_start_time_seconds: !scalar {}
+      process_virtual_memory_bytes: !scalar {}
+      process_virtual_memory_max_bytes: !scalar {}
+      scrape_duration_seconds: !scalar {}
+      scrape_samples_post_metric_relabeling: !scalar {}
+      scrape_samples_scraped: !scalar {}
+      scrape_series_added: !scalar {}
+      up: !scalar {}
+  '!version1':
+    query:
+      version: unset
+    items:
+      - '!grpc_method-!grpc_service-!grpc_type'
+      - grpc_method-grpc_service-grpc_type
+  code-host-method:
+    query:
+      code: set
+      host: set
+      method: set
+    keys:
+      - code
+      - host
+      - method
+    items:
+      - instance-pod1
+  command-hostname:
+    query:
+      command: set
+      hostname: set
+    keys:
+      - command
+      - hostname
+    metrics:
+      argocd_kubectl_exec_pending: !scalar {}
+      argocd_kubectl_exec_total: !scalar {}
+  commonLabels:
+    keys:
+      - job
+    items:
+      - '!code-!host-!method'
+      - code-host-method
+  controller:
+    query:
+      controller: set
+    keys:
+      - controller
+    items:
+      - '!result'
+      - result
+  dest_namespace:
+    query:
+      dest_namespace: set
+    keys:
+      - dest_namespace
+    metrics:
+      argocd_app_info: !scalar {}
+  dest_server-!resource_kind-!response_code-!server-!verb:
+    query:
+      dest_server: set
+      resource_kind: unset
+      response_code: unset
+      server: unset
+      verb: unset
+    keys:
+      - dest_server
+    items:
+      - '!health_status-!repo-!sync_status-phase'
+      - health_status-repo-sync_status-!phase
+  dest_server-exported_namespace:
+    query:
+      dest_server: set
+      exported_namespace: set
+    keys:
+      - dest_server
+      - exported_namespace
+    metrics:
+      argocd_app_reconcile: !histogram {}
+  exported_namespace-project:
+    query:
+      exported_namespace: set
+      project: set
+    keys:
+      - exported_namespace
+      - project
+    items:
+      - '!dest_server-resource_kind-response_code-server-verb'
+      - dest_server-!resource_kind-!response_code-!server-!verb
+  group:
+    query:
+      group: set
+    keys:
+      - group
+    metrics:
+      argocd_cluster_events_total: !scalar {}
+  grpc_code:
+    query:
+      grpc_code: set
+    keys:
+      - grpc_code
+    metrics:
+      grpc_server_handled_total: !scalar {}
+  grpc_method-grpc_service-grpc_type:
+    query:
+      grpc_method: set
+      grpc_service: set
+      grpc_type: set
+    keys:
+      - grpc_method
+      - grpc_service
+      - grpc_type
+    items:
+      - '!grpc_code'
+      - grpc_code
+  health_status-repo-sync_status-!phase:
+    query:
+      health_status: set
+      phase: unset
+      repo: set
+      sync_status: set
+    keys:
+      - health_status
+      - repo
+      - sync_status
+    items:
+      - '!dest_namespace'
+      - dest_namespace
+  instance-pod:
+    query:
+      instance: set
+      pod: set
+    keys:
+      - instance
+      - pod
+    items:
+      - job[argo-cd-argocd-application-controller-metrics]
+      - job[argo-cd-argocd-applicationset-controller-metrics]
+      - job[argo-cd-argocd-notifications-controller-metrics]
+      - job[argo-cd-argocd-repo-server-metrics]
+      - job[argo-cd-argocd-server-metrics]
+  instance-pod1:
+    query:
+      instance: set
+      pod: set
+    keys:
+      - instance
+      - pod
+    items:
+      - job[argo-cd-argocd-applicationset-controller-metrics]1
+  job[argo-cd-argocd-application-controller-metrics]:
+    query:
+      job: !eq argo-cd-argocd-application-controller-metrics
+    items:
+      - '!name'
+      - name
+  job[argo-cd-argocd-applicationset-controller-metrics]:
+    query:
+      job: !eq argo-cd-argocd-applicationset-controller-metrics
+    items:
+      - '!controller'
+      - controller
+  job[argo-cd-argocd-applicationset-controller-metrics]1:
+    query:
+      job: !eq argo-cd-argocd-applicationset-controller-metrics
+    metrics:
+      rest_client_requests_total: !scalar {}
+  job[argo-cd-argocd-notifications-controller-metrics]:
+    query:
+      job: !eq argo-cd-argocd-notifications-controller-metrics
+    items:
+      - '!version'
+      - version
+  job[argo-cd-argocd-repo-server-metrics]:
+    query:
+      job: !eq argo-cd-argocd-repo-server-metrics
+    items:
+      - '!repo'
+      - repo
+  job[argo-cd-argocd-server-metrics]:
+    query:
+      job: !eq argo-cd-argocd-server-metrics
+    items:
+      - '!version1'
+      - version
+  k8s_version:
+    query:
+      k8s_version: set
+    keys:
+      - k8s_version
+    metrics:
+      argocd_cluster_connection_status: !scalar {}
+      argocd_cluster_info: !scalar {}
+  kind:
+    query:
+      kind: set
+    keys:
+      - kind
+    items:
+      - '!group'
+      - group
+  name:
+    query:
+      name: set
+    keys:
+      - name
+    items:
+      - '!exported_namespace-!project'
+      - exported_namespace-project
+  repo:
+    query:
+      repo: set
+    keys:
+      - repo
+    items:
+      - '!request_type'
+      - request_type
+  request_type:
+    query:
+      request_type: set
+    keys:
+      - request_type
+    metrics:
+      argocd_git_request_duration_seconds: !histogram {}
+      argocd_git_request_total: !scalar {}
+  resource_namespace:
+    query:
+      resource_namespace: set
+    keys:
+      - resource_namespace
+    metrics:
+      argocd_app_k8s_request_total: !scalar {}
+  result:
+    query:
+      result: set
+    keys:
+      - result
+    metrics:
+      controller_runtime_reconcile_total: !scalar {}
+  root:
+    items:
+      - commonLabels
+  server:
+    query:
+      server: set
+    keys:
+      - server
+    items:
+      - '!k8s_version'
+      - k8s_version
+  version:
+    query:
+      version: set
+    keys:
+      - version
+    metrics:
+      go_info: !scalar {}

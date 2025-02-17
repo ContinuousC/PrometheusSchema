@@ -1,0 +1,87 @@
+api: 0.1.12
+workspaces:
+  prometheus-schema:
+    type: cargo
+    root: .
+    pre_commit:
+      - run: cargo update -w
+        files:
+          - Cargo.lock
+artifacts:
+  prometheus-core:
+    type: cargo
+    pre_tag:
+      - run: cargo publish --registry si
+    source:
+      type: cargo
+      workspace: prometheus-schema
+      root: core
+      paths:
+        - Cargo.toml
+        # - Cargo.lock
+  prometheus-api:
+    type: cargo
+    pre_tag:
+      - run: cargo publish --registry si
+    source:
+      type: cargo
+      workspace: prometheus-schema
+      root: api
+      paths:
+        - Cargo.toml
+        # - Cargo.lock
+      dependencies:
+        - name: prometheus-core
+          artifact: prometheus-core
+  prometheus-expr:
+    type: cargo
+    pre_tag:
+      - run: cargo publish --registry si
+    source:
+      type: cargo
+      workspace: prometheus-schema
+      root: expr
+      paths:
+        - Cargo.toml
+        # - Cargo.lock
+      dependencies:
+        - name: prometheus-core
+          artifact: prometheus-core
+        - name: prometheus-api
+          artifact: prometheus-api
+        - name: prometheus-schema
+          artifact: prometheus-schema
+  prometheus-schema:
+    type: cargo
+    pre_tag:
+      - run: cargo publish --registry si
+    source:
+      type: cargo
+      workspace: prometheus-schema
+      root: schema
+      paths:
+        - Cargo.toml
+        # - Cargo.lock
+      dependencies:
+        - name: prometheus-core
+          artifact: prometheus-core
+        - name: prometheus-api
+          artifact: prometheus-api
+  prometheus-cmd:
+    type: cargo
+    pre_tag:
+      - run: cargo publish --registry si
+    source:
+      type: cargo
+      workspace: prometheus-schema
+      root: cmd
+      paths:
+        - Cargo.toml
+        # - Cargo.lock
+      dependencies:
+        - name: prometheus-core
+          artifact: prometheus-core
+        - name: prometheus-api
+          artifact: prometheus-api
+        - name: prometheus-schema
+          artifact: prometheus-schema

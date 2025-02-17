@@ -1,0 +1,9 @@
+[output]
+deny = ["warnings"]
+quiet = false
+
+[advisories]
+ignore = [
+       "RUSTSEC-2021-0127", # serde_cbor is unmaintained
+       "RUSTSEC-2024-0370", # proc-macro-error is unmaintained
+]

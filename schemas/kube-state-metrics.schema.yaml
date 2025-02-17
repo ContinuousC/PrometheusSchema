@@ -1,0 +1,1130 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+module:
+version: 0.1.0
+items:
+  root:
+    items:
+      - containerCpuResource
+      - containerMemoryResource
+      - configmap
+      - daemonset
+      - deployment
+      - endpoint
+      - job
+      - lease
+      - mutatingwebhookconfiguration
+      - namespace
+      - networkpolicy
+      - node
+      - persistentvolume
+      - persistentvolumeclaim
+      - pod
+      - poddisruptionbudget
+      - replicaset
+      - secret
+      - service
+      - statefulset
+      - storageclass
+      - validatingwebhookconfiguration
+      - scrape
+  containerCpuResource:
+    query:
+      __name__: !in
+        - cluster:namespace:pod_cpu:active:kube_pod_container_resource_limits
+        - cluster:namespace:pod_cpu:active:kube_pod_container_resource_requests
+    assert:
+      namespace: !set
+      pod: !set
+      container: !set
+      node: !opt
+      uid: !set
+      resource: !eq cpu
+      unit: !eq core
+    keys:
+      - namespace
+      - pod
+      - container
+    metrics:
+      cluster:namespace:pod_cpu:active:kube_pod_container_resource_limits: !scalar
+      cluster:namespace:pod_cpu:active:kube_pod_container_resource_requests: !scalar
+  containerMemoryResource:
+    query:
+      __name__: !in
+        - cluster:namespace:pod_memory:active:kube_pod_container_resource_limits
+        - cluster:namespace:pod_memory:active:kube_pod_container_resource_requests
+    assert:
+      namespace: !set
+      pod: !set
+      container: !set
+      node: !opt
+      uid: !set
+      resource: !eq memory
+      unit: !eq byte
+    keys:
+      - namespace
+      - pod
+      - container
+    metrics:
+      cluster:namespace:pod_memory:active:kube_pod_container_resource_limits: !scalar
+      cluster:namespace:pod_memory:active:kube_pod_container_resource_requests: !scalar
+  configmap:
+    query:
+      __name__: !in
+        - kube_configmap_annotations
+        - kube_configmap_created
+        - kube_configmap_info
+        - kube_configmap_labels
+        - kube_configmap_metadata_resource_version
+    assert:
+      configmap: !set
+      namespace: !set
+    keys:
+      - configmap
+      - namespace
+    metrics:
+      kube_configmap_annotations: !scalar
+      kube_configmap_created: !scalar
+      kube_configmap_info: !scalar
+      kube_configmap_labels: !scalar
+      kube_configmap_metadata_resource_version: !scalar
+  daemonset:
+    query:
+      __name__: !in
+        - kube_daemonset_annotations
+        - kube_daemonset_created
+        - kube_daemonset_labels
+        - kube_daemonset_metadata_generation
+        - kube_daemonset_status_current_number_scheduled
+        - kube_daemonset_status_desired_number_scheduled
+        - kube_daemonset_status_number_available
+        - kube_daemonset_status_number_misscheduled
+        - kube_daemonset_status_number_ready
+        - kube_daemonset_status_number_unavailable
+        - kube_daemonset_status_observed_generation
+        - kube_daemonset_status_updated_number_scheduled
+    assert:
+      daemonset: !set
+      namespace: !set
+    keys:
+      - daemonset
+      - namespace
+    metrics:
+      kube_daemonset_annotations: !scalar
+      kube_daemonset_created: !scalar
+      kube_daemonset_labels: !scalar
+      kube_daemonset_metadata_generation: !scalar
+      kube_daemonset_status_current_number_scheduled: !scalar
+      kube_daemonset_status_desired_number_scheduled: !scalar
+      kube_daemonset_status_number_available: !scalar
+      kube_daemonset_status_number_misscheduled: !scalar
+      kube_daemonset_status_number_ready: !scalar
+      kube_daemonset_status_number_unavailable: !scalar
+      kube_daemonset_status_observed_generation: !scalar
+      kube_daemonset_status_updated_number_scheduled: !scalar
+  deployment:
+    query:
+      __name__: !in
+        - kube_deployment_annotations
+        - kube_deployment_created
+        - kube_deployment_labels
+        - kube_deployment_metadata_generation
+        - kube_deployment_spec_paused
+        - kube_deployment_spec_replicas
+        - kube_deployment_spec_strategy_rollingupdate_max_surge
+        - kube_deployment_spec_strategy_rollingupdate_max_unavailable
+        - kube_deployment_status_condition
+        - kube_deployment_status_observed_generation
+        - kube_deployment_status_replicas
+        - kube_deployment_status_replicas_available
+        - kube_deployment_status_replicas_ready
+        - kube_deployment_status_replicas_unavailable
+        - kube_deployment_status_replicas_updated
+    assert:
+      deployment: !set
+      namespace: !set
+    keys:
+      - deployment
+      - namespace
+    items:
+      - deploymentStatusCondition
+    metrics:
+      kube_deployment_annotations: !scalar
+      kube_deployment_created: !scalar
+      kube_deployment_labels: !scalar
+      kube_deployment_metadata_generation: !scalar
+      kube_deployment_spec_paused: !scalar
+      kube_deployment_spec_replicas: !scalar
+      kube_deployment_spec_strategy_rollingupdate_max_surge: !scalar
+      kube_deployment_spec_strategy_rollingupdate_max_unavailable: !scalar
+      kube_deployment_status_observed_generation: !scalar
+      kube_deployment_status_replicas: !scalar
+      kube_deployment_status_replicas_available: !scalar
+      kube_deployment_status_replicas_ready: !scalar
+      kube_deployment_status_replicas_unavailable: !scalar
+      kube_deployment_status_replicas_updated: !scalar
+  deploymentStatusCondition:
+    query:
+      __name__: !in
+        - kube_deployment_status_condition
+    assert:
+      status: !set
+      condition: !set
+    keys:
+      - status
+      - condition
+    metrics:
+      kube_deployment_status_condition: !scalar
+  endpoint:
+    query:
+      __name__: !in
+        - kube_endpoint_address
+        - kube_endpoint_address_available
+        - kube_endpoint_address_not_ready
+        - kube_endpoint_annotations
+        - kube_endpoint_created
+        - kube_endpoint_info
+        - kube_endpoint_labels
+        - kube_endpoint_ports
+    assert:
+      namespace: !set
+      endpoint: !set
+    keys:
+      - namespace
+      - endpoint
+    items:
+      - address
+      - port
+    metrics:
+      kube_endpoint_address_available: !scalar
+      kube_endpoint_address_not_ready: !scalar
+      kube_endpoint_annotations: !scalar
+      kube_endpoint_created: !scalar
+      kube_endpoint_info: !scalar
+      kube_endpoint_labels: !scalar
+  address:
+    query:
+      __name__: !in
+        - kube_endpoint_address
+    assert:
+      ip: !set
+      ready: !set
+    keys:
+      - ip
+    metrics:
+      kube_endpoint_address: !scalar
+  port:
+    query:
+      __name__: !in
+        - kube_endpoint_ports
+    assert:
+      port_name: !opt
+      port_number: !set
+      port_protocol: !set
+    keys:
+      - port_name
+    metrics:
+      kube_endpoint_ports: !scalar
+  job:
+    query:
+      __name__: !in
+        - kube_job_annotations
+        - kube_job_created
+        - kube_job_info
+        - kube_job_labels
+        - kube_job_owner
+        - kube_job_spec_completions
+        - kube_job_spec_parallelism
+        - kube_job_status_active
+        - kube_job_status_failed
+        - kube_job_status_start_time
+        - kube_job_status_succeeded
+    assert:
+      job_name: !set
+      namespace: !set
+    keys:
+      - job_name
+      - namespace
+    metrics:
+      kube_job_annotations: !scalar
+      kube_job_created: !scalar
+      kube_job_info: !scalar
+      kube_job_labels: !scalar
+      kube_job_owner: !scalar
+      kube_job_spec_completions: !scalar
+      kube_job_spec_parallelism: !scalar
+      kube_job_status_active: !scalar
+      kube_job_status_failed: !scalar
+      kube_job_status_start_time: !scalar
+      kube_job_status_succeeded: !scalar
+  lease:
+    query:
+      __name__: !in
+        - kube_lease_owner
+        - kube_lease_renew_time
+    assert:
+      lease: !set
+      namespace: !set
+    keys:
+      - lease
+      - namespace
+    items:
+      - leaseOwner
+    metrics:
+      kube_lease_renew_time: !scalar
+  leaseOwner:
+    query:
+      __name__: !in
+        - kube_lease_owner
+    assert:
+      lease_holder: !set
+      owner_kind: !opt
+      owner_name: !opt
+    metrics:
+      kube_lease_owner: !scalar
+  mutatingwebhookconfiguration:
+    query:
+      __name__: !in
+        - kube_mutatingwebhookconfiguration_created
+        - kube_mutatingwebhookconfiguration_info
+        - kube_mutatingwebhookconfiguration_metadata_resource_version
+    assert:
+      mutatingwebhookconfiguration: !set
+    keys:
+      - mutatingwebhookconfiguration
+    metrics:
+      kube_mutatingwebhookconfiguration_created: !scalar
+      kube_mutatingwebhookconfiguration_info: !scalar
+      kube_mutatingwebhookconfiguration_metadata_resource_version: !scalar
+  namespace:
+    query:
+      __name__: !in
+        - kube_namespace_annotations
+        - kube_namespace_created
+        - kube_namespace_labels
+        - kube_namespace_status_phase
+    assert:
+      namespace: !set
+    keys:
+      - namespace
+    items:
+      - namespaceStatusPhase
+    metrics:
+      kube_namespace_annotations: !scalar
+      kube_namespace_created: !scalar
+      kube_namespace_labels: !scalar
+  namespaceStatusPhase:
+    query:
+      __name__: !in
+        - kube_namespace_status_phase
+    assert:
+      phase: !set
+    keys:
+      - phase
+    metrics:
+      kube_namespace_status_phase: !scalar
+  networkpolicy:
+    query:
+      __name__: !in
+        - kube_networkpolicy_annotations
+        - kube_networkpolicy_created
+        - kube_networkpolicy_labels
+        - kube_networkpolicy_spec_egress_rules
+        - kube_networkpolicy_spec_ingress_rules
+    assert:
+      namespace: !set
+      networkpolicy: !set
+    keys:
+      - namespace
+      - networkpolicy
+    metrics:
+      kube_networkpolicy_annotations: !scalar
+      kube_networkpolicy_created: !scalar
+      kube_networkpolicy_labels: !scalar
+      kube_networkpolicy_spec_egress_rules: !scalar
+      kube_networkpolicy_spec_ingress_rules: !scalar
+  node:
+    query:
+      __name__: !in
+        - kube_node_annotations
+        - kube_node_created
+        - kube_node_info
+        - kube_node_labels
+        - kube_node_role
+        - kube_node_spec_unschedulable
+        - kube_node_status_allocatable
+        - kube_node_status_capacity
+        - kube_node_status_condition
+    assert:
+      node: !set
+    keys:
+      - node
+    items:
+      - nodeRole
+      - nodeResourceCpu
+      - nodeResourceMemory
+      - nodeResourceEphemeralStorage
+      - nodeResourceHugepages1Gi
+      - nodeResourceHugepages2Mi
+      - nodeResourcePods
+      - nodeConditionDiskPressure
+      - nodeConditionMemoryPressure
+      - nodeConditionNetworkUnavailable
+      - nodeConditionPIDPressure
+      - nodeConditionReady
+    metrics:
+      kube_node_annotations: !scalar
+      kube_node_created: !scalar
+      kube_node_info: !scalar
+        labels:
+          container_runtime_version: !set
+          internal_ip: !set
+          kernel_version: !set
+          kubelet_version: !set
+          kubeproxy_version: !set
+          os_image: !set
+          pod_cidr: !set
+          provider_id: !set
+          system_uuid: !set
+      kube_node_labels: !scalar
+      kube_node_spec_unschedulable: !scalar
+  nodeRole:
+    query:
+      __name__: !in
+        - kube_node_role
+    assert:
+      role: !set
+    keys:
+      - role
+    metrics:
+      kube_node_role: !scalar
+  nodeResourceCpu:
+    query:
+      __name__: !in
+        - kube_node_status_allocatable
+        - kube_node_status_capacity
+      resource: !eq cpu
+    assert:
+      unit: !eq core
+    metrics:
+      kube_node_status_allocatable: !scalar
+      kube_node_status_capacity: !scalar
+  nodeResourceMemory:
+    query:
+      __name__: !in
+        - kube_node_status_allocatable
+        - kube_node_status_capacity
+      resource: !eq memory
+    assert:
+      unit: !eq byte
+    metrics:
+      kube_node_status_allocatable: !scalar
+      kube_node_status_capacity: !scalar
+  nodeResourceEphemeralStorage:
+    query:
+      __name__: !in
+        - kube_node_status_allocatable
+        - kube_node_status_capacity
+      resource: !eq ephemeral_storage
+    assert:
+      unit: !eq byte
+    metrics:
+      kube_node_status_allocatable: !scalar
+      kube_node_status_capacity: !scalar
+  nodeResourceHugepages1Gi:
+    query:
+      __name__: !in
+        - kube_node_status_allocatable
+        - kube_node_status_capacity
+      resource: !eq hugepages_1Gi
+    assert:
+      unit: !eq byte
+    metrics:
+      kube_node_status_allocatable: !scalar
+      kube_node_status_capacity: !scalar
+  nodeResourceHugepages2Mi:
+    query:
+      __name__: !in
+        - kube_node_status_allocatable
+        - kube_node_status_capacity
+      resource: !eq hugepages_2Mi
+    assert:
+      unit: !eq byte
+    metrics:
+      kube_node_status_allocatable: !scalar
+      kube_node_status_capacity: !scalar
+  nodeResourcePods:
+    query:
+      __name__: !in
+        - kube_node_status_allocatable
+        - kube_node_status_capacity
+      resource: !eq pods
+    assert:
+      unit: !eq integer
+    metrics:
+      kube_node_status_allocatable: !scalar
+      kube_node_status_capacity: !scalar
+  nodeConditionDiskPressure:
+    query:
+      __name__: !in
+        - kube_node_status_condition
+      condition: !eq DiskPressure
+    assert:
+      status: !set
+    keys:
+      - status
+    metrics:
+      kube_node_status_condition: !scalar
+  nodeConditionMemoryPressure:
+    query:
+      __name__: !in
+        - kube_node_status_condition
+      condition: !eq MemoryPressure
+    assert:
+      status: !set
+    keys:
+      - status
+    metrics:
+      kube_node_status_condition: !scalar
+  nodeConditionNetworkUnavailable:
+    query:
+      __name__: !in
+        - kube_node_status_condition
+      condition: !eq NetworkUnavailable
+    assert:
+      status: !set
+    keys:
+      - status
+    metrics:
+      kube_node_status_condition: !scalar
+  nodeConditionPIDPressure:
+    query:
+      __name__: !in
+        - kube_node_status_condition
+      condition: !eq PIDPressure
+    assert:
+      status: !set
+    keys:
+      - status
+    metrics:
+      kube_node_status_condition: !scalar
+  nodeConditionReady:
+    query:
+      __name__: !in
+        - kube_node_status_condition
+      condition: !eq Ready
+    assert:
+      status: !set
+    keys:
+      - status
+    metrics:
+      kube_node_status_condition: !scalar
+  persistentvolume:
+    query:
+      __name__: !in
+        - kube_persistentvolume_annotations
+        - kube_persistentvolume_capacity_bytes
+        - kube_persistentvolume_claim_ref
+        - kube_persistentvolume_created
+        - kube_persistentvolume_info
+        - kube_persistentvolume_labels
+        - kube_persistentvolume_status_phase
+    assert:
+      persistentvolume: !set
+    keys:
+      - persistentvolume
+    items:
+      - persistentvolumeStatusPhase
+    metrics:
+      kube_persistentvolume_annotations: !scalar
+      kube_persistentvolume_capacity_bytes: !scalar
+      kube_persistentvolume_claim_ref: !scalar
+        labels:
+          claim_namespace: !set
+          name: !set
+      kube_persistentvolume_created: !scalar
+      kube_persistentvolume_info: !scalar
+        labels:
+          host_path: !set
+          host_path_type: !set
+          storageclass: !set
+      kube_persistentvolume_labels: !scalar
+  persistentvolumeStatusPhase:
+    query:
+      __name__: !in
+        - kube_persistentvolume_status_phase
+    assert:
+      phase: !set
+    keys:
+      - phase
+    metrics:
+      kube_persistentvolume_status_phase: !scalar
+  persistentvolumeclaim:
+    query:
+      __name__: !in
+        - kube_persistentvolumeclaim_access_mode
+        - kube_persistentvolumeclaim_annotations
+        - kube_persistentvolumeclaim_created
+        - kube_persistentvolumeclaim_info
+        - kube_persistentvolumeclaim_labels
+        - kube_persistentvolumeclaim_resource_requests_storage_bytes
+        - kube_persistentvolumeclaim_status_phase
+    assert:
+      namespace: !set
+      persistentvolumeclaim: !set
+    keys:
+      - namespace
+      - persistentvolumeclaim
+    items:
+      - persistentvolumeclaimAccessMode
+      - persistentvolumeclaimStatusPhase
+    metrics:
+      kube_persistentvolumeclaim_annotations: !scalar
+      kube_persistentvolumeclaim_created: !scalar
+      kube_persistentvolumeclaim_info: !scalar
+        labels:
+          storageclass: !set
+          volumename: !opt
+      kube_persistentvolumeclaim_labels: !scalar
+      kube_persistentvolumeclaim_resource_requests_storage_bytes: !scalar
+  persistentvolumeclaimAccessMode:
+    query:
+      __name__: !in
+        - kube_persistentvolumeclaim_access_mode
+    assert:
+      access_mode: !set
+    metrics:
+      kube_persistentvolumeclaim_access_mode: !scalar
+  persistentvolumeclaimStatusPhase:
+    query:
+      __name__: !in
+        - kube_persistentvolumeclaim_status_phase
+    assert:
+      phase: !set
+    keys:
+      - phase
+    metrics:
+      kube_persistentvolumeclaim_status_phase: !scalar
+  pod:
+    query:
+      __name__: !in
+        - kube_pod_annotations
+        - kube_pod_completion_time
+        - kube_pod_container_info
+        - kube_pod_container_resource_limits
+        - kube_pod_container_resource_requests
+        - kube_pod_container_state_started
+        - kube_pod_container_status_last_terminated_exitcode
+        - kube_pod_container_status_last_terminated_reason
+        - kube_pod_container_status_ready
+        - kube_pod_container_status_restarts_total
+        - kube_pod_container_status_running
+        - kube_pod_container_status_terminated
+        - kube_pod_container_status_terminated_reason
+        - kube_pod_container_status_waiting
+        - kube_pod_container_status_waiting_reason
+        - kube_pod_created
+        - kube_pod_info
+        - kube_pod_init_container_info
+        - kube_pod_init_container_resource_limits
+        - kube_pod_init_container_resource_requests
+        - kube_pod_init_container_status_ready
+        - kube_pod_init_container_status_restarts_total
+        - kube_pod_init_container_status_running
+        - kube_pod_init_container_status_terminated
+        - kube_pod_init_container_status_terminated_reason
+        - kube_pod_init_container_status_waiting
+        - kube_pod_init_container_status_waiting_reason
+        - kube_pod_ips
+        - kube_pod_labels
+        - kube_pod_owner
+        - kube_pod_restart_policy
+        - kube_pod_spec_volumes_persistentvolumeclaims_info
+        - kube_pod_spec_volumes_persistentvolumeclaims_readonly
+        - kube_pod_start_time
+        - kube_pod_status_container_ready_time
+        - kube_pod_status_phase
+        - kube_pod_status_qos_class
+        - kube_pod_status_ready
+        - kube_pod_status_ready_time
+        - kube_pod_status_reason
+        - kube_pod_status_scheduled
+        - kube_pod_status_scheduled_time
+        - kube_pod_status_unschedulable
+        - kube_pod_tolerations
+    assert:
+      namespace: !set
+      pod: !set
+      uid: !set
+    keys:
+      - namespace
+      - pod
+    items:
+      - container
+      - initContainer
+      - podIp
+      - podVolume
+      - podStatusPhase
+      - podStatusQosClass
+      - podStatusCondition
+      - podStatusReason
+      - podToleration
+    metrics:
+      kube_pod_annotations: !scalar
+      kube_pod_completion_time: !scalar
+      kube_pod_created: !scalar
+      kube_pod_info: !scalar
+        labels:
+          created_by_kind: !opt
+          created_by_name: !opt
+          host_ip: !opt
+          host_network: !set
+          node: !opt
+          pod_ip: !opt
+          priority_class: !opt
+      kube_pod_labels: !scalar
+      kube_pod_owner: !scalar
+        labels:
+          owner_is_controller: !opt
+          owner_kind: !opt
+          owner_name: !opt
+      kube_pod_restart_policy: !scalar
+        labels:
+          type: !set
+      kube_pod_start_time: !scalar
+      kube_pod_status_container_ready_time: !scalar
+      kube_pod_status_ready_time: !scalar
+      kube_pod_status_scheduled_time: !scalar
+      kube_pod_status_unschedulable: !scalar
+  container:
+    query:
+      __name__: !in
+        - kube_pod_container_info
+        - kube_pod_container_resource_limits
+        - kube_pod_container_resource_requests
+        - kube_pod_container_state_started
+        - kube_pod_container_status_last_terminated_exitcode
+        - kube_pod_container_status_last_terminated_reason
+        - kube_pod_container_status_ready
+        - kube_pod_container_status_restarts_total
+        - kube_pod_container_status_running
+        - kube_pod_container_status_terminated
+        - kube_pod_container_status_terminated_reason
+        - kube_pod_container_status_waiting
+        - kube_pod_container_status_waiting_reason
+    assert:
+      container: !set
+    keys:
+      - container
+    items:
+      - containerResourceCpu
+      - containerResourceMemory
+      - containerResourceEphemeralStorage
+    metrics:
+      kube_pod_container_info: !scalar
+        labels:
+          container_id: !opt
+          image: !set
+          image_id: !opt
+          image_spec: !set
+      kube_pod_container_state_started: !scalar
+      kube_pod_container_status_last_terminated_exitcode: !scalar
+      kube_pod_container_status_last_terminated_reason: !scalar
+        labels:
+          reason: !set
+      kube_pod_container_status_ready: !scalar
+      kube_pod_container_status_restarts_total: !scalar
+      kube_pod_container_status_running: !scalar
+      kube_pod_container_status_terminated: !scalar
+      kube_pod_container_status_terminated_reason: !scalar
+        labels:
+          reason: !set
+      kube_pod_container_status_waiting: !scalar
+      kube_pod_container_status_waiting_reason: !scalar
+        labels:
+          reason: !set
+  containerResourceCpu:
+    query:
+      __name__: !in
+        - kube_pod_container_resource_limits
+        - kube_pod_container_resource_requests
+      resource: !eq cpu
+    assert:
+      node: !opt
+      unit: !eq core
+    metrics:
+      kube_pod_container_resource_limits: !scalar
+      kube_pod_container_resource_requests: !scalar
+  containerResourceMemory:
+    query:
+      __name__: !in
+        - kube_pod_container_resource_limits
+        - kube_pod_container_resource_requests
+      resource: !eq memory
+    assert:
+      node: !opt
+      unit: !eq byte
+    metrics:
+      kube_pod_container_resource_limits: !scalar
+      kube_pod_container_resource_requests: !scalar
+  containerResourceEphemeralStorage:
+    query:
+      __name__: !in
+        - kube_pod_container_resource_limits
+        - kube_pod_container_resource_requests
+      resource: !eq ephemeral_storage
+    assert:
+      node: !opt
+      unit: !eq byte
+    metrics:
+      kube_pod_container_resource_limits: !scalar
+      kube_pod_container_resource_requests: !scalar
+  initContainer:
+    query:
+      __name__: !in
+        - kube_pod_init_container_info
+        - kube_pod_init_container_resource_limits
+        - kube_pod_init_container_resource_requests
+        - kube_pod_init_container_status_ready
+        - kube_pod_init_container_status_restarts_total
+        - kube_pod_init_container_status_running
+        - kube_pod_init_container_status_terminated
+        - kube_pod_init_container_status_terminated_reason
+        - kube_pod_init_container_status_waiting
+        - kube_pod_init_container_status_waiting_reason
+    assert:
+      container: !set
+    keys:
+      - container
+    items:
+      - initContainerResourceCpu
+      - initContainerResourceMemory
+    metrics:
+      kube_pod_init_container_info: !scalar
+        labels:
+          container_id: !opt
+          image: !set
+          image_id: !opt
+          image_spec: !set
+      kube_pod_init_container_status_ready: !scalar
+      kube_pod_init_container_status_restarts_total: !scalar
+      kube_pod_init_container_status_running: !scalar
+      kube_pod_init_container_status_terminated: !scalar
+      kube_pod_init_container_status_terminated_reason: !scalar
+        labels:
+          reason: !set
+      kube_pod_init_container_status_waiting: !scalar
+      kube_pod_init_container_status_waiting_reason: !scalar
+        labels:
+          reason: !set
+  initContainerResourceCpu:
+    query:
+      __name__: !in
+        - kube_pod_init_container_resource_limits
+        - kube_pod_init_container_resource_requests
+      resource: !eq cpu
+    assert:
+      unit: !eq core
+      node: !opt
+    metrics:
+      kube_pod_init_container_resource_limits: !scalar
+      kube_pod_init_container_resource_requests: !scalar
+  initContainerResourceMemory:
+    query:
+      __name__: !in
+        - kube_pod_init_container_resource_limits
+        - kube_pod_init_container_resource_requests
+      resource: !eq memory
+    assert:
+      unit: !eq byte
+      node: !opt
+    metrics:
+      kube_pod_init_container_resource_limits: !scalar
+      kube_pod_init_container_resource_requests: !scalar
+  podIp:
+    query:
+      __name__: !in
+        - kube_pod_ips
+    assert:
+      ip: !set
+      ip_family: !set
+    keys:
+      - ip
+      - ip_family
+    metrics:
+      kube_pod_ips: !scalar
+  podVolume:
+    query:
+      __name__: !in
+        - kube_pod_spec_volumes_persistentvolumeclaims_info
+        - kube_pod_spec_volumes_persistentvolumeclaims_readonly
+    assert:
+      volume: !set
+      persistentvolumeclaim: !set
+    keys:
+      - volume
+    metrics:
+      kube_pod_spec_volumes_persistentvolumeclaims_info: !scalar
+      kube_pod_spec_volumes_persistentvolumeclaims_readonly: !scalar
+  podStatusPhase:
+    query:
+      __name__: !in
+        - kube_pod_status_phase
+    assert:
+      phase: !set
+    keys:
+      - phase
+    metrics:
+      kube_pod_status_phase: !scalar
+  podStatusQosClass:
+    query:
+      __name__: !in
+        - kube_pod_status_qos_class
+    assert:
+      qos_class: !set
+    keys:
+      - qos_class
+    metrics:
+      kube_pod_status_qos_class: !scalar
+  podStatusCondition:
+    query:
+      __name__: !in
+        - kube_pod_status_ready
+        - kube_pod_status_scheduled
+    assert:
+      condition: !set
+    keys:
+      - condition
+    metrics:
+      kube_pod_status_ready: !scalar
+      kube_pod_status_scheduled: !scalar
+  podStatusReason:
+    query:
+      __name__: !in
+        - kube_pod_status_reason
+    assert:
+      reason: !set
+    keys:
+      - reason
+    metrics:
+      kube_pod_status_reason: !scalar
+  podToleration:
+    query:
+      __name__: !in
+        - kube_pod_tolerations
+    assert:
+      key: !opt
+      operator: !set
+      effect: !opt
+      toleration_seconds: !opt
+    keys:
+      - effect
+      - key
+    metrics:
+      kube_pod_tolerations: !scalar
+  poddisruptionbudget:
+    query:
+      __name__: !in
+        - kube_poddisruptionbudget_annotations
+        - kube_poddisruptionbudget_created
+        - kube_poddisruptionbudget_labels
+        - kube_poddisruptionbudget_status_current_healthy
+        - kube_poddisruptionbudget_status_desired_healthy
+        - kube_poddisruptionbudget_status_expected_pods
+        - kube_poddisruptionbudget_status_observed_generation
+        - kube_poddisruptionbudget_status_pod_disruptions_allowed
+    assert:
+      namespace: !set
+      poddisruptionbudget: !set
+    keys:
+      - namespace
+      - poddisruptionbudget
+    metrics:
+      kube_poddisruptionbudget_annotations: !scalar
+      kube_poddisruptionbudget_created: !scalar
+      kube_poddisruptionbudget_labels: !scalar
+      kube_poddisruptionbudget_status_current_healthy: !scalar
+      kube_poddisruptionbudget_status_desired_healthy: !scalar
+      kube_poddisruptionbudget_status_expected_pods: !scalar
+      kube_poddisruptionbudget_status_observed_generation: !scalar
+      kube_poddisruptionbudget_status_pod_disruptions_allowed: !scalar
+  replicaset:
+    query:
+      __name__: !in
+        - kube_replicaset_annotations
+        - kube_replicaset_created
+        - kube_replicaset_labels
+        - kube_replicaset_metadata_generation
+        - kube_replicaset_owner
+        - kube_replicaset_spec_replicas
+        - kube_replicaset_status_fully_labeled_replicas
+        - kube_replicaset_status_observed_generation
+        - kube_replicaset_status_ready_replicas
+        - kube_replicaset_status_replicas
+    assert:
+      namespace: !set
+      replicaset: !set
+    keys:
+      - namespace
+      - replicaset
+    metrics:
+      kube_replicaset_annotations: !scalar
+      kube_replicaset_created: !scalar
+      kube_replicaset_labels: !scalar
+      kube_replicaset_metadata_generation: !scalar
+      kube_replicaset_owner: !scalar
+        labels:
+          owner_is_controller: !set
+          owner_kind: !set
+          owner_name: !set
+      kube_replicaset_spec_replicas: !scalar
+      kube_replicaset_status_fully_labeled_replicas: !scalar
+      kube_replicaset_status_observed_generation: !scalar
+      kube_replicaset_status_ready_replicas: !scalar
+      kube_replicaset_status_replicas: !scalar
+  secret:
+    query:
+      __name__: !in
+        - kube_secret_annotations
+        - kube_secret_created
+        - kube_secret_info
+        - kube_secret_labels
+        - kube_secret_metadata_resource_version
+        - kube_secret_type
+    assert:
+      namespace: !set
+      secret: !set
+    keys:
+      - namespace
+      - secret
+    metrics:
+      kube_secret_annotations: !scalar
+      kube_secret_created: !scalar
+      kube_secret_info: !scalar
+      kube_secret_labels: !scalar
+      kube_secret_metadata_resource_version: !scalar
+      kube_secret_type: !scalar
+        labels:
+          type: !set
+  service:
+    query:
+      __name__: !in
+        - kube_service_annotations
+        - kube_service_created
+        - kube_service_info
+        - kube_service_labels
+        - kube_service_spec_type
+        - kube_service_status_load_balancer_ingress
+    assert:
+      namespace: !set
+      service: !set
+      uid: !set
+    keys:
+      - namespace
+      - service
+    metrics:
+      kube_service_annotations: !scalar
+      kube_service_created: !scalar
+      kube_service_info: !scalar
+        labels:
+          cluster_ip: !opt
+          load_balancer_ip: !opt
+      kube_service_labels: !scalar
+      kube_service_spec_type: !scalar
+        labels:
+          type: !set
+      kube_service_status_load_balancer_ingress: !scalar
+        labels:
+          ip: !set
+  statefulset:
+    query:
+      __name__: !in
+        - kube_statefulset_annotations
+        - kube_statefulset_created
+        - kube_statefulset_labels
+        - kube_statefulset_metadata_generation
+        - kube_statefulset_replicas
+        - kube_statefulset_status_current_revision
+        - kube_statefulset_status_observed_generation
+        - kube_statefulset_status_replicas
+        - kube_statefulset_status_replicas_available
+        - kube_statefulset_status_replicas_current
+        - kube_statefulset_status_replicas_ready
+        - kube_statefulset_status_replicas_updated
+        - kube_statefulset_status_update_revision
+    assert:
+      namespace: !set
+      statefulset: !set
+    keys:
+      - namespace
+      - statefulset
+    metrics:
+      kube_statefulset_annotations: !scalar
+      kube_statefulset_created: !scalar
+      kube_statefulset_labels: !scalar
+      kube_statefulset_metadata_generation: !scalar
+      kube_statefulset_replicas: !scalar
+      kube_statefulset_status_current_revision: !scalar
+        labels:
+          revision: !set
+      kube_statefulset_status_observed_generation: !scalar
+      kube_statefulset_status_replicas: !scalar
+      kube_statefulset_status_replicas_available: !scalar
+      kube_statefulset_status_replicas_current: !scalar
+      kube_statefulset_status_replicas_ready: !scalar
+      kube_statefulset_status_replicas_updated: !scalar
+      kube_statefulset_status_update_revision: !scalar
+        labels:
+          revision: !set
+  storageclass:
+    query:
+      __name__: !in
+        - kube_storageclass_annotations
+        - kube_storageclass_created
+        - kube_storageclass_info
+        - kube_storageclass_labels
+    assert:
+      storageclass: !set
+    keys:
+      - storageclass
+    metrics:
+      kube_storageclass_annotations: !scalar
+      kube_storageclass_created: !scalar
+      kube_storageclass_info: !scalar
+        labels:
+          provisioner: !opt
+          reclaim_policy: !opt
+          volume_binding_mode: !opt
+      kube_storageclass_labels: !scalar
+  validatingwebhookconfiguration:
+    query:
+      __name__: !in
+        - kube_validatingwebhookconfiguration_created
+        - kube_validatingwebhookconfiguration_info
+        - kube_validatingwebhookconfiguration_metadata_resource_version
+    assert:
+      validatingwebhookconfiguration: !set
+      namespace: !unset
+    keys:
+      - validatingwebhookconfiguration
+    metrics:
+      kube_validatingwebhookconfiguration_created: !scalar
+      kube_validatingwebhookconfiguration_info: !scalar
+        labels:
+      kube_validatingwebhookconfiguration_metadata_resource_version: !scalar
+  scrape:
+    query:
+      __name__: !in
+        - scrape_duration_seconds
+        - scrape_samples_post_metric_relabeling
+        - scrape_samples_scraped
+        - scrape_series_added
+        - up
+    metrics:
+      scrape_duration_seconds: !scalar
+      scrape_samples_post_metric_relabeling: !scalar
+      scrape_samples_scraped: !scalar
+      scrape_series_added: !scalar
+      up: !scalar

@@ -1,0 +1,11 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+name: scrape
+metrics:
+  up: !scalar
+  scrape_series_added: !scalar
+  scrape_samples_scraped: !scalar
+  scrape_samples_post_metric_relabeling: !scalar
+  scrape_duration_seconds: !scalar

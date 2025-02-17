@@ -1,0 +1,103 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+version: 0.1.0
+items:
+  container-endpoint-instance-job-metrics_path-namespace-node-pod-pod_uid-probe_type-result-service:
+    query:
+      pod_uid: set
+      result: set
+    keys:
+    - pod_uid
+    - result
+    metrics:
+      prober_probe_total: !scalar {}
+  container-endpoint-instance-job-metrics_path-namespace-node-pod-probe_type-service:
+    query:
+      container: set
+      pod: set
+      probe_type: set
+    keys:
+    - container
+    - pod
+    - probe_type
+    items:
+    - container-endpoint-instance-job-metrics_path-namespace-node-pod-pod_uid-probe_type-result-service
+    metrics:
+      prober_probe_duration_seconds: !histogram
+        labels:
+          pod_uid: unset
+          result: unset
+  endpoint-instance-job-metrics_path-namespace-node-service:
+    query:
+      instance: set
+      node: set
+    keys:
+    - instance
+    - node
+    items:
+    - container-endpoint-instance-job-metrics_path-namespace-node-pod-probe_type-service
+    metrics:
+      process_start_time_seconds: !scalar
+        labels:
+          container: unset
+          pod: unset
+          pod_uid: unset
+          probe_type: unset
+          result: unset
+      scrape_duration_seconds: !scalar
+        labels:
+          container: unset
+          pod: unset
+          pod_uid: unset
+          probe_type: unset
+          result: unset
+      scrape_samples_post_metric_relabeling: !scalar
+        labels:
+          container: unset
+          pod: unset
+          pod_uid: unset
+          probe_type: unset
+          result: unset
+      scrape_samples_scraped: !scalar
+        labels:
+          container: unset
+          pod: unset
+          pod_uid: unset
+          probe_type: unset
+          result: unset
+      scrape_series_added: !scalar
+        labels:
+          container: unset
+          pod: unset
+          pod_uid: unset
+          probe_type: unset
+          result: unset
+      up: !scalar
+        labels:
+          container: unset
+          pod: unset
+          pod_uid: unset
+          probe_type: unset
+          result: unset
+  root:
+    query:
+      endpoint: set
+      job: set
+      metrics_path: set
+      namespace: set
+      service: set
+    items:
+    - endpoint-instance-job-metrics_path-namespace-node-service
+    metrics:
+      count:up1: !scalar
+        labels:
+          container: unset
+          instance: unset
+          node: unset
+          pod: unset
+          pod_uid: unset
+          probe_type: unset
+          result: unset
+

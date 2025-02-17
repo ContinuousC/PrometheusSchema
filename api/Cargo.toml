@@ -1,0 +1,28 @@
+[package]
+name = "prometheus-api"
+version = "0.1.2-acc.21"
+authors = ["Maarten Deprez <mdp@continuousc.eu>"]
+repository = "https://github.com/ContinuousC/PrometheusSchema.git"
+license = "Elastic-2.0"
+edition = "2021"
+publish = false
+
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = []
+tsify = ["dep:tsify", "dep:wasm-bindgen"]
+schemars = ["dep:schemars", "prometheus-core/schemars"]
+
+[dependencies]
+tsify = { registry = "si", version = "0.4.6", optional = true }
+wasm-bindgen = { version = "0.2.87", optional = true }
+schemars = { version = "0.8", features = ["chrono"], optional = true }
+chrono = { version = "0.4.31", features = ["serde"] }
+serde = { version = "1.0.164", features = ["derive"] }
+serde_with = { version = "3.4.0", features = ["chrono"] }
+thiserror = "1.0.40"
+
+prometheus-core = { registry = "si", version = "=0.1.2-acc.8" }

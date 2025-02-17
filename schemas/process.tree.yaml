@@ -1,0 +1,13 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+name: process
+metrics:
+  process_virtual_memory_max_bytes: !scalar
+  process_virtual_memory_bytes: !scalar
+  process_start_time_seconds: !scalar
+  process_resident_memory_bytes: !scalar
+  process_open_fds: !scalar
+  process_max_fds: !scalar
+  process_cpu_seconds_total: !scalar

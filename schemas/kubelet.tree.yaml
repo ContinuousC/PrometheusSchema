@@ -1,0 +1,1784 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+!branch
+kubelet_metrics:
+  labels:
+    endpoint: !set
+    job: !eq kubelet
+    metrics_path: !set
+    namespace: !set
+    service: !set
+  tree: !branch
+    up:
+      labels:
+        __name__: !in
+          - up
+          - ttl_after_finished_controller_job_deletion_duration_seconds_sum
+          - ttl_after_finished_controller_job_deletion_duration_seconds_count
+        instance: !set
+        node: !set
+      tree: !leaf
+        item: job
+    up_bucket:
+      labels:
+        __name__: !in
+          - ttl_after_finished_controller_job_deletion_duration_seconds_bucket
+        instance: !set
+        node: !set
+        le: !set
+      tree: !leaf
+        item: job_bucket
+    count_up:
+      labels:
+        __name__: !eq count:up1
+      tree: !leaf
+        item: prometheus
+    container_metrics:
+      labels:
+        __name__: !not_in
+          - up
+          - count:up1
+          - ttl_after_finished_controller_job_deletion_duration_seconds_sum
+          - ttl_after_finished_controller_job_deletion_duration_seconds_count
+          - ttl_after_finished_controller_job_deletion_duration_seconds_bucket          
+        instance: !set
+        node: !set
+        pod: !set
+      tree: !branch
+        container_metrics:
+          labels:
+            id: !unset
+            container: !set
+          tree: !branch
+            log_filesystem:
+              labels:
+                __name__: !in
+                  - kubelet_container_log_filesystem_used_bytes
+                uid: !set
+              tree: !leaf
+                item: log_filesystem
+            probe_type:
+              labels:
+                __name__: !not_in
+                  - kubelet_container_log_filesystem_used_bytes                
+                probe_type: !set
+              tree: !branch
+                probe_total:
+                  labels:
+                    __name__: !in
+                      - prober_probe_total
+                    pod_uid: !set
+                    result: !set
+                  tree: !leaf
+                    item: probe_type
+                probe_duration:
+                  labels:
+                    __name__: !in
+                      - prober_probe_duration_seconds_sum
+                      - prober_probe_duration_seconds_count
+                  tree: !leaf
+                    item: probe_type
+                probe_duration_bucket:
+                  labels:
+                    __name__: !in
+                      - prober_probe_duration_seconds_bucket
+                    le: !set
+                  tree: !leaf
+                    item: probe_type_bucket
+        cgroup_metrics:
+          labels:
+            id: !set
+          tree: !branch
+            container_memory:
+              labels:
+                __name__: !in
+                  - node_namespace_pod_container:container_memory_working_set_bytes
+                  - node_namespace_pod_container:container_memory_rss
+                  - node_namespace_pod_container:container_memory_cache
+                name: !set
+                image: !set
+                container: !opt
+              tree: !leaf
+                item: container
+            cpu_allocation:
+              labels:
+                __name__: !eq container_cpu_allocation
+                cpu: !eq total
+                container: !set
+              tree: !leaf
+                item: container
+            cpu_cfs_periods:
+              labels:
+                __name__: !in
+                  - container_cpu_cfs_periods_total
+                  - container_cpu_cfs_throttled_periods_total
+              tree: !branch
+                pod:
+                  labels:
+                    container: !unset
+                    name: !unset
+                    image: !unset
+                  tree: !leaf
+                    item: pod
+                container:
+                  labels:
+                    container: !set
+                    name: !set
+                    image: !set
+                  tree: !leaf
+                    item: container
+            cpu_usage_pod:
+              labels:
+                __name__: !eq container_cpu_usage_seconds_total
+                cpu: !eq total
+                container: !unset
+                image: !unset
+                name: !unset
+              tree: !leaf
+                item: pod
+            cpu_usage_init_container:
+              labels:
+                __name__: !eq container_cpu_usage_seconds_total
+                cpu: !eq total
+                container: !unset
+                image: !set
+                name: !set
+              tree: !leaf
+                item: init_container
+            cpu_usage_container:
+              labels:
+                __name__: !in
+                  - container_cpu_usage_seconds_total
+                  - cluster:cpu_usage_nosum:rate5m
+                cpu: !eq total
+                image: !set
+                name: !set
+                container: !set
+              tree: !leaf
+                item: container
+            ulimits_soft:
+              labels:
+                __name__: !eq container_ulimits_soft
+              tree: !branch
+                container:
+                  labels:
+                    ulimit: !set
+                    image: !set
+                    name: !set
+                    container: !set
+                  tree: !leaf
+                    item: container
+                pod:
+                  labels:
+                    ulimit: !set
+                    image: !set
+                    name: !set
+                    container: !unset
+                  tree: !leaf
+                    item: pod
+            memory_failures:
+              labels:
+                __name__: !eq container_memory_failures_total
+                scope: !set
+                failure_type: !set
+              tree: !branch
+                container:
+                  labels:
+                    image: !set
+                    name: !set
+                    container: !set
+                  tree: !leaf
+                    item: container
+                pod:
+                  labels:
+                    image: !set
+                    name: !set
+                    container: !unset
+                  tree: !leaf
+                    item: pod
+                node:
+                  labels:
+                    image: !unset
+                    name: !unset
+                    container: !unset
+                  tree: !leaf
+                    item: node
+            network:
+              labels:
+                __name__: !in
+                  - container_network_transmit_packets_total
+                  - container_network_transmit_packets_dropped_total
+                  - container_network_receive_packets_dropped_total
+                  - container_network_transmit_errors_total
+                  - container_network_receive_errors_total
+                  - container_network_transmit_bytes_total
+                  - container_network_receive_bytes_total
+                  - container_network_receive_packets_total
+                interface: !set
+              tree: !branch
+                container:
+                  labels:
+                    image: !set
+                    name: !set
+                    container: !set
+                  tree: !leaf
+                    item: container
+                pod:
+                  labels:
+                    image: !set
+                    name: !set
+                    container: !unset
+                  tree: !leaf
+                    item: pod
+                node:
+                  labels:
+                    image: !unset
+                    name: !unset
+                    container: !unset
+                  tree: !leaf
+                    item: node
+            fs:
+              labels:
+                __name__: !in
+                  - container_fs_writes_total
+                  - container_fs_writes_bytes_total
+                  - container_fs_reads_total
+                  - container_fs_reads_bytes_total
+                device: !set
+              tree: !branch
+                container:
+                  labels:
+                    image: !set
+                    name: !set
+                    container: !set
+                  tree: !leaf
+                    item: container
+                pod:
+                  labels:
+                    image: !set
+                    name: !set
+                    container: !unset
+                  tree: !leaf
+                    item: pod
+                node:
+                  labels:
+                    image: !unset
+                    name: !unset
+                    container: !unset
+                  tree: !leaf
+                    item: node
+            fs_op:
+              labels:
+                __name__: !in
+                  - container_blkio_device_usage_total
+                device: !set
+                operation: !set
+                major: !set
+                minor: !set
+              tree: !branch
+                container:
+                  labels:
+                    image: !set
+                    name: !set
+                    container: !set
+                  tree: !leaf
+                    item: container
+                pod:
+                  labels:
+                    image: !set
+                    name: !set
+                    container: !unset
+                  tree: !leaf
+                    item: pod
+                node:
+                  labels:
+                    image: !unset
+                    name: !unset
+                    container: !unset
+                  tree: !leaf
+                    item: node
+            container_pod_node:
+              labels:
+                __name__: !in
+                  - container_threads
+                  - container_start_time_seconds
+                  - container_sockets
+                  - container_processes
+                  - container_oom_events_total
+                  - container_memory_working_set_bytes
+                  - container_memory_usage_bytes
+                  - container_memory_rss
+                  - container_memory_max_usage_bytes
+                  - container_memory_failcnt
+                  - container_memory_cache
+                  - container_last_seen
+              tree: !branch
+                container:
+                  labels:
+                    image: !set
+                    name: !set
+                    container: !set
+                  tree: !leaf
+                    item: container
+                pod:
+                  labels:
+                    image: !set
+                    name: !set
+                    container: !unset
+                  tree: !leaf
+                    item: pod
+                node:
+                  labels:
+                    image: !unset
+                    name: !unset
+                    container: !unset
+                  tree: !leaf
+                    item: node
+    node_metrics:
+      labels:
+        __name__: !not_in
+          - up
+          - count:up1
+          - ttl_after_finished_controller_job_deletion_duration_seconds_sum
+          - ttl_after_finished_controller_job_deletion_duration_seconds_count
+          - ttl_after_finished_controller_job_deletion_duration_seconds_bucket
+        instance: !set
+        node: !set
+        pod: !unset
+      tree: !branch
+        node_metrics:
+          labels:
+            __name__: !in
+              - node_collector_evictions_total
+              - node_collector_unhealthy_nodes_in_zone
+              - node_collector_zone_health
+              - node_collector_zone_size
+              - machine_scrape_error
+              - kubeproxy_sync_proxy_rules_service_changes_total
+              - kubeproxy_sync_proxy_rules_service_changes_pending
+              - kubeproxy_sync_proxy_rules_last_timestamp_seconds
+              - kubeproxy_sync_proxy_rules_last_queued_timestamp_seconds
+              - kubeproxy_sync_proxy_rules_iptables_restore_failures_total
+              - kubeproxy_sync_proxy_rules_iptables_partial_restore_failures_total
+              - kubeproxy_sync_proxy_rules_endpoint_changes_total
+              - kubeproxy_sync_proxy_rules_endpoint_changes_pending
+              - kubeproxy_sync_proxy_rules_duration_seconds_sum
+              - kubeproxy_sync_proxy_rules_duration_seconds_count
+              - kubeproxy_network_programming_duration_seconds_sum
+              - kubeproxy_network_programming_duration_seconds_count
+              - kubelet_started_pods_total
+              - kubelet_started_pods_errors_total
+              - kubelet_running_pods
+              - kubelet_run_podsandbox_errors_total
+              - kubelet_run_podsandbox_duration_seconds_sum
+              - kubelet_run_podsandbox_duration_seconds_count
+              - kubelet_pod_worker_start_duration_seconds_sum
+              - kubelet_pod_worker_start_duration_seconds_count
+              - kubelet_pod_status_sync_duration_seconds_sum
+              - kubelet_pod_status_sync_duration_seconds_count
+              - kubelet_pod_start_sli_duration_seconds_sum
+              - kubelet_pod_start_sli_duration_seconds_count
+              - kubelet_pod_start_duration_seconds_sum
+              - kubelet_pod_start_duration_seconds_count
+              - kubelet_pleg_relist_interval_seconds_sum
+              - kubelet_pleg_relist_interval_seconds_count
+              - kubelet_pleg_relist_duration_seconds_sum
+              - kubelet_pleg_relist_duration_seconds_count
+              - kubelet_pleg_last_seen_seconds
+              - kubelet_pleg_discard_events
+              - kubelet_node_name
+              - kubelet_managed_ephemeral_containers
+              - kubelet_lifecycle_handler_http_fallbacks_total
+              - kubelet_graceful_shutdown_start_time_seconds
+              - kubelet_graceful_shutdown_end_time_seconds
+              - kubelet_cpu_manager_pinning_requests_total
+              - kubelet_cpu_manager_pinning_errors_total
+              - kubelet_containers_per_pod_count_sum
+              - kubelet_containers_per_pod_count_count
+              - kube_apiserver_pod_logs_pods_logs_backend_tls_failure_total
+              - hidden_metric_total
+              - go_threads
+              - go_sched_latencies_seconds_sum
+              - go_sched_latencies_seconds_count
+              - go_sched_goroutines_goroutines
+              - go_sched_gomaxprocs_threads
+              - go_memstats_sys_bytes
+              - go_memstats_stack_sys_bytes
+              - go_memstats_stack_inuse_bytes
+              - go_memstats_other_sys_bytes
+              - go_memstats_next_gc_bytes
+              - go_memstats_mspan_sys_bytes
+              - go_memstats_mspan_inuse_bytes
+              - go_memstats_mcache_sys_bytes
+              - go_memstats_mcache_inuse_bytes
+              - go_memstats_mallocs_total
+              - go_memstats_lookups_total
+              - go_memstats_last_gc_time_seconds
+              - go_memstats_heap_sys_bytes
+              - go_memstats_heap_released_bytes
+              - go_memstats_heap_objects
+              - go_memstats_heap_inuse_bytes
+              - go_memstats_heap_idle_bytes
+              - go_memstats_heap_alloc_bytes
+              - go_memstats_gc_sys_bytes
+              - go_memstats_frees_total
+              - go_memstats_buck_hash_sys_bytes
+              - go_memstats_alloc_bytes_total
+              - go_memstats_alloc_bytes
+              - go_memory_classes_total_bytes
+              - go_memory_classes_profiling_buckets_bytes
+              - go_memory_classes_other_bytes
+              - go_memory_classes_os_stacks_bytes
+              - go_memory_classes_metadata_other_bytes
+              - go_memory_classes_metadata_mspan_inuse_bytes
+              - go_memory_classes_metadata_mspan_free_bytes
+              - go_memory_classes_metadata_mcache_inuse_bytes
+              - go_memory_classes_metadata_mcache_free_bytes
+              - go_memory_classes_heap_unused_bytes
+              - go_memory_classes_heap_stacks_bytes
+              - go_memory_classes_heap_released_bytes
+              - go_memory_classes_heap_objects_bytes
+              - go_memory_classes_heap_free_bytes
+              - go_goroutines
+              - go_gc_stack_starting_size_bytes
+              - go_gc_pauses_seconds_sum
+              - go_gc_pauses_seconds_count
+              - go_gc_limiter_last_enabled_gc_cycle
+              - go_gc_heap_tiny_allocs_objects_total
+              - go_gc_heap_objects_objects
+              - go_gc_heap_goal_bytes
+              - go_gc_heap_frees_objects_total
+              - go_gc_heap_frees_bytes_total
+              - go_gc_heap_frees_by_size_bytes_sum
+              - go_gc_heap_frees_by_size_bytes_count
+              - go_gc_heap_allocs_objects_total
+              - go_gc_heap_allocs_bytes_total
+              - go_gc_heap_allocs_by_size_bytes_sum
+              - go_gc_heap_allocs_by_size_bytes_count
+              - go_gc_duration_seconds_sum
+              - go_gc_duration_seconds_count
+              - go_gc_cycles_total_gc_cycles_total
+              - go_gc_cycles_forced_gc_cycles_total
+              - go_gc_cycles_automatic_gc_cycles_total
+              - go_cgo_go_to_c_calls_calls_total
+              - garbagecollector_controller_resources_sync_error_total
+              - etcd_lease_object_counts_sum
+              - etcd_lease_object_counts_count
+              - ephemeral_volume_controller_create_total
+              - ephemeral_volume_controller_create_failures_total
+              - endpoint_slice_mirroring_controller_num_endpoint_slices
+              - endpoint_slice_mirroring_controller_endpoints_updated_per_sync_sum
+              - endpoint_slice_mirroring_controller_endpoints_updated_per_sync_count
+              - endpoint_slice_mirroring_controller_endpoints_sync_duration_sum
+              - endpoint_slice_mirroring_controller_endpoints_sync_duration_count
+              - endpoint_slice_mirroring_controller_endpoints_removed_per_sync_sum
+              - endpoint_slice_mirroring_controller_endpoints_removed_per_sync_count
+              - endpoint_slice_mirroring_controller_endpoints_desired
+              - endpoint_slice_mirroring_controller_endpoints_added_per_sync_sum
+              - endpoint_slice_mirroring_controller_endpoints_added_per_sync_count
+              - endpoint_slice_mirroring_controller_desired_endpoint_slices
+              - endpoint_slice_mirroring_controller_addresses_skipped_per_sync_sum
+              - endpoint_slice_mirroring_controller_addresses_skipped_per_sync_count
+              - endpoint_slice_controller_endpoints_removed_per_sync_sum
+              - endpoint_slice_controller_endpoints_removed_per_sync_count
+              - endpoint_slice_controller_endpoints_added_per_sync_sum
+              - endpoint_slice_controller_endpoints_added_per_sync_count
+              - endpoint_slice_controller_endpoints_desired
+              - endpoint_slice_controller_desired_endpoint_slices
+              - endpoint_slice_controller_num_endpoint_slices
+              - disabled_metric_total
+              - cronjob_controller_job_creation_skew_duration_seconds_sum
+              - cronjob_controller_job_creation_skew_duration_seconds_count
+              - apiserver_webhooks_x509_insecure_sha1_total
+              - apiserver_webhooks_x509_missing_san_total
+              - attachdetach_controller_forced_detaches
+              - apiserver_tls_handshake_errors_total
+              - apiserver_storage_envelope_transformation_cache_misses_total
+              - apiserver_storage_db_total_size_in_bytes
+              - apiserver_storage_data_key_generation_failures_total
+              - apiserver_storage_data_key_generation_duration_seconds_sum
+              - apiserver_storage_data_key_generation_duration_seconds_count
+              - apiserver_kube_aggregator_x509_missing_san_total
+              - apiserver_kube_aggregator_x509_insecure_sha1_total
+              - apiserver_flowcontrol_seat_fair_frac
+              - apiserver_envelope_encryption_dek_cache_fill_percent
+              - apiserver_client_certificate_expiration_seconds_sum
+              - apiserver_client_certificate_expiration_seconds_count
+              - apiserver_cel_evaluation_duration_seconds_sum
+              - apiserver_cel_evaluation_duration_seconds_count
+              - apiserver_cel_compilation_duration_seconds_sum
+              - apiserver_cel_compilation_duration_seconds_count
+              - apiserver_audit_requests_rejected_total
+              - apiserver_audit_event_total
+          tree: !leaf
+            item: node
+        node_metrics_bucket:
+          labels:
+            __name__: !in
+              - kubeproxy_sync_proxy_rules_duration_seconds_bucket
+              - kubeproxy_network_programming_duration_seconds_bucket
+              - kubelet_run_podsandbox_duration_seconds_bucket
+              - kubelet_pod_worker_start_duration_seconds_bucket
+              - kubelet_pod_status_sync_duration_seconds_bucket
+              - kubelet_pod_start_sli_duration_seconds_bucket
+              - kubelet_pod_start_duration_seconds_bucket
+              - kubelet_pleg_relist_interval_seconds_bucket
+              - kubelet_pleg_relist_duration_seconds_bucket
+              - kubelet_containers_per_pod_count_bucket
+              - go_sched_latencies_seconds_bucket
+              - go_gc_pauses_seconds_bucket
+              - go_gc_heap_frees_by_size_bytes_bucket
+              - go_gc_heap_allocs_by_size_bytes_bucket
+              - etcd_lease_object_counts_bucket
+              - endpoint_slice_mirroring_controller_endpoints_updated_per_sync_bucket
+              - endpoint_slice_mirroring_controller_endpoints_sync_duration_bucket
+              - endpoint_slice_mirroring_controller_endpoints_removed_per_sync_bucket
+              - endpoint_slice_mirroring_controller_endpoints_added_per_sync_bucket
+              - endpoint_slice_mirroring_controller_addresses_skipped_per_sync_bucket
+              - endpoint_slice_controller_endpoints_removed_per_sync_bucket
+              - endpoint_slice_controller_endpoints_added_per_sync_bucket
+              - cronjob_controller_job_creation_skew_duration_seconds_bucket
+              - apiserver_storage_data_key_generation_duration_seconds_bucket
+              - apiserver_client_certificate_expiration_seconds_bucket
+              - apiserver_cel_evaluation_duration_seconds_bucket
+              - apiserver_cel_compilation_duration_seconds_bucket
+            le: !set
+          tree: !leaf
+            item: node_bucket
+        node_metrics_quantile:
+          labels:
+            __name__: !in
+              - go_gc_duration_seconds
+            quantile: !set
+          tree: !leaf
+            item: node_quantile
+        aggregator:
+          labels:
+            __name__: !in
+              - aggregator_unavailable_apiservice
+            name: !set
+          tree: !leaf
+            item: aggregator
+        aggregator_reason:
+          labels:
+            __name__: !in
+              - aggregator_unavailable_apiservice_total
+            name: !set
+            reason: !set
+          tree: !leaf
+            item: aggregator_reason
+        aggregator_regeneration_reason:
+          labels:
+            __name__: !in
+              - aggregator_openapi_v2_regeneration_duration
+            reason: !set
+          tree: !leaf
+            item: aggregator_regeneration_reason
+        aggregator_regeneration_apiservice_reason:
+          labels:
+            __name__: !in
+              - aggregator_openapi_v2_regeneration_count
+            apiservice: !set
+            reason: !set
+          tree: !leaf
+            item: aggregator_regeneration_apiservice_reason
+        apiextension_reasons:
+          labels:
+            __name__: !in
+              - apiextensions_openapi_v3_regeneration_count
+            crd: !set
+            group: !set
+            version: !set
+            reason: !set
+          tree: !leaf
+            item: apiextension_reason
+        apiserver_admission_webhook:
+          labels:
+            __name__: !in
+              - apiserver_admission_webhook_admission_duration_seconds_sum
+              - apiserver_admission_webhook_admission_duration_seconds_count
+              - apiserver_admission_controller_admission_duration_seconds_sum
+              - apiserver_admission_controller_admission_duration_seconds_count
+            rejected: !set
+            operation: !set
+            type: !set
+            name: !set
+          tree: !leaf
+            item: apiserver_admission_webhook
+        apiserver_admission_webhook_bucket:
+          labels:
+            __name__: !in
+              - apiserver_admission_webhook_admission_duration_seconds_bucket
+              - apiserver_admission_controller_admission_duration_seconds_bucket
+            rejected: !set
+            operation: !set
+            type: !set
+            name: !set
+            le: !set
+          tree: !leaf
+            item: apiserver_admission_webhook_bucket
+        apiserver_admission_webhook_code:
+          labels:
+            __name__: !in
+              - apiserver_admission_webhook_request_total
+            rejected: !set
+            operation: !set
+            type: !set
+            name: !set
+            code: !set
+          tree: !leaf
+            item: apiserver_admission_webhook_code
+        apiserver_admission_step:
+          labels:
+            __name__: !in
+              - apiserver_admission_step_admission_duration_seconds_summary_sum
+              - apiserver_admission_step_admission_duration_seconds_summary_count
+              - apiserver_admission_step_admission_duration_seconds_sum
+              - apiserver_admission_step_admission_duration_seconds_count
+            operation: !set
+            type: !set
+            rejected: !set
+          tree: !leaf
+            item: apiserver_admission_step
+        apiserver_admission_step_bucket:
+          labels:
+            __name__: !in
+              - apiserver_admission_step_admission_duration_seconds_bucket
+            operation: !set
+            type: !set
+            rejected: !set
+            le: !set
+          tree: !leaf
+            item: apiserver_admission_step_bucket
+        apiserver_admission_step_quantile:
+          labels:
+            __name__: !in
+              - apiserver_admission_step_admission_duration_seconds_summary
+            operation: !set
+            type: !set
+            rejected: !set
+            quantile: !set
+          tree: !leaf
+            item: apiserver_admission_step_quantile
+        apiserver_admission_failure:
+          labels:
+            __name__: !in
+              - apiserver_admission_webhook_fail_open_count
+            name: !set
+            type: !set
+          tree: !leaf
+            item: apiserver_admission_failure
+        apiserver_request_kind:
+          labels:
+            __name__: !in
+              - apiserver_current_inqueue_requests
+              - apiserver_current_inflight_requests
+            request_kind: !set
+          tree: !leaf
+            item: apiserver_current_request
+        apiserver_cache_resource:
+          labels:
+            __name__: !in
+              - apiserver_cache_list_total
+              - apiserver_cache_list_returned_objects_total
+              - apiserver_cache_list_fetched_objects_total
+            resource_prefix: !set
+            index: !opt
+          tree: !leaf
+            item: apiserver_cache_resource
+        apiserver_delegated_auth_request:
+          labels:
+            __name__: !in
+              - apiserver_delegated_authz_request_total
+              - apiserver_delegated_authz_request_duration_seconds_count
+              - apiserver_delegated_authz_request_duration_seconds_sum
+              - apiserver_delegated_authn_request_total
+              - apiserver_delegated_authn_request_duration_seconds_count
+              - apiserver_delegated_authn_request_duration_seconds_sum
+            code: !set
+          tree: !leaf
+            item: apiserver_delegated_auth_request
+        apiserver_delegated_auth_request_bucket:
+          labels:
+            __name__: !in
+              - apiserver_delegated_authz_request_duration_seconds_bucket
+              - apiserver_delegated_authn_request_duration_seconds_bucket
+            code: !set
+            le: !set
+          tree: !leaf
+            item: apiserver_delegated_auth_request_bucket
+        apiserver_watch_events:
+          labels:
+            __name__: !in
+              - apiserver_watch_events_total
+              - apiserver_watch_events_sizes_sum
+              - apiserver_watch_events_sizes_count
+            kind: !set
+            version: !set
+            group: !opt
+          tree: !leaf
+            item: kind
+        apiserver_watch_events_bucket:
+          labels:
+            __name__: !in
+              - apiserver_watch_events_sizes_bucket
+            kind: !set
+            version: !set
+            group: !opt
+            le: !set
+          tree: !leaf
+            item: kind_bucket
+        cadvisor_meta:
+          labels:
+            __name__: !eq cadvisor_version_info
+            kernelVersion: !set
+            osVersion: !set
+          tree: !leaf
+            item: node
+        authentication_token_cache_request_status:
+          labels:
+            __name__: !in
+              - authentication_token_cache_request_total
+              - authentication_token_cache_fetch_total
+              - authentication_token_cache_request_duration_seconds_sum
+              - authentication_token_cache_request_duration_seconds_count
+              - authentication_token_cache_active_fetch_count
+            status: !set
+          tree: !leaf
+            item: authentication_token_cache_request_status
+        authentication_token_cache_request_status_bucket:
+          labels:
+            __name__: !in
+              - authentication_token_cache_request_duration_seconds_bucket
+            status: !set
+            le: !set
+          tree: !leaf
+            item: authentication_token_cache_request_status_bucket
+        authentication:
+          labels:
+            __name__: !in
+              - authentication_duration_seconds_sum
+              - authentication_duration_seconds_count
+              - authentication_attempts
+            result: !set
+          tree: !leaf
+            item: authentication
+        authentication_bucket:
+          labels:
+            __name__: !in
+              - authentication_duration_seconds_bucket
+            result: !set
+            le: !set
+          tree: !leaf
+            item: authentication_bucket
+        authenticated_user:
+          labels:
+            __name__: !in
+              - authenticated_user_requests
+            username: !set
+          tree: !leaf
+            item: authenticated_user
+        etcd_request:
+          labels:
+            __name__: !in
+              - etcd_request_duration_seconds_sum
+              - etcd_request_duration_seconds_count
+            operation: !set
+            type: !set
+          tree: !leaf
+            item: etcd_request
+        etcd_request_bucket:
+          labels:
+            __name__: !in
+              - etcd_request_duration_seconds_bucket
+            operation: !set
+            type: !set
+            le: !set
+          tree: !leaf
+            item: etcd_request_bucket
+        endpoint_slice_controller_sync_result:
+          labels:
+            __name__: !in
+              - endpoint_slice_controller_syncs
+            result: !set
+          tree: !leaf
+            item: endpoint_slice_controller_sync_result
+        endpoint_slice_controller_topology:
+          labels:
+            __name__: !in
+              - endpoint_slice_controller_endpointslices_changed_per_sync_sum
+              - endpoint_slice_controller_endpointslices_changed_per_sync_count
+            topology: !set
+          tree: !leaf
+            item: endpoint_slice_controller_topology
+        endpoint_slice_controller_topology_bucket:
+          labels:
+            __name__: !in
+              - endpoint_slice_controller_endpointslices_changed_per_sync_bucket
+            topology: !set
+            le: !set
+          tree: !leaf
+            item: endpoint_slice_controller_topology_bucket
+        field_validation_requests:
+          labels:
+            __name__: !in
+              - field_validation_request_duration_seconds_sum
+              - field_validation_request_duration_seconds_count
+            field_validation: !opt
+            enabled: !set
+          tree: !leaf
+            item: field_validation_request
+        field_validation_request_bucket:
+          labels:
+            __name__: !in
+              - field_validation_request_duration_seconds_bucket
+            field_validation: !opt
+            enabled: !set
+            le: !set
+          tree: !leaf
+            item: field_validation_request_bucket
+        go_info:
+          labels:
+            __name__: !in
+              - go_info
+            version: !set
+          tree: !leaf
+            item: node
+        grpc_client:
+          labels:
+            __name__: !in
+              - grpc_client_started_total
+              - grpc_client_msg_sent_total
+              - grpc_client_msg_received_total
+              - grpc_client_handled_total
+            grpc_method: !set
+            grpc_service: !set
+            grpc_type: !set
+          tree: !branch
+            handled:
+              labels:
+                __name__: !in
+                  - grpc_client_handled_total
+                grpc_code: !set
+              tree: !leaf
+                item: grpc_client
+            otherwise:
+              labels:
+                __name__: !not_in
+                  - grpc_client_handled_total
+              tree: !leaf
+                item: grpc_client
+        usage:
+          labels:
+            __name__: !in
+              - kube_apiserver_pod_logs_pods_logs_insecure_backend_total
+            usage: !set
+          tree: !leaf
+            item: node_usage
+        http_requests:
+          labels:
+            __name__: !in
+              - kubelet_http_requests_total
+              - kubelet_http_requests_duration_seconds_sum
+              - kubelet_http_requests_duration_seconds_count
+              - kubelet_http_inflight_requests
+            method: !set
+            server_type: !set
+            path: !set
+            long_running: !set
+          tree: !leaf
+            item: http_request
+        http_requests_bucket:
+          labels:
+            __name__: !in
+              - kubelet_http_requests_duration_seconds_bucket
+            method: !set
+            server_type: !set
+            path: !set
+            long_running: !set
+            le: !set
+          tree: !leaf
+            item: http_request_bucket
+        container_type:
+          labels:
+            __name__: !in
+              - kubelet_started_containers_total
+            container_type: !set
+          tree: !leaf
+            item: container_type
+        container_type_errors:
+          labels:
+            __name__: !in
+              - kubelet_started_containers_errors_total
+            container_type: !set
+            code: !set
+          tree: !leaf
+            item: container_type_error
+        container_state:
+          labels:
+            __name__: !in
+              - kubelet_running_containers
+            container_state: !set
+          tree: !leaf
+            item: container_state
+        runtime_operation_types:
+          labels:
+            __name__: !in
+              - kubelet_runtime_operations_total
+              - kubelet_runtime_operations_errors_total
+              - kubelet_runtime_operations_duration_seconds_sum
+              - kubelet_runtime_operations_duration_seconds_count
+              - kubelet_pod_worker_duration_seconds_sum
+              - kubelet_pod_worker_duration_seconds_count
+              - kubelet_cgroup_manager_duration_seconds_sum
+              - kubelet_cgroup_manager_duration_seconds_count
+            operation_type: !set
+          tree: !leaf
+            item: runtime_operation_type
+        runtime_operation_types_bucket:
+          labels:
+            __name__: !in
+              - kubelet_runtime_operations_duration_seconds_bucket
+              - kubelet_pod_worker_duration_seconds_bucket
+              - kubelet_cgroup_manager_duration_seconds_bucket
+            operation_type: !set
+            le: !set
+          tree: !leaf
+            item: runtime_operation_type_bucket
+        metric_source:
+          labels:
+            __name__: !in
+              - kubelet_volume_metric_collection_duration_seconds_sum
+              - kubelet_volume_metric_collection_duration_seconds_count
+            metric_source: !set
+          tree: !leaf
+            item: metric_source
+        metric_source_bucket:
+          labels:
+            __name__: !in
+              - kubelet_volume_metric_collection_duration_seconds_bucket
+            metric_source: !set
+            le: !set
+          tree: !leaf
+            item: metric_source_bucket
+        traffic_policy:
+          labels:
+            __name__: !in
+              - kubeproxy_sync_proxy_rules_no_local_endpoints_total
+            traffic_policy: !set
+          tree: !leaf
+            item: traffic_policy
+        iptables:
+          labels:
+            __name__: !in
+              - kubeproxy_sync_proxy_rules_iptables_total
+            table: !set
+          tree: !leaf
+            item: iptable
+        kubernetes_feature:
+          labels:
+            __name__: !in
+              - kubernetes_feature_enabled
+            name: !set
+            stage: !opt
+          tree: !leaf
+            item: kubernetes_feature
+        kubernetes_build_info:
+          labels:
+            __name__: !in
+              - kubernetes_build_info
+            go_version: !set
+            git_commit: !set
+            git_version: !set
+            git_tree_state: !set
+            major: !set
+            minor: !set
+            compiler: !set
+            platform: !set
+            build_date: !set
+          tree: !leaf
+            item: node
+        machine:
+          labels:
+            __name__: !in
+              - machine_nvm_capacity
+              - machine_nvm_avg_power_budget_watts
+              - machine_memory_bytes
+              - machine_cpu_sockets
+              - machine_cpu_physical_cores
+              - machine_cpu_cores
+            machine_id: !set
+            boot_id: !set
+            system_uuid: !set
+            mode: !opt
+          tree: !leaf
+            item: machine
+        node_authorizer_operation:
+          labels:
+            __name__: !in
+              - node_authorizer_graph_actions_duration_seconds_sum
+              - node_authorizer_graph_actions_duration_seconds_count
+              - endpoint_slice_controller_changes
+            operation: !set
+          tree: !leaf
+            item: node_authorizer_operation
+        node_authorizer_operation_bucket:
+          labels:
+            __name__: !in
+              - node_authorizer_graph_actions_duration_seconds_bucket
+            operation: !set
+            le: !set
+          tree: !leaf
+            item: node_authorizer_operation_bucket
+        cidr:
+          labels:
+            __name__: !in
+              - kube_apiserver_clusterip_allocator_available_ips
+              - kube_apiserver_clusterip_allocator_allocated_ips
+            cidr: !set
+          tree: !leaf
+            item: cidr
+        cidr_scope:
+          labels:
+            __name__: !in
+              - kube_apiserver_clusterip_allocator_allocation_total
+            cidr: !set
+            scope: !set
+          tree: !leaf
+            item: cidr
+        cidrset:
+          labels:
+            __name__: !in
+              - node_ipam_controller_cidrset_usage_cidrs
+              - node_ipam_controller_cidrset_cidrs_allocations_total
+            clusterCIDR: !set
+          tree: !leaf
+            item: cidr
+        request_operation:
+          labels:
+            __name__: !in
+              - pod_security_exemptions_total
+            resource: !set
+            request_operation: !set
+          tree: !leaf
+            item: request_operation
+        security_evaluation:
+          labels:
+            __name__: !in
+              - pod_security_evaluations_total
+            resource: !set
+            request_operation: !set
+            policy_version: !set
+            policy_level: !set
+            mode: !set
+            decision: !set
+          tree: !leaf
+            item: security_evaluation
+        metrics:
+          labels:
+            __name__: !in
+              - container_scrape_error
+              - serviceaccount_valid_tokens_total
+              - serviceaccount_stale_tokens_total
+              - serviceaccount_legacy_tokens_total
+              - scrape_series_added
+              - scrape_samples_scraped
+              - scrape_samples_post_metric_relabeling
+              - scrape_duration_seconds
+              - scheduler_scheduling_algorithm_duration_seconds_sum
+              - scheduler_scheduling_algorithm_duration_seconds_count
+              - scheduler_preemption_victims_sum
+              - scheduler_preemption_victims_count
+              - scheduler_preemption_attempts_total
+              - scheduler_pod_scheduling_attempts_sum
+              - scheduler_pod_scheduling_attempts_count
+              - retroactive_storageclass_total
+              - retroactive_storageclass_errors_total
+              - rest_client_exec_plugin_ttl_seconds
+              - rest_client_exec_plugin_certificate_rotation_age_sum
+              - rest_client_exec_plugin_certificate_rotation_age_count
+              - replicaset_controller_sorting_deletion_age_ratio_sum
+              - replicaset_controller_sorting_deletion_age_ratio_count
+              - pv_collector_bound_pvc_count
+              - process_virtual_memory_max_bytes
+              - process_start_time_seconds
+              - process_resident_memory_bytes
+              - process_open_fds
+              - process_max_fds
+              - process_cpu_seconds_total
+              - process_virtual_memory_bytes
+          tree: !leaf
+            item: node
+        metrics_bucket:
+          labels:
+            __name__: !in
+              - scheduler_scheduling_algorithm_duration_seconds_bucket
+              - scheduler_preemption_victims_bucket
+              - scheduler_pod_scheduling_attempts_bucket
+              - rest_client_exec_plugin_certificate_rotation_age_bucket
+              - replicaset_controller_sorting_deletion_age_ratio_bucket
+            le: !set
+          tree: !leaf
+            item: node_bucket
+        registered_metric:
+          labels:
+            __name__: !in
+              - registered_metric_total
+            stability_level: !set
+            deprecated_version: !opt
+          tree: !leaf
+            item: registered_metric
+        plugin_profile:
+          labels:
+            __name__: !in
+              - scheduler_unschedulable_pods
+            plugin: !set
+            profile: !set
+          tree: !leaf
+            item: plugin_profile
+        code_path:
+          labels:
+            __name__: !in
+              - apiserver_request_timestamp_comparison_time_sum
+              - apiserver_request_timestamp_comparison_time_count
+            code_path: !set
+          tree: !leaf
+            item: code_path
+        code_path_bucket:
+          labels:
+            __name__: !in
+              - apiserver_request_timestamp_comparison_time_bucket
+            code_path: !set
+            le: !set
+          tree: !leaf
+            item: code_path_bucket            
+        result_profile:
+          labels:
+            __name__: !in
+              - scheduler_scheduling_attempt_duration_seconds_sum
+              - scheduler_scheduling_attempt_duration_seconds_count
+              - scheduler_schedule_attempts_total
+            result: !set
+            profile: !set
+          tree: !leaf
+            item: result_profile
+        result_profile_bucket:
+          labels:
+            __name__: !in
+              - scheduler_scheduling_attempt_duration_seconds_bucket
+            result: !set
+            profile: !set
+            le: !set
+          tree: !leaf
+            item: result_profile_bucket
+        storage_operation:
+          labels:
+            __name__: !in
+              - storage_operation_duration_seconds_sum
+              - storage_operation_duration_seconds_count
+            operation_name: !set
+            status: !set
+            migrated: !set
+            volume_plugin: !set
+          tree: !leaf
+            item: storage_operation
+        storage_operation_bucket:
+          labels:
+            __name__: !in
+              - storage_operation_duration_seconds_bucket
+            operation_name: !set
+            status: !set
+            migrated: !set
+            volume_plugin: !set
+            le: !set
+          tree: !leaf
+            item: storage_operation_bucket
+        volume_manager:
+          labels:
+            __name__: !in
+              - volume_manager_total_volumes
+            plugin_name: !set
+            state: !set
+          tree: !leaf
+            item: volume_manager
+        volume_operation:
+          labels:
+            __name__: !in
+              - volume_operation_total_seconds_sum
+              - volume_operation_total_seconds_count
+            plugin_name: !set
+            operation_name: !set
+          tree: !leaf
+            item: volume_operation
+        volume_operation_bucket:
+          labels:
+            __name__: !in
+              - volume_operation_total_seconds_bucket
+            plugin_name: !set
+            operation_name: !set
+            le: !set
+          tree: !leaf
+            item: volume_operation_bucket
+        apiserver_request_source_status:
+          labels:
+            __name__: !in
+              - apiserver_request_post_timeout_total
+            source: !set
+            status: !set
+          tree: !leaf
+            item: apiserver_request_source_status
+        apiserver_request_filter:
+          labels:
+            __name__: !in
+              - apiserver_request_filter_duration_seconds_sum
+              - apiserver_request_filter_duration_seconds_count
+            filter: !set
+          tree: !leaf
+            item: apiserver_request_filter
+        apiserver_request_filter_bucket:
+          labels:
+            __name__: !in
+              - apiserver_request_filter_duration_seconds_bucket
+            filter: !set
+            le: !set
+          tree: !leaf
+            item: apiserver_request_filter_bucket
+        resource:
+          labels:
+            __name__: !in
+              - watch_cache_capacity_decrease_total
+              - watch_cache_capacity
+              - apiserver_watch_cache_initializations_total
+              - apiserver_watch_cache_events_dispatched_total
+              - apiserver_storage_objects
+              - apiserver_storage_list_total
+              - apiserver_storage_list_returned_objects_total
+              - apiserver_storage_list_fetched_objects_total
+              - apiserver_storage_list_evaluated_objects_total
+              - etcd_bookmark_counts
+              - apiserver_init_events_total
+            resource: !set
+          tree: !leaf
+            item: resource
+        resource_verb:
+          labels:
+            __name__: !in
+              - apiserver_selfrequest_total
+              - apiserver_request_aborts_total
+              - apiserver_request_duration_seconds_sum
+              - apiserver_request_duration_seconds_count
+              - apiserver_request_slo_duration_seconds_sum
+              - apiserver_request_slo_duration_seconds_count
+              - apiserver_request_sli_duration_seconds_sum
+              - apiserver_request_sli_duration_seconds_count
+              - apiserver_longrunning_requests
+            verb: !set
+          tree: !branch
+            subresource:
+              labels:
+                scope: !unset
+                subresource: !set
+                resource: !unset
+                component: !opt
+              tree: !leaf
+                item: subresource
+            resource:
+              labels:
+                scope: !unset
+                resource: !set
+                subresource: !opt
+              tree: !leaf
+                item: subresource
+            resource_scope:
+              labels:
+                scope: !set
+                resource: !set
+                version: !opt
+                group: !opt
+                component: !opt
+                subresource: !opt
+                dry_run: !opt
+              tree: !leaf
+                item: resource
+        resource_verb_bucket:
+          labels:
+            __name__: !in
+              - apiserver_request_duration_seconds_bucket
+              - apiserver_request_slo_duration_seconds_bucket
+              - apiserver_request_sli_duration_seconds_bucket
+            verb: !set
+            le: !set
+          tree: !branch
+            subresource:
+              labels:
+                scope: !unset
+                subresource: !set
+                component: !opt
+              tree: !leaf
+                item: subresource_verb_bucket
+            resource:
+              labels:
+                scope: !set
+                resource: !set
+                component: !set
+                version: !set
+                group: !opt
+                subresource: !opt
+                dry_run: !opt
+              tree: !leaf
+                item: resource_verb_bucket
+        apiserver_flowcontrol_request:
+          labels:
+            __name__: !in
+              - apiserver_flowcontrol_read_vs_write_current_requests_sum
+              - apiserver_flowcontrol_read_vs_write_current_requests_count
+            request_kind: !set
+            phase: !set
+          tree: !leaf
+            item: apiserver_flowcontrol_request
+        apiserver_flowcontrol_request_bucket:
+          labels:
+            __name__: !in
+              - apiserver_flowcontrol_read_vs_write_current_requests_bucket
+            request_kind: !set
+            phase: !set
+            le: !set
+          tree: !leaf
+            item: apiserver_flowcontrol_request_bucket
+        apiserver_flow_priority:
+          labels:
+            __name__: !in
+              - apiserver_flowcontrol_work_estimated_seats_sum
+              - apiserver_flowcontrol_work_estimated_seats_count
+              - apiserver_flowcontrol_watch_count_samples_sum
+              - apiserver_flowcontrol_watch_count_samples_count
+              - apiserver_flowcontrol_request_queue_length_after_enqueue_sum
+              - apiserver_flowcontrol_request_queue_length_after_enqueue_count
+              - apiserver_flowcontrol_request_dispatch_no_accommodation_total
+              - apiserver_flowcontrol_request_concurrency_in_use
+              - apiserver_flowcontrol_dispatched_requests_total
+              - apiserver_flowcontrol_current_inqueue_requests
+              - apiserver_flowcontrol_current_executing_requests
+            flow_schema: !set
+            priority_level: !set
+          tree: !leaf
+            item: apiserver_flow_priority
+        apiserver_flow_priority_bucket:
+          labels:
+            __name__: !in
+              - apiserver_flowcontrol_work_estimated_seats_bucket
+              - apiserver_flowcontrol_watch_count_samples_bucket
+              - apiserver_flowcontrol_request_queue_length_after_enqueue_bucket
+            flow_schema: !set
+            priority_level: !set
+            le: !set
+          tree: !leaf
+            item: apiserver_flow_priority_bucket
+        apiserver_flow_priority_type:
+          labels:
+            __name__: !in
+              - apiserver_flowcontrol_request_execution_seconds_sum
+              - apiserver_flowcontrol_request_execution_seconds_count
+            flow_schema: !set
+            priority_level: !set
+            type: !set
+          tree: !leaf
+            item: apiserver_flow_priority_type
+        apiserver_flow_priority_type_bucket:
+          labels:
+            __name__: !in
+              - apiserver_flowcontrol_request_execution_seconds_bucket
+            flow_schema: !set
+            priority_level: !set
+            type: !set
+            le: !set
+          tree: !leaf
+            item: apiserver_flow_priority_type_bucket
+        apiserver_flow_priority_execute:
+          labels:
+            __name__: !in
+              - apiserver_flowcontrol_request_wait_duration_seconds_sum
+              - apiserver_flowcontrol_request_wait_duration_seconds_count
+            flow_schema: !set
+            priority_level: !set
+            execute: !set
+          tree: !leaf
+            item: apiserver_flow_priority_execute
+        apiserver_flow_priority_execute_bucket:
+          labels:
+            __name__: !in
+              - apiserver_flowcontrol_request_wait_duration_seconds_bucket
+            flow_schema: !set
+            priority_level: !set
+            execute: !set
+            le: !set
+          tree: !leaf
+            item: apiserver_flow_priority_execute_bucket
+        apiserver_priority:
+          labels:
+            __name__: !in
+              - apiserver_flowcontrol_target_seats
+              - apiserver_flowcontrol_upper_limit_seats
+              - apiserver_flowcontrol_request_concurrency_limit
+              - apiserver_flowcontrol_nominal_limit_seats
+              - apiserver_flowcontrol_lower_limit_seats
+              - apiserver_flowcontrol_latest_s
+              - apiserver_flowcontrol_dispatch_r
+              - apiserver_flowcontrol_demand_seats_sum
+              - apiserver_flowcontrol_demand_seats_stdev
+              - apiserver_flowcontrol_demand_seats_smoothed
+              - apiserver_flowcontrol_demand_seats_high_watermark
+              - apiserver_flowcontrol_demand_seats_count
+              - apiserver_flowcontrol_demand_seats_average
+              - apiserver_flowcontrol_current_r
+              - apiserver_flowcontrol_current_limit_seats
+            priority_level: !set
+          tree: !leaf
+            item: apiserver_priority
+        apiserver_priority_bucket:
+          labels:
+            __name__: !in
+              - apiserver_flowcontrol_demand_seats_bucket
+            priority_level: !set
+            le: !set
+          tree: !leaf
+            item: apiserver_priority_bucket
+        apiserver_priority_bounds:
+          labels:
+            __name__: !in
+              - apiserver_flowcontrol_next_s_bounds
+              - apiserver_flowcontrol_next_discounted_s_bounds
+            priority_level: !set
+            bound: !set
+          tree: !leaf
+            item: apiserver_priority_bound
+        apiserver_priority_phase:
+          labels:
+            __name__: !in
+              - apiserver_flowcontrol_priority_level_seat_utilization_sum
+              - apiserver_flowcontrol_priority_level_seat_utilization_count
+              - apiserver_flowcontrol_priority_level_request_utilization_sum
+              - apiserver_flowcontrol_priority_level_request_utilization_count
+            priority_level: !set
+            phase: !set
+          tree: !leaf
+            item: apiserver_priority_phase
+        apiserver_priority_phase_bucket:
+          labels:
+            __name__: !in
+              - apiserver_flowcontrol_priority_level_seat_utilization_bucket
+              - apiserver_flowcontrol_priority_level_request_utilization_bucket
+            priority_level: !set
+            phase: !set
+            le: !set
+          tree: !leaf
+            item: apiserver_priority_phase_bucket
+        apiserver_protocol:
+          labels:
+            __name__: !in
+              - apiserver_egress_dialer_dial_start_total
+              - apiserver_egress_dialer_dial_duration_seconds_sum
+              - apiserver_egress_dialer_dial_duration_seconds_count
+            protocol: !set
+            transport: !set
+            stage: !unset
+          tree: !leaf
+            item: apiserver_protocol
+        apiserver_protocol_bucket:
+          labels:
+            __name__: !in
+              - apiserver_egress_dialer_dial_duration_seconds_bucket
+            protocol: !set
+            transport: !set
+            stage: !unset
+            le: !set
+          tree: !leaf
+            item: apiserver_protocol_bucket
+        apiserver_protocol_stage:
+          labels:
+            __name__: !in
+              - apiserver_egress_dialer_dial_duration_seconds_sum
+              - apiserver_egress_dialer_dial_duration_seconds_count
+              - apiserver_egress_dialer_dial_failure_count
+            protocol: !set
+            transport: !set
+            stage: !set
+          tree: !leaf
+            item: apiserver_protocol_stage
+        apiserver_request_verb_code:
+          labels:
+            __name__: !in
+              - apiserver_request_total
+              - apiserver_request_terminations_total
+            verb: !set
+            code: !set
+          tree: !branch
+            subresource:
+              labels:
+                scope: !unset
+                subresource: !set
+                component: !opt
+              tree: !leaf
+                item: subresource
+            resource:
+              labels:
+                scope: !set
+                resource: !set
+                component: !set
+                version: !set
+                group: !opt
+                subresource: !opt
+                dry_run: !opt
+              tree: !leaf
+                item: resource
+        group_version_resource:
+          labels:
+            __name__: !in
+              - apiserver_requested_deprecated_apis
+            group: !set
+            resource: !set
+            version: !set
+          tree: !leaf
+            item: resource
+        resource_verb_scope:
+          labels:
+            __name__: !in
+              - apiserver_response_sizes_sum
+              - apiserver_response_sizes_count
+            verb: !set
+          tree: !branch
+            subresource:
+              labels:
+                scope: !unset
+                subresource: !set
+              tree: !leaf
+                item: subresource
+            resource:
+              labels:
+                scope: !set
+                resource: !set
+                component: !set
+                version: !set
+                group: !opt
+                subresource: !opt
+              tree: !leaf
+                item: resource
+        resource_verb_scope_bucket:
+          labels:
+            __name__: !in
+              - apiserver_response_sizes_bucket
+            verb: !set
+            le: !set
+          tree: !branch
+            subresource:
+              labels:
+                scope: !unset
+                subresource: !set
+              tree: !leaf
+                item: subresource_bucket
+            resource:
+              labels:
+                scope: !set
+                resource: !set
+                component: !set
+                version: !set
+                group: !opt
+                subresource: !opt
+              tree: !leaf
+                item: resource_bucket
+        workqueue:
+          labels:
+            __name__: !in
+              - workqueue_work_duration_seconds_sum
+              - workqueue_work_duration_seconds_count
+              - workqueue_unfinished_work_seconds
+              - workqueue_retries_total
+              - workqueue_queue_duration_seconds_sum
+              - workqueue_queue_duration_seconds_count
+              - workqueue_longest_running_processor_seconds
+              - workqueue_depth
+              - workqueue_adds_total
+            name: !set
+          tree: !leaf
+            item: workqueue
+        workqueue_bucket:
+          labels:
+            __name__: !in
+              - workqueue_work_duration_seconds_bucket
+              - workqueue_queue_duration_seconds_bucket
+            name: !set
+            le: !set
+          tree: !leaf
+            item: workqueue_bucket
+        work:
+          labels:
+            __name__: !in
+              - scheduler_scheduler_goroutines
+            work: !set
+          tree: !leaf
+            item: work
+        cache:
+          labels:
+            __name__: !in
+              - scheduler_scheduler_cache_size
+            type: !set
+          tree: !leaf
+            item: cache
+        queue_event:
+          labels:
+            __name__: !in
+              - scheduler_queue_incoming_pods_total
+            queue: !set
+            event: !set
+          tree: !leaf
+            item: queue_event
+        queue:
+          labels:
+            __name__: !in
+              - scheduler_pending_pods
+            queue: !set
+          tree: !leaf
+            item: queue
+        attempts:
+          labels:
+            __name__: !in
+              - scheduler_pod_scheduling_duration_seconds_sum
+              - scheduler_pod_scheduling_duration_seconds_count
+            attempts: !set
+          tree: !leaf
+            item: attempts
+        attempts_bucket:
+          labels:
+            __name__: !in
+              - scheduler_pod_scheduling_duration_seconds_bucket
+            attempts: !set
+            le: !set
+          tree: !leaf
+            item: attempts_bucket
+        scheduler_plugin:
+          labels:
+            __name__: !in
+              - scheduler_plugin_execution_duration_seconds_sum
+              - scheduler_plugin_execution_duration_seconds_count
+            plugin: !set
+            extension_point: !set
+            status: !set
+          tree: !leaf
+            item: scheduler_plugin
+        scheduler_plugin_bucket:
+          labels:
+            __name__: !in
+              - scheduler_plugin_execution_duration_seconds_bucket
+            plugin: !set
+            extension_point: !set
+            status: !set
+            le: !set
+          tree: !leaf
+            item: scheduler_plugin_bucket
+        scheduler_profile:
+          labels:
+            __name__: !in
+              - scheduler_framework_extension_point_duration_seconds_sum
+              - scheduler_framework_extension_point_duration_seconds_count
+            profile: !set
+            extension_point: !set
+            status: !set
+          tree: !leaf
+            item: scheduler_profile
+        scheduler_profile_bucket:
+          labels:
+            __name__: !in
+              - scheduler_framework_extension_point_duration_seconds_bucket
+            profile: !set
+            extension_point: !set
+            status: !set
+            le: !set
+          tree: !leaf
+            item: scheduler_profile_bucket
+        operation:
+          labels:
+            __name__: !in
+              - scheduler_goroutines
+            operation: !set
+          tree: !leaf
+            item: scheduler_operation
+        manager:
+          labels:
+            __name__: !in
+              - running_managed_controllers
+            manager: !set
+            name: !set
+          tree: !leaf
+            item: manager
+        root_ca_cert_publisher:
+          labels:
+            __name__: !in
+              - root_ca_cert_publisher_sync_total
+              - root_ca_cert_publisher_sync_duration_seconds_sum
+              - root_ca_cert_publisher_sync_duration_seconds_count
+            code: !set
+          tree: !leaf
+            item: root_ca_cert_publisher
+        root_ca_cert_publisher_bucket:
+          labels:
+            __name__: !in
+              - root_ca_cert_publisher_sync_duration_seconds_bucket
+            code: !set
+            le: !set
+          tree: !leaf
+            item: root_ca_cert_publisher_bucket
+        rest_client:
+          labels:
+            __name__: !in
+              - rest_client_response_size_bytes_sum
+              - rest_client_response_size_bytes_count
+              - rest_client_request_size_bytes_sum
+              - rest_client_request_size_bytes_count
+              - rest_client_request_duration_seconds_sum
+              - rest_client_request_duration_seconds_count
+              - rest_client_rate_limiter_duration_seconds_sum
+              - rest_client_rate_limiter_duration_seconds_count
+            host: !set
+            verb: !set
+          tree: !leaf
+            item: rest_client
+        rest_client_bucket:
+          labels:
+            __name__: !in
+              - rest_client_response_size_bytes_bucket
+              - rest_client_request_size_bytes_bucket
+              - rest_client_request_duration_seconds_bucket
+              - rest_client_rate_limiter_duration_seconds_bucket
+            host: !set
+            verb: !set
+            le: !set
+          tree: !leaf
+            item: rest_client_bucket
+        rest_client_request:
+          labels:
+            __name__: !in
+              - rest_client_requests_total
+            host: !set
+            method: !set
+            code: !set
+          tree: !leaf
+            item: rest_client_request
+        pv_collector_plugin:
+          labels:
+            __name__: !in
+              - pv_collector_total_pv_count
+              - pv_collector_total_pv_sum
+            plugin_name: !set
+            volume_mode: !set
+          tree: !leaf
+            item: pv_collector_plugin
+        pv_collector:
+          labels:
+            __name__: !in
+              - pv_collector_bound_pv_count
+              - pv_collector_bound_pv_sum
+            storage_class: !set
+          tree: !leaf
+            item: pv_collector

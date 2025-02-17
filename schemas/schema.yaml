@@ -1,0 +1,34 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+items:
+  host:
+    - ip
+    - hostname
+  container:
+    - namespace
+    - pod
+    - container
+  pod:
+    - namespace
+    - pod
+metrics:
+  ram_usage:
+    item:
+      - host
+      - container
+      - pod
+
+
+--> ram_usage { ip="127.0.0.1", hostname="localhost" } 5
+    ram_usage { namespace="argocd", pod="repo-server-xxxx", container="repo-server" } 1
+    ram_usage { namespace="argocd", pod="repo-server-xxxx", container="repo-helper" } 2
+    ram_usage { namespace="argocd", pod="repo-server-xxxx" } 3
+
+
+hosts
+-----
+ip        hostname  ram_usage
+127.0.0.1 localhost 5
+

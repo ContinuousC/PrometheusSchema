@@ -1,0 +1,24 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+requires:
+  argocd: ^0.1
+items:
+  root:
+    query:
+      cluster: set
+      container: set
+      endpoint: set
+      namespace: set
+      prometheus: set
+      prometheus_replica: set
+      service: set
+      job: !in
+        - argo-cd-argocd-application-controller-metrics
+        - argo-cd-argocd-applicationset-controller-metrics
+        - argo-cd-argocd-notifications-controller-metrics
+        - argo-cd-argocd-repo-server-metrics
+        - argo-cd-argocd-server-metrics
+    items:
+      - argocd:root

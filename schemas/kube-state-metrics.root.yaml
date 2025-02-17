@@ -1,0 +1,25 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+version: 0.1.0
+requires:
+  kube-state-metrics: 0.1
+items:
+  root:
+    query:
+      job: !eq kube-state-metrics
+      alertname: !unset
+      cluster: !set
+      container: !set # kube-state-metrics
+      endpoint: !set # http
+      instance: !set # 10.0.0.241:8080
+      namespace: !opt # monitoring
+      pod: !set # monitoring-kube-state-metrics-6d77dd6dd6-9w6cs
+      prometheus: !set # monitoring/monitoring-kube-prometheus-prometheus
+      prometheus_replica: !set # prometheus-monitoring-kube-prometheus-prometheus-0
+      service: !set # monitoring-kube-state-metrics
+    keys:
+      - cluster
+    items:
+      - kube-state-metrics:root

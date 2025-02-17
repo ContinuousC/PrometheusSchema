@@ -1,0 +1,222 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+name: argocd
+version: 0.1.0
+requires:
+  go: 0.1
+  grpc: 0.1
+  prometheus: 0.1
+items:
+  app:
+    query:
+      name: set
+    items:
+    - sync
+    metrics:
+      argocd_app_info: !scalar
+        labels:
+          dest_namespace: opt
+          health_status: set
+          project: set
+          repo: set
+          sync_status: set
+  application-controller:
+    query:
+      job: !eq argo-cd-argocd-application-controller-metrics
+    implements:
+    - argocd-cluster
+    items:
+    - application-controller-pod
+  application-controller-pod:
+    implements:
+    - argocd-pod
+    items:
+    - command
+    - k8s_request
+    - k8s_server
+    - namespace
+    - server2
+    - workqueue
+  applicationset-controller:
+    query:
+      job: !eq argo-cd-argocd-applicationset-controller-metrics
+    implements:
+    - argocd-cluster
+    items:
+    - applicationset-controller-pod
+  applicationset-controller-pod:
+    implements:
+    - argocd-pod
+    items:
+    - controller
+    - rest_client_request
+  argocd-cluster:
+    assert:
+      container: set
+      endpoint: set
+      namespace: set
+      service: set
+    metrics:
+      count:up1: !scalar {}
+  argocd-pod:
+    assert:
+      instance: set
+      pod: set
+    implements:
+    - go:metrics
+    - process
+    - prometheus:scrape
+  command:
+    query:
+      command: set
+      hostname: set
+    metrics:
+      argocd_kubectl_exec_pending: !scalar {}
+      argocd_kubectl_exec_total: !scalar {}
+  controller:
+    query:
+      controller: set
+    items:
+    - result
+    metrics:
+      controller_runtime_active_workers: !scalar {}
+      controller_runtime_max_concurrent_reconciles: !scalar {}
+      controller_runtime_reconcile_errors_total: !scalar {}
+      controller_runtime_reconcile_time_seconds: !histogram {}
+  k8s_kind:
+    query:
+      group: opt
+      kind: set
+    metrics:
+      argocd_cluster_events_total: !scalar {}
+  k8s_request:
+    query:
+      exported_namespace: set
+      name: set
+      project: set
+      resource_kind: set
+      resource_namespace: opt
+      response_code: set
+      server: set
+      verb: set
+    metrics:
+      argocd_app_k8s_request_total: !scalar {}
+  k8s_server:
+    query:
+      k8s_version: set
+      server: set
+    metrics:
+      argocd_cluster_connection_status: !scalar {}
+      argocd_cluster_info: !scalar {}
+  namespace:
+    query:
+      dest_server: set
+      exported_namespace: set
+    items:
+    - app
+    metrics:
+      argocd_app_reconcile: !histogram {}
+  notifications-controller:
+    query:
+      job: !eq argo-cd-argocd-notifications-controller-metrics
+    implements:
+    - argocd-cluster
+    items:
+    - notifications-controller-pod
+  notifications-controller-pod:
+    implements:
+    - argocd-pod
+  process:
+    metrics:
+      process_cpu_seconds_total: !scalar {}
+      process_max_fds: !scalar {}
+      process_open_fds: !scalar {}
+      process_resident_memory_bytes: !scalar {}
+      process_start_time_seconds: !scalar {}
+      process_virtual_memory_bytes: !scalar {}
+      process_virtual_memory_max_bytes: !scalar {}
+  repo:
+    query:
+      repo: set
+    items:
+    - request_type
+    metrics:
+      argocd_repo_pending_request_total: !scalar {}
+  repo-server:
+    query:
+      job: !eq argo-cd-argocd-repo-server-metrics
+    implements:
+    - argocd-cluster
+    items:
+    - repo-server-pod
+  repo-server-pod:
+    implements:
+    - argocd-pod
+    items:
+    - repo
+  request_type:
+    query:
+      request_type: set
+    metrics:
+      argocd_git_request_duration_seconds: !histogram {}
+      argocd_git_request_total: !scalar {}
+  rest_client_request:
+    query:
+      code: set
+      host: set
+      method: set
+    metrics:
+      rest_client_requests_total: !scalar {}
+  result:
+    query:
+      result: set
+    metrics:
+      controller_runtime_reconcile_total: !scalar {}
+  root:
+    items:
+    - application-controller
+    - applicationset-controller
+    - notifications-controller
+    - repo-server
+    - server
+  server2:
+    query:
+      server: set
+    items:
+    - k8s_kind
+    metrics:
+      argocd_cluster_api_resource_objects: !scalar {}
+      argocd_cluster_api_resources: !scalar {}
+      argocd_cluster_cache_age_seconds: !scalar {}
+  server-pod:
+    implements:
+    - argocd-pod
+    items:
+    - grpc:grpc_server
+  server:
+    query:
+      job: !eq argo-cd-argocd-server-metrics
+    implements:
+    - argocd-cluster
+    items:
+    - server-pod
+  sync:
+    query:
+      phase: set
+      project: set
+    metrics:
+      argocd_app_sync_total: !scalar {}
+  workqueue:
+    query:
+      name: set
+    metrics:
+      workqueue_adds_total: !scalar {}
+      workqueue_depth: !scalar {}
+      workqueue_longest_running_processor_seconds: !scalar {}
+      workqueue_queue_duration_seconds: !histogram {}
+      workqueue_retries_total: !scalar {}
+      workqueue_unfinished_work_seconds: !scalar {}
+      workqueue_work_duration_seconds: !histogram {}
+

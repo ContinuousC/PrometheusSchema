@@ -1,0 +1,2297 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+version: 0.1.0
+items:
+  '!action':
+    query:
+      action: unset
+    items:
+      - '!completion_mode'
+      - completion_mode
+  '!apiservice':
+    query:
+      apiservice: unset
+    metrics:
+      aggregator_openapi_v2_regeneration_duration: !scalar {}
+  '!attempts':
+    query:
+      attempts: unset
+    items:
+      - '!plugin'
+      - plugin
+  '!boot_id-!machine_id-!system_uuid':
+    query:
+      boot_id: unset
+      machine_id: unset
+      system_uuid: unset
+    items:
+      - '!long_running-!path-!server_type'
+      - long_running-path-server_type
+  '!bound':
+    query:
+      bound: unset
+    items:
+      - '!priority_level'
+      - priority_level
+  '!build_date-!compiler-!git_commit-!git_tree_state-!git_version-!go_version-!platform':
+    query:
+      build_date: unset
+      compiler: unset
+      git_commit: unset
+      git_tree_state: unset
+      git_version: unset
+      go_version: unset
+      platform: unset
+    items:
+      - '!decision-!policy_level-!policy_version'
+      - decision-policy_level-policy_version
+  '!cidr':
+    query:
+      cidr: unset
+    items:
+      - '!action'
+      - action
+  '!clusterCIDR':
+    query:
+      clusterCIDR: unset
+    items:
+      - '!traffic_policy'
+      - traffic_policy
+  '!code':
+    query:
+      code: unset
+    items:
+      - '!type'
+      - type
+  '!code-verb-!method':
+    query:
+      code: unset
+      method: unset
+      verb: set
+    keys:
+      - verb
+    metrics:
+      rest_client_rate_limiter_duration_seconds: !histogram {}
+      rest_client_request_duration_seconds: !histogram {}
+      rest_client_request_size_bytes: !histogram {}
+      rest_client_response_size_bytes: !histogram {}
+  '!code1':
+    query:
+      code: unset
+    items:
+      - '!group'
+      - group
+  '!code2':
+    query:
+      code: unset
+    metrics:
+      apiserver_request_duration_seconds: !histogram {}
+      apiserver_request_sli_duration_seconds: !histogram {}
+      apiserver_request_slo_duration_seconds: !histogram {}
+      apiserver_response_sizes: !histogram {}
+      apiserver_selfrequest_total: !scalar {}
+  '!code3':
+    query:
+      code: unset
+    items:
+      - '!group2'
+      - group2
+  '!code4':
+    query:
+      code: unset
+    metrics:
+      apiserver_request_duration_seconds: !histogram {}
+  '!code5':
+    query:
+      code: unset
+    metrics:
+      kubelet_started_containers_total: !scalar {}
+  '!code_path':
+    query:
+      code_path: unset
+    items:
+      - '!source'
+      - source
+  '!completion_mode':
+    query:
+      completion_mode: unset
+    items:
+      - '!field_validation'
+      - field_validation
+  '!component':
+    query:
+      component: unset
+    metrics:
+      apiserver_request_aborts_total: !scalar {}
+  '!component1':
+    query:
+      component: unset
+    items:
+      - '!resource1'
+      - resource2
+  '!container':
+    query:
+      container: unset
+    metrics:
+      container_last_seen: !scalar {}
+      container_memory_cache: !scalar {}
+      container_memory_failcnt: !scalar {}
+      container_memory_max_usage_bytes: !scalar {}
+      container_memory_rss: !scalar {}
+      container_memory_usage_bytes: !scalar {}
+      container_memory_working_set_bytes: !scalar {}
+      container_oom_events_total: !scalar {}
+      container_processes: !scalar {}
+      container_sockets: !scalar {}
+      container_start_time_seconds: !scalar {}
+      container_threads: !scalar {}
+      node_namespace_pod_container:container_memory_cache: !scalar {}
+      node_namespace_pod_container:container_memory_rss: !scalar {}
+      node_namespace_pod_container:container_memory_working_set_bytes: !scalar {}
+  '!container1':
+    query:
+      container: unset
+    metrics:
+      container_cpu_usage_seconds_total: !scalar {}
+  '!container2':
+    query:
+      container: unset
+    metrics:
+      container_fs_reads_bytes_total: !scalar {}
+      container_fs_reads_total: !scalar {}
+      container_fs_writes_bytes_total: !scalar {}
+      container_fs_writes_total: !scalar {}
+  '!container3':
+    query:
+      container: unset
+    metrics:
+      container_ulimits_soft: !scalar {}
+  '!container4':
+    query:
+      container: unset
+    metrics:
+      container_memory_failures_total: !scalar {}
+  '!container5':
+    query:
+      container: unset
+    metrics:
+      container_blkio_device_usage_total: !scalar {}
+  '!container_state':
+    query:
+      container_state: unset
+    items:
+      - '!uid'
+      - uid
+  '!container_type':
+    query:
+      container_type: unset
+    items:
+      - '!container_state'
+      - container_state
+  '!cpu':
+    query:
+      cpu: unset
+    metrics:
+      container_cpu_cfs_periods_total: !scalar {}
+      container_cpu_cfs_throttled_periods_total: !scalar {}
+      container_last_seen: !scalar {}
+      container_memory_cache: !scalar {}
+      container_memory_failcnt: !scalar {}
+      container_memory_max_usage_bytes: !scalar {}
+      container_memory_rss: !scalar {}
+      container_memory_usage_bytes: !scalar {}
+      container_memory_working_set_bytes: !scalar {}
+      container_oom_events_total: !scalar {}
+      container_processes: !scalar {}
+      container_sockets: !scalar {}
+      container_start_time_seconds: !scalar {}
+      container_threads: !scalar {}
+  '!cpu1':
+    query:
+      cpu: unset
+    items:
+      - '!container'
+      - container
+  '!crd':
+    query:
+      crd: unset
+    items:
+      - '!name'
+      - name
+  '!decision-!policy_level-!policy_version':
+    query:
+      decision: unset
+      policy_level: unset
+      policy_version: unset
+    items:
+      - '!boot_id-!machine_id-!system_uuid'
+      - boot_id-machine_id-system_uuid
+  '!deprecated_version':
+    query:
+      deprecated_version: unset
+    metrics:
+      registered_metric_total: !scalar {}
+  '!device':
+    query:
+      device: unset
+    items:
+      - '!cpu'
+      - cpu
+  '!device1':
+    query:
+      device: unset
+    items:
+      - '!cpu1'
+      - cpu1
+  '!dry_run':
+    query:
+      dry_run: unset
+    items:
+      - '!subresource'
+      - subresource
+  '!enabled':
+    query:
+      enabled: unset
+    items:
+      - '!topology'
+      - topology
+  '!event':
+    query:
+      event: unset
+    items:
+      - '!attempts'
+      - attempts
+  '!execute':
+    query:
+      execute: unset
+    items:
+      - '!phase'
+      - phase
+  '!field_validation':
+    query:
+      field_validation: unset
+    items:
+      - '!enabled'
+      - enabled
+  '!filter':
+    query:
+      filter: unset
+    items:
+      - '!status'
+      - status
+  '!flow_schema':
+    query:
+      flow_schema: unset
+    metrics:
+      apiserver_flowcontrol_current_limit_seats: !scalar {}
+      apiserver_flowcontrol_current_r: !scalar {}
+      apiserver_flowcontrol_demand_seats: !histogram {}
+      apiserver_flowcontrol_demand_seats_average: !scalar {}
+      apiserver_flowcontrol_demand_seats_high_watermark: !scalar {}
+      apiserver_flowcontrol_demand_seats_smoothed: !scalar {}
+      apiserver_flowcontrol_demand_seats_stdev: !scalar {}
+      apiserver_flowcontrol_dispatch_r: !scalar {}
+      apiserver_flowcontrol_latest_s: !scalar {}
+      apiserver_flowcontrol_lower_limit_seats: !scalar {}
+      apiserver_flowcontrol_nominal_limit_seats: !scalar {}
+      apiserver_flowcontrol_request_concurrency_limit: !scalar {}
+      apiserver_flowcontrol_target_seats: !scalar {}
+      apiserver_flowcontrol_upper_limit_seats: !scalar {}
+  '!group':
+    query:
+      group: unset
+    metrics:
+      apiserver_longrunning_requests: !scalar {}
+      apiserver_request_duration_seconds: !histogram {}
+      apiserver_request_sli_duration_seconds: !histogram {}
+      apiserver_request_slo_duration_seconds: !histogram {}
+      apiserver_response_sizes: !histogram {}
+  '!group-!version':
+    query:
+      group: unset
+      version: unset
+    metrics:
+      apiserver_init_events_total: !scalar {}
+      apiserver_storage_list_evaluated_objects_total: !scalar {}
+      apiserver_storage_list_fetched_objects_total: !scalar {}
+      apiserver_storage_list_returned_objects_total: !scalar {}
+      apiserver_storage_list_total: !scalar {}
+      apiserver_storage_objects: !scalar {}
+      apiserver_watch_cache_events_dispatched_total: !scalar {}
+      apiserver_watch_cache_initializations_total: !scalar {}
+      etcd_bookmark_counts: !scalar {}
+      watch_cache_capacity: !scalar {}
+      watch_cache_capacity_decrease_total: !scalar {}
+  '!group1':
+    query:
+      group: unset
+    metrics:
+      apiserver_request_terminations_total: !scalar {}
+      apiserver_request_total: !scalar {}
+  '!group2':
+    query:
+      group: unset
+    metrics:
+      apiserver_longrunning_requests: !scalar {}
+      apiserver_request_duration_seconds: !histogram {}
+      apiserver_request_sli_duration_seconds: !histogram {}
+      apiserver_request_slo_duration_seconds: !histogram {}
+  '!group3':
+    query:
+      group: unset
+    metrics:
+      apiserver_request_total: !scalar {}
+  '!group4':
+    query:
+      group: unset
+    metrics:
+      apiserver_watch_events_sizes: !histogram {}
+      apiserver_watch_events_total: !scalar {}
+  '!grpc_code':
+    query:
+      grpc_code: unset
+    metrics:
+      grpc_client_msg_received_total: !scalar {}
+      grpc_client_msg_sent_total: !scalar {}
+      grpc_client_started_total: !scalar {}
+  '!grpc_method-!grpc_service-!grpc_type':
+    query:
+      grpc_method: unset
+      grpc_service: unset
+      grpc_type: unset
+    items:
+      - '!migrated-!volume_plugin'
+      - migrated-volume_plugin
+  '!host':
+    query:
+      host: unset
+    items:
+      - '!stability_level'
+      - stability_level
+  '!id-!pod':
+    query:
+      id: unset
+      pod: unset
+    items:
+      - '!operation_type'
+      - operation_type
+  '!index':
+    query:
+      index: unset
+    metrics:
+      apiserver_cache_list_fetched_objects_total: !scalar {}
+      apiserver_cache_list_returned_objects_total: !scalar {}
+      apiserver_cache_list_total: !scalar {}
+  '!instance-!node':
+    query:
+      instance: unset
+      node: unset
+    metrics:
+      count:up1: !scalar {}
+  '!interface':
+    query:
+      interface: unset
+    items:
+      - '!device1'
+      - device1
+  '!kernelVersion-!osVersion':
+    query:
+      kernelVersion: unset
+      osVersion: unset
+    items:
+      - '!protocol-!transport'
+      - protocol-transport
+  '!kind':
+    query:
+      kind: unset
+    items:
+      - '!code_path'
+      - code_path
+  '!long_running-!path-!server_type':
+    query:
+      long_running: unset
+      path: unset
+      server_type: unset
+    items:
+      - '!grpc_method-!grpc_service-!grpc_type'
+      - grpc_method-grpc_service-grpc_type
+  '!major-!minor':
+    query:
+      major: unset
+      minor: unset
+    items:
+      - '!kernelVersion-!osVersion'
+      - kernelVersion-osVersion
+  '!manager':
+    query:
+      manager: unset
+    items:
+      - '!host'
+      - host
+  '!metric_source':
+    query:
+      metric_source: unset
+    items:
+      - '!container_type'
+      - container_type
+  '!migrated-!volume_plugin':
+    query:
+      migrated: unset
+      volume_plugin: unset
+    items:
+      - '!major-!minor'
+      - major-minor
+  '!mode':
+    query:
+      mode: unset
+    metrics:
+      machine_cpu_cores: !scalar {}
+      machine_cpu_physical_cores: !scalar {}
+      machine_cpu_sockets: !scalar {}
+      machine_memory_bytes: !scalar {}
+      machine_nvm_avg_power_budget_watts: !scalar {}
+  '!name':
+    query:
+      name: unset
+    items:
+      - '!reason'
+      - reason
+  '!name-!image':
+    query:
+      image: unset
+      name: unset
+    items:
+      - '!device'
+      - device
+  '!name-!image1':
+    query:
+      image: unset
+      name: unset
+    metrics:
+      container_memory_failures_total: !scalar {}
+  '!name-!image2':
+    query:
+      image: unset
+      name: unset
+    metrics:
+      container_blkio_device_usage_total: !scalar {}
+  '!name-!operation-!rejected-!type':
+    query:
+      name: unset
+      operation: unset
+      rejected: unset
+      type: unset
+    metrics:
+      apiserver_delegated_authn_request_duration_seconds: !histogram {}
+      apiserver_delegated_authn_request_total: !scalar {}
+      apiserver_delegated_authz_request_duration_seconds: !histogram {}
+      apiserver_delegated_authz_request_total: !scalar {}
+      root_ca_cert_publisher_sync_duration_seconds: !histogram {}
+      root_ca_cert_publisher_sync_total: !scalar {}
+  '!name1':
+    query:
+      name: unset
+    metrics:
+      scheduler_scheduler_cache_size: !scalar {}
+  '!name2':
+    query:
+      name: unset
+    metrics:
+      apiserver_admission_step_admission_duration_seconds: !histogram {}
+      apiserver_admission_step_admission_duration_seconds_summary: !summary {}
+  '!operation':
+    query:
+      operation: unset
+    items:
+      - '!version'
+      - version
+  '!operation1':
+    query:
+      operation: unset
+    items:
+      - '!name1'
+      - name1
+  '!operation_name':
+    query:
+      operation_name: unset
+    items:
+      - '!plugin_name-!volume_mode'
+      - plugin_name-volume_mode
+  '!operation_type':
+    query:
+      operation_type: unset
+    items:
+      - '!usage'
+      - usage
+  '!phase':
+    query:
+      phase: unset
+    items:
+      - '!bound'
+      - bound
+  '!plugin':
+    query:
+      plugin: unset
+    items:
+      - '!queue'
+      - queue
+  '!plugin_name-!volume_mode':
+    query:
+      plugin_name: unset
+      volume_mode: unset
+    items:
+      - '!work'
+      - work
+  '!pod_uid':
+    query:
+      pod_uid: unset
+    items:
+      - '!probe_type'
+      - probe_type
+  '!priority_level':
+    query:
+      priority_level: unset
+    items:
+      - '!stage'
+      - stage
+  '!probe_type':
+    query:
+      probe_type: unset
+    items:
+      - '!request_operation'
+      - request_operation
+  '!profile':
+    query:
+      profile: unset
+    items:
+      - '!manager'
+      - manager
+  '!protocol-!transport':
+    query:
+      protocol: unset
+      transport: unset
+    items:
+      - '!instance-!node'
+      - instance-node
+  '!queue':
+    query:
+      queue: unset
+    items:
+      - '!profile'
+      - profile
+  '!reason':
+    query:
+      reason: unset
+    metrics:
+      apiserver_audit_event_total: !scalar {}
+      apiserver_audit_requests_rejected_total: !scalar {}
+      apiserver_cel_compilation_duration_seconds: !histogram {}
+      apiserver_cel_evaluation_duration_seconds: !histogram {}
+      apiserver_client_certificate_expiration_seconds: !histogram {}
+      apiserver_envelope_encryption_dek_cache_fill_percent: !scalar {}
+      apiserver_flowcontrol_seat_fair_frac: !scalar {}
+      apiserver_kube_aggregator_x509_insecure_sha1_total: !scalar {}
+      apiserver_kube_aggregator_x509_missing_san_total: !scalar {}
+      apiserver_storage_data_key_generation_duration_seconds: !histogram {}
+      apiserver_storage_data_key_generation_failures_total: !scalar {}
+      apiserver_storage_db_total_size_in_bytes: !scalar {}
+      apiserver_storage_envelope_transformation_cache_misses_total: !scalar {}
+      apiserver_tls_handshake_errors_total: !scalar {}
+      apiserver_webhooks_x509_insecure_sha1_total: !scalar {}
+      apiserver_webhooks_x509_missing_san_total: !scalar {}
+      attachdetach_controller_forced_detaches: !scalar {}
+      container_scrape_error: !scalar {}
+      cronjob_controller_job_creation_skew_duration_seconds: !histogram {}
+      disabled_metric_total: !scalar {}
+      endpoint_slice_controller_desired_endpoint_slices: !scalar {}
+      endpoint_slice_controller_endpoints_added_per_sync: !histogram {}
+      endpoint_slice_controller_endpoints_desired: !scalar {}
+      endpoint_slice_controller_endpoints_removed_per_sync: !histogram {}
+      endpoint_slice_controller_num_endpoint_slices: !scalar {}
+      endpoint_slice_mirroring_controller_addresses_skipped_per_sync: !histogram {}
+      endpoint_slice_mirroring_controller_desired_endpoint_slices: !scalar {}
+      endpoint_slice_mirroring_controller_endpoints_added_per_sync: !histogram {}
+      endpoint_slice_mirroring_controller_endpoints_desired: !scalar {}
+      endpoint_slice_mirroring_controller_endpoints_removed_per_sync: !histogram {}
+      endpoint_slice_mirroring_controller_endpoints_sync_duration: !histogram {}
+      endpoint_slice_mirroring_controller_endpoints_updated_per_sync: !histogram {}
+      endpoint_slice_mirroring_controller_num_endpoint_slices: !scalar {}
+      ephemeral_volume_controller_create_failures_total: !scalar {}
+      ephemeral_volume_controller_create_total: !scalar {}
+      etcd_lease_object_counts: !histogram {}
+      garbagecollector_controller_resources_sync_error_total: !scalar {}
+      go_cgo_go_to_c_calls_calls_total: !scalar {}
+      go_gc_cycles_automatic_gc_cycles_total: !scalar {}
+      go_gc_cycles_forced_gc_cycles_total: !scalar {}
+      go_gc_cycles_total_gc_cycles_total: !scalar {}
+      go_gc_duration_seconds: !summary {}
+      go_gc_heap_allocs_by_size_bytes: !histogram {}
+      go_gc_heap_allocs_bytes_total: !scalar {}
+      go_gc_heap_allocs_objects_total: !scalar {}
+      go_gc_heap_frees_by_size_bytes: !histogram {}
+      go_gc_heap_frees_bytes_total: !scalar {}
+      go_gc_heap_frees_objects_total: !scalar {}
+      go_gc_heap_goal_bytes: !scalar {}
+      go_gc_heap_objects_objects: !scalar {}
+      go_gc_heap_tiny_allocs_objects_total: !scalar {}
+      go_gc_limiter_last_enabled_gc_cycle: !scalar {}
+      go_gc_pauses_seconds: !histogram {}
+      go_gc_stack_starting_size_bytes: !scalar {}
+      go_goroutines: !scalar {}
+      go_memory_classes_heap_free_bytes: !scalar {}
+      go_memory_classes_heap_objects_bytes: !scalar {}
+      go_memory_classes_heap_released_bytes: !scalar {}
+      go_memory_classes_heap_stacks_bytes: !scalar {}
+      go_memory_classes_heap_unused_bytes: !scalar {}
+      go_memory_classes_metadata_mcache_free_bytes: !scalar {}
+      go_memory_classes_metadata_mcache_inuse_bytes: !scalar {}
+      go_memory_classes_metadata_mspan_free_bytes: !scalar {}
+      go_memory_classes_metadata_mspan_inuse_bytes: !scalar {}
+      go_memory_classes_metadata_other_bytes: !scalar {}
+      go_memory_classes_os_stacks_bytes: !scalar {}
+      go_memory_classes_other_bytes: !scalar {}
+      go_memory_classes_profiling_buckets_bytes: !scalar {}
+      go_memory_classes_total_bytes: !scalar {}
+      go_memstats_alloc_bytes: !scalar {}
+      go_memstats_alloc_bytes_total: !scalar {}
+      go_memstats_buck_hash_sys_bytes: !scalar {}
+      go_memstats_frees_total: !scalar {}
+      go_memstats_gc_sys_bytes: !scalar {}
+      go_memstats_heap_alloc_bytes: !scalar {}
+      go_memstats_heap_idle_bytes: !scalar {}
+      go_memstats_heap_inuse_bytes: !scalar {}
+      go_memstats_heap_objects: !scalar {}
+      go_memstats_heap_released_bytes: !scalar {}
+      go_memstats_heap_sys_bytes: !scalar {}
+      go_memstats_last_gc_time_seconds: !scalar {}
+      go_memstats_lookups_total: !scalar {}
+      go_memstats_mallocs_total: !scalar {}
+      go_memstats_mcache_inuse_bytes: !scalar {}
+      go_memstats_mcache_sys_bytes: !scalar {}
+      go_memstats_mspan_inuse_bytes: !scalar {}
+      go_memstats_mspan_sys_bytes: !scalar {}
+      go_memstats_next_gc_bytes: !scalar {}
+      go_memstats_other_sys_bytes: !scalar {}
+      go_memstats_stack_inuse_bytes: !scalar {}
+      go_memstats_stack_sys_bytes: !scalar {}
+      go_memstats_sys_bytes: !scalar {}
+      go_sched_gomaxprocs_threads: !scalar {}
+      go_sched_goroutines_goroutines: !scalar {}
+      go_sched_latencies_seconds: !histogram {}
+      go_threads: !scalar {}
+      hidden_metric_total: !scalar {}
+      kube_apiserver_pod_logs_pods_logs_backend_tls_failure_total: !scalar {}
+      kubelet_containers_per_pod_count: !histogram {}
+      kubelet_cpu_manager_pinning_errors_total: !scalar {}
+      kubelet_cpu_manager_pinning_requests_total: !scalar {}
+      kubelet_graceful_shutdown_end_time_seconds: !scalar {}
+      kubelet_graceful_shutdown_start_time_seconds: !scalar {}
+      kubelet_lifecycle_handler_http_fallbacks_total: !scalar {}
+      kubelet_managed_ephemeral_containers: !scalar {}
+      kubelet_node_name: !scalar {}
+      kubelet_pleg_discard_events: !scalar {}
+      kubelet_pleg_last_seen_seconds: !scalar {}
+      kubelet_pleg_relist_duration_seconds: !histogram {}
+      kubelet_pleg_relist_interval_seconds: !histogram {}
+      kubelet_pod_start_duration_seconds: !histogram {}
+      kubelet_pod_start_sli_duration_seconds: !histogram {}
+      kubelet_pod_status_sync_duration_seconds: !histogram {}
+      kubelet_pod_worker_start_duration_seconds: !histogram {}
+      kubelet_run_podsandbox_duration_seconds: !histogram {}
+      kubelet_running_pods: !scalar {}
+      kubelet_started_pods_errors_total: !scalar {}
+      kubelet_started_pods_total: !scalar {}
+      kubeproxy_network_programming_duration_seconds: !histogram {}
+      kubeproxy_sync_proxy_rules_duration_seconds: !histogram {}
+      kubeproxy_sync_proxy_rules_endpoint_changes_pending: !scalar {}
+      kubeproxy_sync_proxy_rules_endpoint_changes_total: !scalar {}
+      kubeproxy_sync_proxy_rules_iptables_partial_restore_failures_total: !scalar {}
+      kubeproxy_sync_proxy_rules_iptables_restore_failures_total: !scalar {}
+      kubeproxy_sync_proxy_rules_last_queued_timestamp_seconds: !scalar {}
+      kubeproxy_sync_proxy_rules_last_timestamp_seconds: !scalar {}
+      kubeproxy_sync_proxy_rules_service_changes_pending: !scalar {}
+      kubeproxy_sync_proxy_rules_service_changes_total: !scalar {}
+      machine_scrape_error: !scalar {}
+      node_collector_evictions_total: !scalar {}
+      node_collector_unhealthy_nodes_in_zone: !scalar {}
+      node_collector_zone_health: !scalar {}
+      node_collector_zone_size: !scalar {}
+      process_cpu_seconds_total: !scalar {}
+      process_max_fds: !scalar {}
+      process_open_fds: !scalar {}
+      process_resident_memory_bytes: !scalar {}
+      process_start_time_seconds: !scalar {}
+      process_virtual_memory_bytes: !scalar {}
+      process_virtual_memory_max_bytes: !scalar {}
+      pv_collector_bound_pvc_count: !scalar {}
+      pv_collector_unbound_pvc_count: !scalar {}
+      replicaset_controller_sorting_deletion_age_ratio: !histogram {}
+      rest_client_exec_plugin_certificate_rotation_age: !histogram {}
+      rest_client_exec_plugin_ttl_seconds: !scalar {}
+      retroactive_storageclass_errors_total: !scalar {}
+      retroactive_storageclass_total: !scalar {}
+      scheduler_pod_scheduling_attempts: !histogram {}
+      scheduler_preemption_attempts_total: !scalar {}
+      scheduler_preemption_victims: !histogram {}
+      scheduler_scheduling_algorithm_duration_seconds: !histogram {}
+      scrape_duration_seconds: !scalar {}
+      scrape_samples_post_metric_relabeling: !scalar {}
+      scrape_samples_scraped: !scalar {}
+      scrape_series_added: !scalar {}
+      serviceaccount_legacy_tokens_total: !scalar {}
+      serviceaccount_stale_tokens_total: !scalar {}
+      serviceaccount_valid_tokens_total: !scalar {}
+      ttl_after_finished_controller_job_deletion_duration_seconds: !histogram {}
+      up: !scalar {}
+  '!reason-!crd-!group':
+    query:
+      crd: unset
+      group: unset
+      reason: unset
+    metrics:
+      go_info: !scalar {}
+  '!reason1':
+    query:
+      reason: unset
+    metrics:
+      aggregator_unavailable_apiservice: !scalar {}
+      kubernetes_feature_enabled: !scalar {}
+      workqueue_adds_total: !scalar {}
+      workqueue_depth: !scalar {}
+      workqueue_longest_running_processor_seconds: !scalar {}
+      workqueue_queue_duration_seconds: !histogram {}
+      workqueue_retries_total: !scalar {}
+      workqueue_unfinished_work_seconds: !scalar {}
+      workqueue_work_duration_seconds: !histogram {}
+  '!rejected':
+    query:
+      rejected: unset
+    items:
+      - '!operation1'
+      - operation1
+  '!request_kind':
+    query:
+      request_kind: unset
+    items:
+      - '!resource_prefix'
+      - resource_prefix
+  '!request_kind-priority_level':
+    query:
+      priority_level: set
+      request_kind: unset
+    keys:
+      - priority_level
+    metrics:
+      apiserver_flowcontrol_priority_level_request_utilization: !histogram {}
+      apiserver_flowcontrol_priority_level_seat_utilization: !histogram {}
+  '!request_operation':
+    query:
+      request_operation: unset
+    items:
+      - '!clusterCIDR'
+      - clusterCIDR
+  '!resource':
+    query:
+      resource: unset
+    items:
+      - '!execute'
+      - execute
+  '!resource1':
+    query:
+      resource: unset
+    items:
+      - '!code2'
+      - code2
+  '!resource_prefix':
+    query:
+      resource_prefix: unset
+    items:
+      - '!code'
+      - code
+  '!result':
+    query:
+      result: unset
+    items:
+      - '!username'
+      - username
+  '!scope':
+    query:
+      scope: unset
+    metrics:
+      kube_apiserver_clusterip_allocator_allocated_ips: !scalar {}
+      kube_apiserver_clusterip_allocator_available_ips: !scalar {}
+  '!scope-!failure_type':
+    query:
+      failure_type: unset
+      scope: unset
+    items:
+      - '!name-!image'
+      - name-image
+  '!source':
+    query:
+      source: unset
+    items:
+      - '!filter'
+      - filter
+  '!stability_level':
+    query:
+      stability_level: unset
+    items:
+      - '!storage_class'
+      - storage_class
+  '!stage':
+    query:
+      stage: unset
+    items:
+      - '!request_kind'
+      - request_kind
+  '!stage1':
+    query:
+      stage: unset
+    metrics:
+      apiserver_egress_dialer_dial_duration_seconds: !histogram {}
+      apiserver_egress_dialer_dial_start_total: !scalar {}
+  '!state':
+    query:
+      state: unset
+    items:
+      - '!operation_name'
+      - operation_name
+  '!status':
+    query:
+      status: unset
+    items:
+      - '!dry_run'
+      - dry_run
+  '!status-!extension_point-profile':
+    query:
+      extension_point: unset
+      profile: set
+      status: unset
+    keys:
+      - profile
+    metrics:
+      scheduler_unschedulable_pods: !scalar {}
+  '!status-result-!extension_point':
+    query:
+      extension_point: unset
+      result: set
+      status: unset
+    keys:
+      - result
+    metrics:
+      scheduler_schedule_attempts_total: !scalar {}
+      scheduler_scheduling_attempt_duration_seconds: !histogram {}
+  '!storage_class':
+    query:
+      storage_class: unset
+    items:
+      - '!pod_uid'
+      - pod_uid
+  '!subresource':
+    query:
+      subresource: unset
+    items:
+      - '!verb'
+      - verb
+  '!table':
+    query:
+      table: unset
+    items:
+      - '!metric_source'
+      - metric_source
+  '!topology':
+    query:
+      topology: unset
+    items:
+      - '!result'
+      - result
+  '!traffic_policy':
+    query:
+      traffic_policy: unset
+    items:
+      - '!table'
+      - table
+  '!type':
+    query:
+      type: unset
+    items:
+      - '!operation'
+      - operation
+  '!type1':
+    query:
+      type: unset
+    metrics:
+      apiserver_flowcontrol_current_executing_requests: !scalar {}
+      apiserver_flowcontrol_current_inqueue_requests: !scalar {}
+      apiserver_flowcontrol_dispatched_requests_total: !scalar {}
+      apiserver_flowcontrol_request_concurrency_in_use: !scalar {}
+      apiserver_flowcontrol_request_dispatch_no_accommodation_total: !scalar {}
+      apiserver_flowcontrol_request_queue_length_after_enqueue: !histogram {}
+      apiserver_flowcontrol_watch_count_samples: !histogram {}
+      apiserver_flowcontrol_work_estimated_seats: !histogram {}
+  '!uid':
+    query:
+      uid: unset
+    items:
+      - '!id-!pod'
+      - id-pod
+  '!ulimit':
+    query:
+      ulimit: unset
+    items:
+      - '!interface'
+      - interface
+  '!usage':
+    query:
+      usage: unset
+    items:
+      - '!cidr'
+      - cidr
+  '!username':
+    query:
+      username: unset
+    items:
+      - '!kind'
+      - kind
+  '!verb':
+    query:
+      verb: unset
+    items:
+      - '!resource'
+      - resource
+  '!version':
+    query:
+      version: unset
+    items:
+      - '!crd'
+      - crd
+  '!version-!scope':
+    query:
+      scope: unset
+      version: unset
+    metrics:
+      apiserver_selfrequest_total: !scalar {}
+  '!version-!scope1':
+    query:
+      scope: unset
+      version: unset
+    items:
+      - '!component1'
+      - component1
+  '!work':
+    query:
+      work: unset
+    items:
+      - '!event'
+      - event
+  action:
+    query:
+      action: set
+    keys:
+      - action
+    items:
+      - result-completion_mode
+  apiservice:
+    query:
+      apiservice: set
+    keys:
+      - apiservice
+    metrics:
+      aggregator_openapi_v2_regeneration_count: !scalar {}
+  attempts:
+    query:
+      attempts: set
+    keys:
+      - attempts
+    metrics:
+      scheduler_pod_scheduling_duration_seconds: !histogram {}
+  boot_id-machine_id-system_uuid:
+    query:
+      boot_id: set
+      machine_id: set
+      system_uuid: set
+    keys:
+      - boot_id
+      - machine_id
+      - system_uuid
+    items:
+      - instance-node4
+  bound:
+    query:
+      bound: set
+    keys:
+      - bound
+    items:
+      - priority_level1
+  build_date-compiler-git_commit-git_tree_state-git_version-go_version-platform:
+    query:
+      build_date: set
+      compiler: set
+      git_commit: set
+      git_tree_state: set
+      git_version: set
+      go_version: set
+      platform: set
+    keys:
+      - build_date
+      - compiler
+      - git_commit
+      - git_tree_state
+      - git_version
+      - go_version
+      - platform
+    items:
+      - instance-node-major-minor
+  cidr:
+    query:
+      cidr: set
+    keys:
+      - cidr
+    items:
+      - '!scope'
+      - scope
+  cluster-endpoint-job-metrics_path-namespace-prometheus-prometheus_replica-service:
+    query:
+      cluster: set
+      endpoint: set
+      metrics_path: set
+      namespace: set
+      prometheus: set
+      prometheus_replica: set
+    keys:
+      - cluster
+      - endpoint
+      - job
+      - metrics_path
+      - namespace
+      - prometheus
+      - prometheus_replica
+      - service
+    items:
+      - '!build_date-!compiler-!git_commit-!git_tree_state-!git_version-!go_version-!platform'
+      - build_date-compiler-git_commit-git_tree_state-git_version-go_version-platform
+  clusterCIDR:
+    query:
+      clusterCIDR: set
+    keys:
+      - clusterCIDR
+    metrics:
+      node_ipam_controller_cidrset_cidrs_allocations_total: !scalar {}
+      node_ipam_controller_cidrset_usage_cidrs: !scalar {}
+  code:
+    query:
+      code: set
+    keys:
+      - code
+    items:
+      - '!name-!operation-!rejected-!type'
+      - name-operation-rejected-type
+  code-!verb-method:
+    query:
+      code: set
+      method: set
+      verb: unset
+    keys:
+      - code
+      - method
+    metrics:
+      rest_client_requests_total: !scalar {}
+  code1:
+    query:
+      code: set
+    keys:
+      - code
+    items:
+      - '!group1'
+      - group1
+  code2:
+    query:
+      code: set
+    keys:
+      - code
+    metrics:
+      apiserver_request_total: !scalar {}
+  code3:
+    query:
+      code: set
+    keys:
+      - code
+    metrics:
+      apiserver_request_terminations_total: !scalar {}
+  code4:
+    query:
+      code: set
+    keys:
+      - code
+    items:
+      - '!group3'
+      - group3
+  code5:
+    query:
+      code: set
+    keys:
+      - code
+    metrics:
+      kubelet_started_containers_errors_total: !scalar {}
+  code_path:
+    query:
+      code_path: set
+    keys:
+      - code_path
+    metrics:
+      apiserver_request_timestamp_comparison_time: !histogram {}
+  completion_mode:
+    query:
+      completion_mode: set
+    keys:
+      - completion_mode
+    items:
+      - result1
+  component:
+    query:
+      component: set
+    keys:
+      - component
+    items:
+      - '!code1'
+      - code1
+  component1:
+    query:
+      component: set
+    keys:
+      - component
+    items:
+      - code3
+  container:
+    query:
+      container: set
+    keys:
+      - container
+    metrics:
+      container_cpu_cfs_periods_total: !scalar {}
+      container_cpu_cfs_throttled_periods_total: !scalar {}
+      container_last_seen: !scalar {}
+      container_memory_cache: !scalar {}
+      container_memory_failcnt: !scalar {}
+      container_memory_max_usage_bytes: !scalar {}
+      container_memory_rss: !scalar {}
+      container_memory_usage_bytes: !scalar {}
+      container_memory_working_set_bytes: !scalar {}
+      container_oom_events_total: !scalar {}
+      container_processes: !scalar {}
+      container_sockets: !scalar {}
+      container_start_time_seconds: !scalar {}
+      container_threads: !scalar {}
+      node_namespace_pod_container:container_memory_cache: !scalar {}
+      node_namespace_pod_container:container_memory_rss: !scalar {}
+      node_namespace_pod_container:container_memory_working_set_bytes: !scalar {}
+  container-pod:
+    query:
+      container: set
+      pod: set
+    keys:
+      - container
+      - pod
+    metrics:
+      kubelet_container_log_filesystem_used_bytes: !scalar {}
+  container-pod1:
+    query:
+      container: set
+      pod: set
+    keys:
+      - container
+      - pod
+    metrics:
+      prober_probe_duration_seconds: !histogram {}
+  container1:
+    query:
+      container: set
+    keys:
+      - container
+    metrics:
+      cluster:cpu_usage_nosum:rate5m: !scalar {}
+      container_cpu_usage_seconds_total: !scalar {}
+  container2:
+    query:
+      container: set
+    keys:
+      - container
+    metrics:
+      container_fs_reads_bytes_total: !scalar {}
+      container_fs_reads_total: !scalar {}
+      container_fs_writes_bytes_total: !scalar {}
+      container_fs_writes_total: !scalar {}
+  container3:
+    query:
+      container: set
+    keys:
+      - container
+    metrics:
+      container_ulimits_soft: !scalar {}
+  container4:
+    query:
+      container: set
+    keys:
+      - container
+    metrics:
+      container_memory_failures_total: !scalar {}
+  container5:
+    query:
+      container: set
+    keys:
+      - container
+    metrics:
+      container_blkio_device_usage_total: !scalar {}
+  container_state:
+    query:
+      container_state: set
+    keys:
+      - container_state
+    metrics:
+      kubelet_running_containers: !scalar {}
+  container_type:
+    query:
+      container_type: set
+    keys:
+      - container_type
+    items:
+      - '!code5'
+      - code5
+  cpu:
+    query:
+      cpu: set
+    keys:
+      - cpu
+    metrics:
+      container_cpu_usage_seconds_total: !scalar {}
+  cpu1:
+    query:
+      cpu: set
+    keys:
+      - cpu
+    items:
+      - '!container1'
+      - container1
+  crd:
+    query:
+      crd: set
+    keys:
+      - crd
+    items:
+      - reason2
+  decision-policy_level-policy_version:
+    query:
+      decision: set
+      policy_level: set
+      policy_version: set
+    keys:
+      - decision
+      - policy_level
+      - policy_version
+    items:
+      - instance-node-resource-mode-request_operation
+  deprecated_version:
+    query:
+      deprecated_version: set
+    keys:
+      - deprecated_version
+    metrics:
+      registered_metric_total: !scalar {}
+  device:
+    query:
+      device: set
+    keys:
+      - device
+    metrics:
+      container_fs_reads_bytes_total: !scalar {}
+      container_fs_reads_total: !scalar {}
+      container_fs_writes_bytes_total: !scalar {}
+      container_fs_writes_total: !scalar {}
+  device1:
+    query:
+      device: set
+    keys:
+      - device
+    items:
+      - '!container2'
+      - container2
+  dry_run:
+    query:
+      dry_run: set
+    keys:
+      - dry_run
+    items:
+      - group-version-resource-component-scope-verb
+  enabled:
+    query:
+      enabled: set
+    keys:
+      - enabled
+    metrics:
+      field_validation_request_duration_seconds: !histogram {}
+  event:
+    query:
+      event: set
+    keys:
+      - event
+    items:
+      - queue1
+  execute:
+    query:
+      execute: set
+    keys:
+      - execute
+    items:
+      - flow_schema-priority_level
+  field_validation:
+    query:
+      field_validation: set
+    keys:
+      - field_validation
+    items:
+      - enabled
+  filter:
+    query:
+      filter: set
+    keys:
+      - filter
+    metrics:
+      apiserver_request_filter_duration_seconds: !histogram {}
+  flow_schema:
+    query:
+      flow_schema: set
+    keys:
+      - flow_schema
+    items:
+      - '!type1'
+      - type1
+  flow_schema-priority_level:
+    query:
+      flow_schema: set
+      priority_level: set
+    keys:
+      - flow_schema
+      - priority_level
+    metrics:
+      apiserver_flowcontrol_request_wait_duration_seconds: !histogram {}
+  group:
+    query:
+      group: set
+    keys:
+      - group
+    metrics:
+      apiserver_longrunning_requests: !scalar {}
+      apiserver_request_duration_seconds: !histogram {}
+      apiserver_request_sli_duration_seconds: !histogram {}
+      apiserver_request_slo_duration_seconds: !histogram {}
+      apiserver_response_sizes: !histogram {}
+  group-version:
+    query:
+      group: set
+      version: set
+    keys:
+      - group
+      - version
+    metrics:
+      apiserver_requested_deprecated_apis: !scalar {}
+  group-version-resource-component-scope-verb:
+    query:
+      component: set
+      group: set
+      resource: set
+      scope: set
+      verb: set
+      version: set
+    keys:
+      - component
+      - group
+      - resource
+      - scope
+      - verb
+      - version
+    items:
+      - '!code4'
+      - code2
+  group1:
+    query:
+      group: set
+    keys:
+      - group
+    metrics:
+      apiserver_request_terminations_total: !scalar {}
+      apiserver_request_total: !scalar {}
+  group2:
+    query:
+      group: set
+    keys:
+      - group
+    metrics:
+      apiserver_request_duration_seconds: !histogram {}
+      apiserver_request_sli_duration_seconds: !histogram {}
+      apiserver_request_slo_duration_seconds: !histogram {}
+      apiserver_response_sizes: !histogram {}
+  group3:
+    query:
+      group: set
+    keys:
+      - group
+    metrics:
+      apiserver_request_total: !scalar {}
+  group4:
+    query:
+      group: set
+    keys:
+      - group
+    metrics:
+      apiserver_watch_events_sizes: !histogram {}
+      apiserver_watch_events_total: !scalar {}
+  grpc_code:
+    query:
+      grpc_code: set
+    keys:
+      - grpc_code
+    metrics:
+      grpc_client_handled_total: !scalar {}
+  grpc_method-grpc_service-grpc_type:
+    query:
+      grpc_method: set
+      grpc_service: set
+      grpc_type: set
+    keys:
+      - grpc_method
+      - grpc_service
+      - grpc_type
+    items:
+      - instance-node3
+  host:
+    query:
+      host: set
+    keys:
+      - host
+    items:
+      - '!code-verb-!method'
+      - code-!verb-method
+  id-pod:
+    query:
+      id: set
+      pod: set
+    keys:
+      - id
+      - pod
+    items:
+      - '!scope-!failure_type'
+      - scope-failure_type
+  index:
+    query:
+      index: set
+    keys:
+      - index
+    metrics:
+      apiserver_cache_list_fetched_objects_total: !scalar {}
+      apiserver_cache_list_total: !scalar {}
+  instance-node:
+    query:
+      instance: set
+      node: set
+    keys:
+      - instance
+      - node
+    items:
+      - '!state'
+      - state
+  instance-node-major-minor:
+    query:
+      instance: set
+      major: set
+      minor: set
+      node: set
+    keys:
+      - instance
+      - major
+      - minor
+      - node
+    metrics:
+      kubernetes_build_info: !scalar {}
+  instance-node-method:
+    query:
+      instance: set
+      method: set
+      node: set
+    keys:
+      - instance
+      - method
+      - node
+    metrics:
+      kubelet_http_inflight_requests: !scalar {}
+      kubelet_http_requests_duration_seconds: !histogram {}
+      kubelet_http_requests_total: !scalar {}
+  instance-node-operation-id-pod-device:
+    query:
+      device: set
+      id: set
+      instance: set
+      node: set
+      operation: set
+      pod: set
+    keys:
+      - device
+      - id
+      - instance
+      - node
+      - operation
+      - pod
+    items:
+      - '!name-!image2'
+      - name-image2
+  instance-node-resource-mode-request_operation:
+    query:
+      instance: set
+      mode: set
+      node: set
+      request_operation: set
+      resource: set
+    keys:
+      - instance
+      - mode
+      - node
+      - request_operation
+      - resource
+    metrics:
+      pod_security_evaluations_total: !scalar {}
+  instance-node-status-operation_name:
+    query:
+      instance: set
+      node: set
+      operation_name: set
+      status: set
+    keys:
+      - instance
+      - node
+      - operation_name
+      - status
+    metrics:
+      storage_operation_duration_seconds: !histogram {}
+  instance-node1:
+    query:
+      instance: set
+      node: set
+    keys:
+      - instance
+      - node
+    items:
+      - '!stage1'
+      - stage1
+  instance-node2:
+    query:
+      instance: set
+      node: set
+    keys:
+      - instance
+      - node
+    metrics:
+      cadvisor_version_info: !scalar {}
+  instance-node3:
+    query:
+      instance: set
+      node: set
+    keys:
+      - instance
+      - node
+    items:
+      - '!grpc_code'
+      - grpc_code
+  instance-node4:
+    query:
+      instance: set
+      node: set
+    keys:
+      - instance
+      - node
+    items:
+      - '!mode'
+      - mode
+  interface:
+    query:
+      interface: set
+    keys:
+      - interface
+    metrics:
+      container_network_receive_bytes_total: !scalar {}
+      container_network_receive_errors_total: !scalar {}
+      container_network_receive_packets_dropped_total: !scalar {}
+      container_network_receive_packets_total: !scalar {}
+      container_network_transmit_bytes_total: !scalar {}
+      container_network_transmit_errors_total: !scalar {}
+      container_network_transmit_packets_dropped_total: !scalar {}
+      container_network_transmit_packets_total: !scalar {}
+  kernelVersion-osVersion:
+    query:
+      kernelVersion: set
+      osVersion: set
+    keys:
+      - kernelVersion
+      - osVersion
+    items:
+      - instance-node2
+  kind:
+    query:
+      kind: set
+    keys:
+      - kind
+    items:
+      - version1
+  long_running-path-server_type:
+    query:
+      long_running: set
+      path: set
+      server_type: set
+    keys:
+      - long_running
+      - path
+      - server_type
+    items:
+      - instance-node-method
+  major-minor:
+    query:
+      major: set
+      minor: set
+    keys:
+      - major
+      - minor
+    items:
+      - instance-node-operation-id-pod-device
+  manager:
+    query:
+      manager: set
+    keys:
+      - manager
+    items:
+      - name4
+  metric_source:
+    query:
+      metric_source: set
+    keys:
+      - metric_source
+    metrics:
+      kubelet_volume_metric_collection_duration_seconds: !histogram {}
+  migrated-volume_plugin:
+    query:
+      migrated: set
+      volume_plugin: set
+    keys:
+      - migrated
+      - volume_plugin
+    items:
+      - instance-node-status-operation_name
+  mode:
+    query:
+      mode: set
+    keys:
+      - mode
+    metrics:
+      machine_nvm_capacity: !scalar {}
+  name:
+    query:
+      name: set
+    keys:
+      - name
+    items:
+      - '!reason1'
+      - reason1
+  name-image:
+    query:
+      image: set
+      name: set
+    keys:
+      - image
+      - name
+    items:
+      - '!ulimit'
+      - ulimit
+  name-image1:
+    query:
+      image: set
+      name: set
+    keys:
+      - image
+      - name
+    items:
+      - '!container4'
+      - container4
+  name-image2:
+    query:
+      image: set
+      name: set
+    keys:
+      - image
+      - name
+    items:
+      - '!container5'
+      - container5
+  name-operation-rejected-type:
+    query:
+      name: set
+      operation: set
+      rejected: set
+      type: set
+    keys:
+      - name
+      - operation
+      - rejected
+      - type
+    metrics:
+      apiserver_admission_webhook_request_total: !scalar {}
+  name1:
+    query:
+      name: set
+    keys:
+      - name
+    metrics:
+      apiserver_admission_webhook_fail_open_count: !scalar {}
+  name2:
+    query:
+      name: set
+    keys:
+      - name
+    metrics:
+      apiserver_admission_controller_admission_duration_seconds: !histogram {}
+      apiserver_admission_webhook_admission_duration_seconds: !histogram {}
+  name3:
+    query:
+      name: set
+    keys:
+      - name
+    metrics:
+      kubernetes_feature_enabled: !scalar {}
+  name4:
+    query:
+      name: set
+    keys:
+      - name
+    metrics:
+      running_managed_controllers: !scalar {}
+  operation:
+    query:
+      operation: set
+    keys:
+      - operation
+    metrics:
+      endpoint_slice_controller_changes: !scalar {}
+      node_authorizer_graph_actions_duration_seconds: !histogram {}
+      scheduler_goroutines: !scalar {}
+      scheduler_volume_scheduling_stage_error_total: !scalar {}
+  operation1:
+    query:
+      operation: set
+    keys:
+      - operation
+    metrics:
+      etcd_request_duration_seconds: !histogram {}
+  operation2:
+    query:
+      operation: set
+    keys:
+      - operation
+    items:
+      - '!name2'
+      - name2
+  operation_name:
+    query:
+      operation_name: set
+    keys:
+      - operation_name
+    items:
+      - plugin_name
+  operation_type:
+    query:
+      operation_type: set
+    keys:
+      - operation_type
+    metrics:
+      kubelet_cgroup_manager_duration_seconds: !histogram {}
+      kubelet_pod_worker_duration_seconds: !histogram {}
+      kubelet_runtime_operations_duration_seconds: !histogram {}
+      kubelet_runtime_operations_errors_total: !scalar {}
+      kubelet_runtime_operations_total: !scalar {}
+  phase:
+    query:
+      phase: set
+    keys:
+      - phase
+    items:
+      - '!request_kind-priority_level'
+      - request_kind-!priority_level
+  plugin:
+    query:
+      plugin: set
+    keys:
+      - plugin
+    items:
+      - '!status-!extension_point-profile'
+      - status-extension_point-!profile
+  plugin_name:
+    query:
+      plugin_name: set
+    keys:
+      - plugin_name
+    metrics:
+      volume_operation_total_seconds: !histogram {}
+  plugin_name-volume_mode:
+    query:
+      plugin_name: set
+      volume_mode: set
+    keys:
+      - plugin_name
+      - volume_mode
+    metrics:
+      pv_collector_total_pv_count: !scalar {}
+  plugin_name1:
+    query:
+      plugin_name: set
+    keys:
+      - plugin_name
+    metrics:
+      volume_manager_total_volumes: !scalar {}
+  pod_uid:
+    query:
+      pod_uid: set
+    keys:
+      - pod_uid
+    items:
+      - result-container-pod-probe_type
+  priority_level:
+    query:
+      priority_level: set
+    keys:
+      - priority_level
+    items:
+      - '!flow_schema'
+      - flow_schema
+  priority_level1:
+    query:
+      priority_level: set
+    keys:
+      - priority_level
+    metrics:
+      apiserver_flowcontrol_next_discounted_s_bounds: !scalar {}
+      apiserver_flowcontrol_next_s_bounds: !scalar {}
+  probe_type:
+    query:
+      probe_type: set
+    keys:
+      - probe_type
+    items:
+      - container-pod1
+  profile:
+    query:
+      profile: set
+    keys:
+      - profile
+    items:
+      - '!status-result-!extension_point'
+      - status-!result-extension_point
+  protocol-transport:
+    query:
+      protocol: set
+      transport: set
+    keys:
+      - protocol
+      - transport
+    items:
+      - instance-node1
+  queue:
+    query:
+      queue: set
+    keys:
+      - queue
+    metrics:
+      scheduler_pending_pods: !scalar {}
+  queue1:
+    query:
+      queue: set
+    keys:
+      - queue
+    metrics:
+      scheduler_queue_incoming_pods_total: !scalar {}
+  reason:
+    query:
+      reason: set
+    keys:
+      - reason
+    items:
+      - '!apiservice'
+      - apiservice
+  reason-crd-group:
+    query:
+      crd: set
+      group: set
+      reason: set
+    keys:
+      - crd
+      - group
+      - reason
+    metrics:
+      apiextensions_openapi_v3_regeneration_count: !scalar {}
+  reason1:
+    query:
+      reason: set
+    keys:
+      - reason
+    metrics:
+      aggregator_unavailable_apiservice_total: !scalar {}
+  reason2:
+    query:
+      reason: set
+    keys:
+      - reason
+    metrics:
+      apiextensions_openapi_v2_regeneration_count: !scalar {}
+  rejected:
+    query:
+      rejected: set
+    keys:
+      - rejected
+    items:
+      - operation2
+  request_kind:
+    query:
+      request_kind: set
+    keys:
+      - request_kind
+    metrics:
+      apiserver_current_inflight_requests: !scalar {}
+      apiserver_current_inqueue_requests: !scalar {}
+  request_kind-!priority_level:
+    query:
+      priority_level: unset
+      request_kind: set
+    keys:
+      - request_kind
+    metrics:
+      apiserver_flowcontrol_read_vs_write_current_requests: !histogram {}
+  request_operation:
+    query:
+      request_operation: set
+    keys:
+      - request_operation
+    items:
+      - resource3
+  resource:
+    query:
+      resource: set
+    keys:
+      - resource
+    items:
+      - '!group-!version'
+      - group-version
+  resource-component:
+    query:
+      component: set
+      resource: set
+    keys:
+      - component
+      - resource
+    items:
+      - '!code3'
+      - code4
+  resource1:
+    query:
+      resource: set
+    keys:
+      - resource
+    items:
+      - '!version-!scope'
+      - version-scope
+  resource2:
+    query:
+      resource: set
+    keys:
+      - resource
+    metrics:
+      apiserver_selfrequest_total: !scalar {}
+  resource3:
+    query:
+      resource: set
+    keys:
+      - resource
+    metrics:
+      pod_security_exemptions_total: !scalar {}
+  resource_prefix:
+    query:
+      resource_prefix: set
+    keys:
+      - resource_prefix
+    items:
+      - '!index'
+      - index
+  result:
+    query:
+      result: set
+    keys:
+      - result
+    metrics:
+      authentication_attempts: !scalar {}
+      authentication_duration_seconds: !histogram {}
+      endpoint_slice_controller_syncs: !scalar {}
+  result-completion_mode:
+    query:
+      completion_mode: set
+      result: set
+    keys:
+      - completion_mode
+      - result
+    metrics:
+      job_controller_job_sync_duration_seconds: !histogram {}
+      job_controller_job_syncs_total: !scalar {}
+  result-container-pod-probe_type:
+    query:
+      container: set
+      pod: set
+      probe_type: set
+      result: set
+    keys:
+      - container
+      - pod
+      - probe_type
+      - result
+    metrics:
+      prober_probe_total: !scalar {}
+  result1:
+    query:
+      result: set
+    keys:
+      - result
+    metrics:
+      job_controller_job_pods_finished_total: !scalar {}
+  root:
+    items:
+      - cluster-endpoint-job-metrics_path-namespace-prometheus-prometheus_replica-service
+  scope:
+    query:
+      scope: set
+    keys:
+      - scope
+    metrics:
+      kube_apiserver_clusterip_allocator_allocation_total: !scalar {}
+  scope-failure_type:
+    query:
+      failure_type: set
+      scope: set
+    keys:
+      - failure_type
+      - scope
+    items:
+      - '!name-!image1'
+      - name-image1
+  source:
+    query:
+      source: set
+    keys:
+      - source
+    items:
+      - status1
+  stability_level:
+    query:
+      stability_level: set
+    keys:
+      - stability_level
+    items:
+      - '!deprecated_version'
+      - deprecated_version
+  stage:
+    query:
+      stage: set
+    keys:
+      - stage
+    items:
+      - name3
+  stage1:
+    query:
+      stage: set
+    keys:
+      - stage
+    metrics:
+      apiserver_egress_dialer_dial_failure_count: !scalar {}
+  state:
+    query:
+      state: set
+    keys:
+      - state
+    items:
+      - plugin_name1
+  status:
+    query:
+      status: set
+    keys:
+      - status
+    metrics:
+      authentication_token_cache_active_fetch_count: !scalar {}
+      authentication_token_cache_fetch_total: !scalar {}
+      authentication_token_cache_request_duration_seconds: !histogram {}
+      authentication_token_cache_request_total: !scalar {}
+  status-!result-extension_point:
+    query:
+      extension_point: set
+      result: unset
+      status: set
+    keys:
+      - extension_point
+      - status
+    metrics:
+      scheduler_framework_extension_point_duration_seconds: !histogram {}
+  status-extension_point-!profile:
+    query:
+      extension_point: set
+      profile: unset
+      status: set
+    keys:
+      - extension_point
+      - status
+    metrics:
+      scheduler_plugin_execution_duration_seconds: !histogram {}
+  status1:
+    query:
+      status: set
+    keys:
+      - status
+    metrics:
+      apiserver_request_post_timeout_total: !scalar {}
+  storage_class:
+    query:
+      storage_class: set
+    keys:
+      - storage_class
+    metrics:
+      pv_collector_bound_pv_count: !scalar {}
+  subresource:
+    query:
+      subresource: set
+    keys:
+      - subresource
+    items:
+      - verb1
+  table:
+    query:
+      table: set
+    keys:
+      - table
+    metrics:
+      kubeproxy_sync_proxy_rules_iptables_total: !scalar {}
+  topology:
+    query:
+      topology: set
+    keys:
+      - topology
+    metrics:
+      endpoint_slice_controller_endpointslices_changed_per_sync: !histogram {}
+  traffic_policy:
+    query:
+      traffic_policy: set
+    keys:
+      - traffic_policy
+    metrics:
+      kubeproxy_sync_proxy_rules_no_local_endpoints_total: !scalar {}
+  type:
+    query:
+      type: set
+    keys:
+      - type
+    items:
+      - '!rejected'
+      - rejected
+  type1:
+    query:
+      type: set
+    keys:
+      - type
+    metrics:
+      apiserver_flowcontrol_request_execution_seconds: !histogram {}
+  uid:
+    query:
+      uid: set
+    keys:
+      - uid
+    items:
+      - container-pod
+  ulimit:
+    query:
+      ulimit: set
+    keys:
+      - ulimit
+    items:
+      - '!container3'
+      - container3
+  usage:
+    query:
+      usage: set
+    keys:
+      - usage
+    metrics:
+      kube_apiserver_pod_logs_pods_logs_insecure_backend_total: !scalar {}
+  username:
+    query:
+      username: set
+    keys:
+      - username
+    metrics:
+      authenticated_user_requests: !scalar {}
+  verb:
+    query:
+      verb: set
+    keys:
+      - verb
+    items:
+      - resource1
+  verb1:
+    query:
+      verb: set
+    keys:
+      - verb
+    items:
+      - '!version-!scope1'
+      - version-scope1
+  version:
+    query:
+      version: set
+    keys:
+      - version
+    items:
+      - '!reason-!crd-!group'
+      - reason-crd-group
+  version-scope:
+    query:
+      scope: set
+      version: set
+    keys:
+      - scope
+      - version
+    items:
+      - '!component'
+      - component
+  version-scope1:
+    query:
+      scope: set
+      version: set
+    keys:
+      - scope
+      - version
+    items:
+      - resource-component
+  version1:
+    query:
+      version: set
+    keys:
+      - version
+    items:
+      - '!group4'
+      - group4
+  work:
+    query:
+      work: set
+    keys:
+      - work
+    metrics:
+      scheduler_scheduler_goroutines: !scalar {}

@@ -1,0 +1,13 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+requires:
+  kubelet: ^0.1
+items:
+  root:
+    query:
+      job: !eq kubelet
+      service: !eq monitoring-kube-prometheus-kubelet
+    items:
+      - kubelet:root

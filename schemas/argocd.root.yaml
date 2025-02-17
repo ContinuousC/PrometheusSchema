@@ -1,0 +1,10 @@
+################################################################################
+# Copyright ContinuousC. Licensed under the "Elastic License 2.0".             #
+################################################################################
+
+requires:
+  argocd: 0.1
+items:
+  root:
+    items:
+      - argocd:root

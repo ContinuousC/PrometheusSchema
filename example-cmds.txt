@@ -1,0 +1,2 @@
+PROMETHEUS_URL=https://tenant-mdp.continuousc.contc/api/prom/api/v1/query
+PROMETHEUS_URL=https://prometheus.contc/api/v1/query cargo run -- verify-metrics schemas/argocd.root.yaml '{ job =~ "argo-cd-.*" }'

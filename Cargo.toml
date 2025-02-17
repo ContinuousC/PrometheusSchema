@@ -1,0 +1,23 @@
+[workspace]
+resolver = "2"
+members = [
+	"core",
+	"api",
+	"schema",
+	"expr",
+	"cmd"
+	]
+
+[patch.crates-io]
+# serde-wasm-bindgen = { registry = "si", version = "0.5" }
+tsify = { registry = "si", version = "0.4.8" }
+tsify-macros = { registry = "si", version = "0.4.8" }
+apistos = { registry = "si", version = "0.2.5" }
+schemars = { registry = "si", version = "0.8.22" }
+
+[patch.si]
+prometheus-core = { path = "core" }
+prometheus-api = { path = "api" }
+prometheus-expr = { path = "expr" }
+prometheus-schema = { path = "schema" }
+prometheus-cmd = { path = "cmd" }
