@@ -17,7 +17,7 @@ tsify = ["dep:tsify", "dep:wasm-bindgen"]
 schemars = ["dep:schemars", "prometheus-core/schemars"]
 
 [dependencies]
-tsify = { registry = "si", version = "0.4.6", optional = true }
+tsify = { version = "0.4.8", optional = true }
 wasm-bindgen = { version = "0.2.87", optional = true }
 schemars = { version = "0.8", features = ["chrono"], optional = true }
 chrono = { version = "0.4.31", features = ["serde"] }
@@ -25,4 +25,4 @@ serde = { version = "1.0.164", features = ["derive"] }
 serde_with = { version = "3.4.0", features = ["chrono"] }
 thiserror = "1.0.40"
 
-prometheus-core = { registry = "si", version = "=0.1.2-acc.8" }
+prometheus-core = { version = "=0.1.2-acc.8" }

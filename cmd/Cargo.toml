@@ -15,11 +15,11 @@ warp = "0.3.5"
 serde_yaml = "0.9.25"
 serde_cbor = "0.11.2"
 futures = "0.3.28"
-
-prometheus-core = { registry = "si", version = "=0.1.2-acc.8" }
-prometheus-api = { registry = "si", version = "=0.1.2-acc.21" }
-prometheus-schema = { registry = "si", version = "=0.1.25-acc.23", features = [
-    "tokio",
-] }
 serde_json = "1.0.117"
 env_logger = "0.11.3"
+
+prometheus-core = "=0.1.2-acc.8"
+prometheus-api = "=0.1.2-acc.21"
+prometheus-schema = { version = "=0.1.25-acc.23", features = [
+    "tokio",
+]}
